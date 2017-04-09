@@ -365,7 +365,192 @@ The SWEMWBS will be used for this project as it seems to provide a good trade of
 
 \section{Personal informatics} \label{personalinformatics}
 \subsection{Introduction}
+Personal informatics can be defined as software that is designed to \enquote{help individuals collect personal information to improve self-understanding}, allowing them to \enquote{promote positive behaviors} such as \enquote{healthy living, energy conservation, etc.} \parencite{li2012personal}.
 
+\subsection{Stages of personal informatics}
+A study by \citeauthor{li2010stage} developed a 5 stage model to represent personal informatics systems, consisting of \enquote{preparation, collection, integration, reflection, and action} \parencite{li2010stage}.
+\newpage
+
+This study produced a diagrammatic representation of these stages, which is shown in Figure \ref{fig:5stagespi}.
+\begin{figure}[ht]
+\centering
+\caption{Five stage model of personal informatics}
+\includegraphics[width=\textwidth]{i/5stagespi.png}
+\label{fig:5stagespi}
+\end{figure}
+
+\subsubsection{Preparation}
+This section refers to the user's decision to start using a personal informatics tool, and their decision of which tool to use. This can cause issues when users do not prepare sufficiently. It can result in users switching between applications, which can cause issues where \enquote{they abandon their previous data
+because most systems do not support data exporting}, or \enquote{if they can export data, the formats between the applications
+may not be the same} \parencite{li2010stage}.
+
+This project hopes to minimise the risk of this, in that most of the data used will not be entered by the user, but rather pulled from existing applications such as Twitter and Strava. It also hopes to reduce this by recording wellbeing in a way that is already developed and in circulation; the SWEMWBS scale \parencite{swemwbs}. However, this stage is not the main focus of this project.
+
+\subsubsection{Collection}
+This stage is, as expected, the stage where people collect information about themselves. There are two key methods of collection: active and passive. That is, either the user has to enter information themselves, or it is recorded automatically.
+
+Active collection can result in problems where users \enquote{lacked time, lacked motivation, or did not remember to collect information} \parencite{li2010stage}. In the case of US health apps, \citeauthor{krebs2015health} found that \enquote{about half of the respondents (427/934, 45.7\%) had stopped using some health apps, primarily due to high data entry burden, loss of interest, and hidden costs} \parencite{krebs2015health}. It is for this reason that some applications \enquote{are beginning to shift from requiring active tracking to
+support for passive tracking} \parencite{rooksby2014personal}.
+
+An aim of this project is to implement a solution that combines these two types of collection, and results in a form of compromise. If most data is collected from applications the user already uses, this can be viewed as passive collection in the context of this system (even if the user actively recorded this data on another system). This means that the active collection within this system can be kept as small as possible (just the SWEMWBS questionnaire).
+
+It is possible that in the future wearable technologies will be able to track wellbeing, which could make collection entirely passive. Research is ongoing in this area, for example a project by \citeauthor{valenza2014wearable} (\citeyear{valenza2014wearable}) developed a system to \enquote{recognize four possible clinical mood states in bipolar patients ... using heart rate variability information exclusively}. Interesting as this is, it is outside of the scope of this project. It may however be identified as an area for future work.
+
+\subsubsection{Integration}
+This stage combines and transforms data for the user. The amount of user input that is required varies, but in the case of this project this should require no user involvement. The system should already have wellbeing data, and user credentials for external applications, so should be able to integrate the data automatically.
+
+\subsubsection{Reflection}
+This stage involves the user interrogating the data, and being presented with visualisations in order to reflect on the data. Building these visualisations in an effective way is not easy. \citeauthor{keim2008visual} (\citeyear{keim2008visual}) stated that while \enquote{the capacity to collect and store new data rapidly grows, the ability to analyze these data volumes increases at much lower rates}.
+
+Presentation and visualisations are large challenges for this project, and will be discussed further in section \ref{visualisations}.
+
+\subsubsection{Action}
+This stage relates to how users respond to the reflection stage. \enquote{Some systems alert the user to take
+actions} based on some arbitrary criteria \parencite{li2010stage}. However, this project will leave this section entirely user driven, in order to limit the scope of the project.
+
+\subsection{Types of data tracked}
+A huge number of people are collecting and recording data about themselves, whether this is by choice or is automatic. For example, it is reported that there are approximately 15 million users Twitter users in the UK, and around 60\% of the UK population has a Facebook account \parencite{smdemographics}. These applications record lots of data about users, but this is usually not the primary reason people use social media. In fact, a study by \citeauthor{whiting2013people} (\citeyear{whiting2013people}) found that there are ten key reasons people use social media: \enquote{social interaction, information seeking, pass time, entertainment, relaxation,
+communicatory utility, convenience utility, expression of opinion, information sharing, and
+surveillance/knowledge about others}. Information storage is clearly a requirement and side product of many of these, but is not the primary motivation.
+
+In terms of self-tracking by choice, a study by \citeauthor{krebs2015health} (\citeyear{krebs2015health}) reported that, in the US, 58.23\% of smartphone users \enquote{had downloaded a health related mobile app}. It also found that most participants used these apps \enquote{at least daily}.
+
+There are many examples of applications that collect data, falling into various categories. Two examples of these categories are exercise data on apps like Strava \parencite{strava} and social media activity data on apps like Facebook \parencite{facebook} or Twitter \parencite{twitter}. These forms of personal informatics applications will be discussed later, with regard to their relevance to mental health and wellbeing.
+
+This data is collected for a number of reasons, such as:
+\begin{itemize}
+\item To tailor content to the user, whether that content be trends, adverts, suggested \enquote{accounts} or \enquote{friends}.
+\item To report statistics such as how much the user has exercised, and whether they have hit certain targets. Note that this encompasses more areas of personal informatics than the above reason. It allows the user to not only collect data about themselves, but to carry out some analysis on the data.
+\end{itemize}
+
+It is important to recognise all of this results is a huge amount of data being collected, which is available for analysis. A paper by \citeauthor{swan2013quantified} (\citeyear{swan2013quantified}) defined the \enquote{quantified self}, or QS, as \enquote{the selftracking of any kind of biological, physical, behavioral, or environmental information}. This paper stated that future \enquote{QS applications could include tools for rendering QS data meaningful in behavior change}. Clearly there is desire to make use of all of this data, and to allow users to interpret and make behavioural changes based on the quantified self.
+
+\section{Personal informatics in the context of mental health and wellbeing} \label{personalinformaticsmentalhealth}
+Lots of personal informatics data relates to mental health and wellbeing, and personal informatics is said to offer \enquote{great potential to more effective management of clinical
+mental health problems} \parencite{pimentalhealth}. This project will consider two types of data, and two applications that collect these types of data about users. Both of the applications considered have open Application Programming Interfaces (APIs) for accessing a user's data, given the user's credentials.
+
+\subsection{Physical Exercise}
+\subsubsection{Link to mental health}
+Physical exercise has long been linked with mental health; a study in 1990 stated that in \enquote{general, findings from research indicate that exercise is associated with improvements in mental health including mood state and self-esteem} \parencite{raglin1990exercise}. More recently, another study found that \enquote{exercise is beneficial for mental health; it reduces anxiety, depression, and negative mood, and improves self-esteem and cognitive functioning} \parencite{callaghan2004exercise}.
+
+\citeauthor{canzian2015trajectories} (\citeyear{canzian2015trajectories}) investigated this relationship by monitoring users' locations at various points, calculating values such as distance travelled, and comparing this data to the results of daily mood questionnaires. This study found \enquote{that there exists a significant correlation between mobility trace characteristics and the depressive moods}, and managed to produce \enquote{models that are able to successfully predict changes in the depressive mood of individuals by analyzing their movements}.
+
+\subsubsection{Strava}
+Strava is a mobile app that \enquote{lets you track your running and riding with GPS, join Challenges, share photos from your activities, and follow friends} \parencite{stravamobile}. It was reported in March 2015 to have had about 8.2 million users, 1.2 million of which can be classed as active \parencite{stravausers}, so is clearly a very popular and active app.
+
+Strava also has an API \parencite{stravaapi}, that allows retrieval of a users activities, which is perfect for the needs of this system.
+
+\subsection{Social media}
+\subsubsection{Link to mental health}
+A project by \citeauthor{de2013predicting} (\citeyear{de2013predicting}) stated that \enquote{social media contains useful signals for characterizing the onset of depression in individuals}. This same project managed to build a classifier using Twitter data, to predict onset depressive episodes in patients with major depression, with an impressive accuracy of around 70\%.
+
+On the other hand, a study by \citeauthor{hawn2009take} (\citeyear{hawn2009take}) stated that incorporating social media in healthcare is \enquote{one route to greater patient happiness - and to a more patient-centered health care system}. Another article stated that Facebook usage \enquote{may contribute to an overall sense of connection and wellbeing. However, given the research on social media, it is evident that certain ways of using and experiencing Facebook are complex and potentially harmful} \parencite{smhurtorhelp}.
+
+While most research seems to express concerns about negative affects of social media usage on mental health, other studies talk of positive impacts. Either way it is clear that social media activity has some affect on mental health and wellbeing, so is an interesting and important type of data to be included in this system.
+
+\subsubsection{Twitter}
+This project will incorporate Twitter data. According to Twitter, the platform has 313 million active users \parencite{twitterabout}. Facebook is a larger social media platform, with around 1.79 billion active users \parencite{facebookusers}, but Twitter provides a more simple, restricted dataset.
+
+Simply mapping number of tweets to wellbeing may be more effective than trying to map friends, statuses, activity, events and other data to wellbeing. The latter option could lead to the \enquote{sheer volume of analysis overwhelming the sense-making process itself}, an issue that was found in a paper by \citeauthor{jones2016sensemaking} (\citeyear{jones2016sensemaking}). Also, the success of the project by \citeauthor{de2013predicting} (\citeyear{de2013predicting}), in building a classifier with Twitter data, provides proof that Twitter data will be useful in this context.
+
+Again, Twitter provides a simple API for retrieving user data such as user timelines, allowing for retrieval of tweets \parencite{twitterrestapi}. It also provides a search API for more complex searches \parencite{twittersearchapi}.
+
+\section{Visualisations} \label{visualisations}
+Deciding how to present the user with visualisations is a huge challenge for this project, and is a key area of the field of personal informatics in which this project hopes to contribute. \citeauthor{jones2016sensemaking} (\citeyear{jones2016sensemaking}) investigated the challenges of sensemaking for personal informatics in a health context.
+
+This study identified various challenges:
+\begin{enumerate}
+\item Overwhelming of users with too much data.
+\item Poor presentation of information leading to misinterpretation.
+\item Lack of transparency in outputs.
+\item Difficulty of obtaining holistic insights from disjointed outputs.
+\end{enumerate}
+
+Challenge 3 is more related to how the data is collected, and should hopefully be overcome by the collection method (SWEMWBS) as discussed earlier in this literature survey.
+
+It seems that challenge 2 and 4 are caused primarily by the system trying to predict which visualisations the user will find useful. In terms of challenge 2, it was found that, for the system tested, \enquote{numerous examples of the phraseology ... [lead] to misinterpretation}. For challenge 4, one participant tried \enquote{to understand the associations between the quality of her sleep, the temperature at night, and her mood}. It was found that the system tested \enquote{provided few explicit mechanisms to support this linking activity}.
+
+Predicting what the user will find useful is clearly difficult, which may be solved by providing lots of visualisations. However, this method can lead to challenge 1: overloading of information. This is the case with Exist, as will be discussed in section \ref{exist}.
+
+The solution that this project will trial to overcome these three challenges (1, 2 and 4) is: do not try to predict the visualisations the user wants, but rather implement a tool allow the user to build custom visualisations themselves. That is, allow the user to select which data they want to be included in the displayed visualisation.
+
+\section{Existing systems} \label{existingsystems}
+This section will focus on systems that interpret and produce visualisations. While there are similar systems from the context of data collection, the collection system for the proposed project is a very small, simple part of the overall system. Also, the justification of collection method has been discussed already in section \ref{whichoutcomemeasures} above.
+
+This section will consider four similar systems, and discuss the similarities and differences between each system and the system proposed in this project.
+
+\subsection{Optimism}
+Optimism \parencite{optimism} is similar to the proposed system in a mental health context. It allows users to self track their mood, wellbeing and many other things, in order to self-manage their mental health this way. Optimism apps are designed for users with Depression, Bipolar, Anxiety or PTSD.
+
+\newpage
+Some images of the optimism system can be seen in Figure \ref{fig:optimism} (images from \parencite{optimism}):
+\begin{figure}[ht]
+\centering
+\caption{Optimism Web App}
+\includegraphics[width=.5\textwidth]{i/optimism1.png}\hfill
+\includegraphics[width=.5\textwidth]{i/optimism2.png}
+\label{fig:optimism}
+\end{figure}
+
+While Optimism is similar in it's aims to this project, it is a more \enquote{heavy duty} mental health management app, whereas the proposed system in this project is a more lightweight, general purpose self-management app. Optimism clearly has a significantly higher response burden than the proposed system in this project. It does have a wider array of features, but while this can be a positive in terms of aiding users, it means that users will need to spend time learning how to use and interpret the system.
+
+Also, a key part of the proposed system is making use of data that already exists about a user (via existing application APIs), which is a feature not included in Optimism.
+
+\subsection{Exist} \label{exist}
+Exist \parencite{exist} is similar to the proposed application from an API data import context. It also produces visualisations of this data, but with some key differences. It imports API data, then produces a dashboard of correlations rather than allowing the user to build visualisations themselves. While Exist is not designed for health or mental health tracking, it has the potential to be used for this, and is actually very impressive in terms of analysing the correlations in data.
+
+There are various issues with Exist however. The study by \citeauthor{jones2016sensemaking} (\citeyear{jones2016sensemaking}) that investigated challenges in sensemaking, was in fact carried out using Exist. The various pre-built visualisations, as well as lack of customisation, can result in users not being able to interpret their data effectively.
+
+\subsection{Zenobase}
+Zenobase \parencite{zenobase} is similar to the proposed system from both an API data import and visualisation building context. Zenobase allows users to \enquote{store, aggregate and visualize your data}. It again imports API data, but unlike Exist allows users to build custom visualisations from this data.
+
+This is similar to the functionality of the proposed system. A feature of note that Zenobase has, that is not yet planned for the proposed system, is the ability to manually import data. This means that Zenobase could, while significantly more difficult and time consuming, be used in the exact same way as the proposed system for self-management of mental health and wellbeing.
+
+The system proposed in this project instead has the ability to record a very restricted amount of user data through the SWEMWBS questionnaire. While this simplicity is an advantage of the proposed system, allowing users to also manually import of data would be a nice addition. This may have to be identified as future work.
+
+Zenobase seems to be extremely flexible, and allows the user to interrogate their data in a large number of ways. As a side effect of this, it is quite complex to use and understand. Having tested the system, this does not seem to be due to the design, but due to the flexibility and large number of ways that Zenobase allows users to visualise their data.
+
+This flexibility is clearly an advantage for those users that want it, and the proposed project would not hope to compete with Zenobase in this respect. However, the higher difficulty and complexity may not be accepted by all users, especially those that are not as serious about interrogating their data.
+
+\subsection{Fluxstream}
+Like Zenobase, Fluxstream \parencite{fluxstream} also allows users to provide API credentials (via \enquote{connectors}), import their data, and build visualisations from this imported data.
+
+Fluxstream consists of two core applications: a Calendar app and a BodyTrack app. The first of these divides visualisations into various \enquote{tabs}, such as a clock, dashboards, a map and a timeline. This seems to encounter the same challenge as exist: too many options of data interpretation are being provided simultaneously.
+
+It does seem to be very powerful in collating data. The timeline feature for example can be used to map the data from lots of \enquote{connectors}, allowing the user to view all of their activity in one \enquote{feed}. However, the complexity of comprehending the data may deter some users.
+
+The BodyTrack app includes a \enquote{grapher}, allowing the user to build custom visualisations.
+
+\newpage
+An image of this can be seen in Figure \ref{fig:fluxstream} (image taken from video on \parencite{fluxstream}):
+\begin{figure}[ht]
+\centering
+\caption{Fluxstream BodyTrack Grapher}
+\includegraphics[width=\textwidth]{i/fluxstream.png}
+\label{fig:fluxstream}
+\end{figure}
+
+This again seems very flexible, but also complicated and very difficult to use, which could again turn users away from the system.
+
+Another issue is that there doesn't seem to be a way to record or import data manually into Fluxstream. Also, Fluxstream does not currently support any mental health and wellbeing tracking apps. This means that it may be impossible, or at least very difficult, for users to use Fluxstream as a mental health tracking/self management tool.
+
+\subsection{Summary}
+The four systems reviewed in this section were similar to the proposed system in different ways. Reviewing these existing systems provided some extremely useful insight on how the proposed project can differentiate itself from similar systems. A summary of these insights is provided below:
+\begin{itemize}
+\item The system will combine user submitted mental health and wellbeing data with API data.
+  \begin{itemize}
+  \item None of the systems reviewed do this explicitly.
+  \item Optimism allows user submitted mental health data, but no API data.
+  \item The other three apps allow importing of API data, but no mental health data.
+  \item The closest to allowing this is Zenobase, which allows manual data importing. This however would be harder and more time consuming for the user, and would require them to develop their own way of measuring their wellbeing.
+  \end{itemize}
+\item The system will include a \emph{simple} visualisation building tool.
+  \begin{itemize}
+  \item Exist and Optimism generated (fairly) fixed visualisations.
+  \item Zenobase and Fluxstream included very flexible, complex and difficult to use visualisation building and customisation tools.
+  \item The proposed system could, when compared to Zenobase and Fluxstream, sacrifice flexibility to make the system easier to use and understand.
+  \end{itemize}
+\end{itemize}
 
 \chapter{Requirements Specification}
 
