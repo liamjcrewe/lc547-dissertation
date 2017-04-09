@@ -267,6 +267,104 @@ This is particularly important for the purposes of this system. Only if this mea
 
 \subsection{Recording of mental health and wellbeing} \label{recordingmentalhealth}
 \subsubsection{Method of recording} \label{methodofrecording}
+There are two key ways to record a person's wellbeing: self-rating and observer rating. For the purposes of this project, self-rating will be used, as the application is designed for self-management. Regardless of the fact that this is necessary for this project, self-rating methods may well be more effective anyway. A study in 2011, published in the journal of mental health, investigated the effectiveness of various measures from the point of view of service users \parencite{crawford2011selecting}.
+
+This study highlighted the importance service users place on measures rated by the patient. The participants in the study even \enquote{expressed surprise, and in some instances disbelief, that outcome measures based entirely on the judgements of researchers or clinicians could be used to judge a person’s response to treatment}. This study will be particular useful when discussing how to record mental health and wellbeing.
+
+\subsubsection{Ecological momentary assessment (EMA)}
+Ecological momentary assessment (EMA) refers to a method of data collection in which a person can \enquote{report on symptoms, affect and behaviour close in time to experience} \parencite{moskowitz2006ecological}. This strongly relates to this project, as a key aim is to allow users to record their wellbeing regularly and easily, allowing EMA. EMA has \enquote{a number of advantages over more traditional methods for the assessment of patients}, and has been shown to \enquote{permit more sensitive assessments} and \enquote{enable more wide-ranging and detailed measurements of mood and behaviour} \parencite{moskowitz2006ecological}.
+
+\subsubsection{Questionnaire length and response burden} \label{questionnairelength}
+Another important consideration is the length of the method used to record wellbeing. This relates to a concept known as \enquote{response burden}. That is, the effort required by a user to answer a questionnaire \parencite{rolstad2011response}. The initial proposal for this project was for the questionnaire length to be just one field, rating a mood or wellbeing on a simple scale. However, research shows that users accused questionnaires that are too short of not being able to \enquote{properly assess the complex
+outcomes they are designed to measure} \parencite{crawford2011selecting}.
+
+Questionnaires that are too long however have been shown to result in a lower response rate, and faster, shorter, more uniform responses to later questions \parencite{galesic2009effects}. This is possibly due to the questionnaire having too large a response burden for the user. The user may become bored or disillusioned with the measure and think less about responses.
+
+A high response burden poses another problem for this project, in that this system aims to allow users to record their wellbeing quickly and easily. A higher response burden could lead to the user delaying the recording of their wellbeing, which would then not count as EMA. To overcome this, the system must implement some trade off between response burden, and obtaining meaningful measures of mental health and wellbeing.
+
+\subsubsection{Outcome measures}
+In both mental and physical health, measurements of a patient's progress and the efficacy of their treatment are often referred to as \enquote{outcome measures} \parencite{pediaoutcomemeasures}. These measures are said to allow health services to improve quality of service, but can also be used in the context of tracking a patient's mental health and wellbeing. These measures come in many forms, and fall into various possible categories: general outcome measures, patient rated outcome measures (PROMS), outcome measures for use with children, outcome measures for emotional difficulties and various others \parencite{mhpoutcomemeasures}. As discussed in section \ref{methodofrecording} above, we are only interested in self-rating methods, and hence will only investigate patient reported outcome measures.
+
+\subsection{Which outcome measure(s)?} \label{whichoutcomemeasures}
+There are many condition specific outcome measures, for example the \enquote{Patient Health Questionnaire} (PHQ-9) for depression \parencite{kroenke2001phq}, and the \enquote{Generalized Anxiety Disorder} (GAD7) questionnaire for generalised anxiety disorder \parencite{spitzer2006brief}.
+
+These condition specific questionnaires may well be more effective than generic wellbeing questionnaires. This project however will focus on the more generic examples. This is due to the fact that the key goal of this project is to investigate the combinations of user provided wellbeing data with user specific API data. The scope of the project does not allow for investigation and development of a new or custom outcome measure. Neither does it allow for the inclusion of multiple condition specific outcome measures. A key goal of the application is that it is generic, and at least somewhat applicable to the majority of the general population, in regards to keeping track of their mental health and wellbeing.
+
+For these reasons the project will implement an existing, well established patient reported outcome measure. Some examples of existing, popular outcome measures will be discussed, as will their appropriateness for use in this project. Candidates to be discussed (one of which will be included in the system) are: the \enquote{European Quality of Life instrument} (EQ-5D), the \enquote{Recovery Star}, the \enquote{Warwick-Edinburgh Mental Wellbeing Scale} (WEMWBS), and its short version, the \enquote{Short WEMWBS} (SWEMWBS).
+
+\newpage
+\subsubsection{European Quality of Life instrument (EQ-5D)}
+The \enquote{European Quality of Life instrument} (EQ-5D) is a \enquote{standardized instrument for use as a measure of health outcome} \parencite{eq5dabout}. The questionnaire consists of two pages. The user answers 5 questions on a scale from \enquote{no problem} to \enquote{unable to do} in areas such as mobility and self care, then scores their mood on a scale of 1 to 100 \parencite{eq5duse}. An example EQ-5D can be seen in Figure \ref{fig:eq5d} (images from \parencite{eq5duse}):
+
+\begin{figure}[ht]
+\caption{The European Quality of Life instrument}
+\includegraphics[width=.5\textwidth]{i/eq5d1.jpg}\hfill
+\includegraphics[width=.5\textwidth]{i/eq5d2.jpg}
+\label{fig:eq5d}
+\end{figure}
+
+The EQ-5D has been shown to be useful for common mental health conditions such as mild to moderate depression \parencite{brazier2010eq}, which may well be appropriate for this system. However, it is possible it suffers from an issue discussed in the section \ref{questionnairelength} above; it is too short. In fact, in the study by \citeauthor{crawford2011selecting}, it was this questionnaire that participants raised concerns about with regard to it being too short to properly assess complex outcomes \parencite{crawford2011selecting}.
+
+\newpage
+\subsubsection{Mental Health Recovery Star (MHRS)}
+The \enquote{Mental Health Recovery Star} (MHRS) is part of a set of outcome measure tools called \enquote{Outcomes Stars} \parencite{outcomesstars}. It measures ten areas of a user's life, rating them on a scale of 1 to 10, where 1 is \enquote{stuck} and 10 is \enquote{self-reliance}. This then produces a graphic in the shape of a ten-pointed star, an example of which can be seen in Figure \ref{fig:mhrs} (image from \parencite{outcomesstars}):
+
+\begin{figure}[ht]
+\centering
+\caption{The Mental Health Recovery Star}
+\includegraphics[width=\textwidth]{i/recoverystar.jpg}]
+\label{fig:mhrs}
+\end{figure}
+
+This measure has been \enquote{received enthusiastically by both
+mental health service providers and service users} \parencite{dickens2012recovery}. A study by \citeauthor{killaspy2012psychometric} aimed to analyse the psychometric properties of the MHRS \parencite{killaspy2012psychometric}. It found some positive results, revealing that 85\% of participants found the MHRS useful in areas such as planning support and tracking their recovery. It also found that 70\% of participants said the MHRS was easy to use. However, this study only considered MHRS recorded either by staff or collaboratively with staff and user.
+
+Staff or collaborative recording is common with the MHRS; many staff are given training in order to guide users in using the measure. In fact, training is now a requirement to gain a license to use the star \parencite{starlicense}. Clearly this poses an issue for this project. Assuming a license could be obtained without training (which may be unlikely), it is possible that this training issue could be overcome with computerised tutorials and careful user experience design. However, this would still require the user to learn how to use the MHRS, and would be more complicated than a more simple, intuitive outcome measure.
+
+Another issue with MHRS is the time to complete. In the study by \citeauthor{killaspy2012psychometric} it was found that it, on average, took 30 to 60 minutes to complete \parencite{killaspy2012psychometric}. While this was posed as a positive in this study, it is likely a negative for the purposes of this project. Response burden needs to be considered with regard to the desired frequency of response. For this project, the aim is to have a high frequency of response, meaning users will be able to regularly record their wellbeing. This could be multiple times per week, once per day or even multiple times per day. 
+
+When considering 30 to 60 minutes with regard to this high desired response frequency, this is quite a high response burden. As discussed in the questionnaire length and response burden section, this is a key problem for this project. Also, it is likely that this time will be even longer than 30 to 60 minutes, given that the user would be completing the MHRS on their own without the guidance of a trained member of staff.
+
+\subsubsection{Warwick-Edinburgh Mental Wellbeing Scale (WEMWBS)}
+The \enquote{Warwick-Edinburgh Mental Wellbeing Scale} (WEMWBS) is a scale designed to \enquote{enable the monitoring of mental wellbeing in the general population} \parencite{wemwbs}. It was developed by a panel of experts \parencite{wemwbsdevelopment} and has been tested fairly extensively, finding that it \enquote{showed good content validity} and is a \enquote{short and psychometrically robust scale} \parencite{tennant2007warwick}. It consists of 14 positively worded items with 5 possible responses to each, ranging from \enquote{none of the time} to \enquote{all of the time}.
+\newpage
+These questions and responses can be seen in Figure \ref{fig:wemwbs} (table from \parencite{wemwbsquestions}):
+\begin{figure}[ht]
+\centering
+\caption{The Warwick-Edinburgh Mental Wellbeing Scale}
+\includegraphics[width=.8\textwidth]{i/wemwbs.png}
+\label{fig:wemwbs}
+\end{figure}
+
+The fact that WEMWBS was developed for the general population is particular useful to this project, as a general purpose, simple scale is exactly what this project requires. Another strength of this scale is that it results in a single score, which is simply a sum of the responses. Each response is scored 1-5, giving a score of 14-70 for the full questionnaire \parencite{wemwbsscoring}. This is beneficial to this project as a single score can be easily recorded and mapped against other data such as date/time, or user specific API data such as social media activity.
+
+The study by \citeauthor{crawford2011selecting} found the WEMWBS to be largely successful, in that it achieved one of the highest ratings among participants \parencite{crawford2011selecting}. This study identified another key problem with various outcome measures. This was the use of negatively phrased questions, as users said it can be \enquote{upsetting to be asked long lists of questions about difficulties associated with mental ill
+health}. The WEMWBS was commended by participants for phrasing items positively, where poor mental health would be recognised by a lack of these positive terms, rather than the presence of negative terms.
+
+A problem with WEMWBS however is the length of the questionnaire, in that it consists of 14 items. This shouldn't be too time consuming for the user as the questions are not open ended, and are relatively simple. However, again regarding the aim of a high response frequency, a shorter questionnaire may be more effective for the purposes of this project. Thankfully, a shorter version of the WEMWBS exists; the \enquote{Short WEMWBS} (SWEMWBS).
+
+\subsubsection{Short WEMWBS (SWEMWBS)}
+The \enquote{Short WEMWBS} (SWEMWBS) is a shorter version of the WEMWBS, consisting of a 7 item scale rather than a 14 item scale \parencite{swemwbs}. The questions on the short version are a subset of those on the full version, so retain the advantages of being positively worded. In order to compare the two scales, the score obtained from the shorter version is mapped to an equivalent longer version score via a conversion table. This conversion table can be seen in appendix \ref{swemwbsconversiontable}.
+\newpage
+The questions in the SWEMWBS can be seen in Figure \ref{fig:swemwbs} (table from \parencite{swemwbsquestions}):
+\begin{figure}[ht]
+\centering
+\caption{The Short Warwick-Edinburgh Mental Wellbeing Scale}
+\includegraphics[width=.8\textwidth]{i/swemwbs.png}
+\label{fig:swemwbs}
+\end{figure}
+
+The scale was developed in a research project by \citeauthor{stewart2009internal} (\citeyear{stewart2009internal}). This project tested the shorter scale and drew various conclusions on its validity and effectiveness. While the longer version of course provides more detail, the r-value was found to be 0.954 in the development and testing of the scale, meaning the scores produced are very similar. Given the high correlation of scores, the lower response burden and robust measurement properties of SWEMWBS, this testing found that this made \enquote{SWEMWBS preferable to WEMWBS at present for monitoring mental wellbeing in populations} \parencite{stewart2009internal}.
+
+The disadvantages of this scale are that, as discussed, it does provide a more narrow view of a person's wellbeing. \citeauthor{stewart2009internal} (\citeyear{stewart2009internal}) found that where \enquote{face validity is an issue there remain arguments for continuing to collect data on the full 14 item WEMWBS}. However, for the purposes of this project a simpler scale with lower face validity is preferable.
+
+The SWEMWBS (as well as the WEMWBS) is copyrighted by the University of Warwick and NHS Health Scotland. However, it is free to use as long as users register by completing a registration form \parencite{wemwbsreg}.
+
+\subsubsection{This project}
+The SWEMWBS will be used for this project as it seems to provide a good trade off between response burden and obtaining meaningful measures of mental health and wellbeing. It is publicly available (after registration) and provides a single wellbeing score per response, which will aid massively when building visualisations. This will make mapping of wellbeing to other factors simple, which should result in simple, effective and easy to understand visualisations for the user.
+
+\section{Personal informatics} \label{personalinformatics}
+\subsection{Introduction}
 
 
 \chapter{Requirements Specification}
