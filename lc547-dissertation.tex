@@ -14,6 +14,11 @@
   dateabbrev=false
 ]{biblatex}
 
+% Biblatex long urls fix
+\makeatletter
+\def\blx@maxline{77}
+\makeatother
+
 % Fix to apply hyperref to whole biblatex citation instead of just year.
 \DeclareCiteCommand{\parencite}[\mkbibparens]
   {\usebibmacro{prenote}}
@@ -204,7 +209,65 @@ This chapter summarises the project and discusses its successes and failures. It
 \section{Introduction} \label{introduction}
 This literature survey will identify the various fields this project relates to. It will then present and critique existing work related to these fields, both in the form of academic research and existing technologies. By doing so, it will discuss what exactly this project hopes to contribute to these fields, how it plans to do so, and how this contribution would be useful.
 
-This project encompasses two key fields: personal informatics and mental health. These are two active areas of research, as will be shown and discussed in later sections. This project hopes to combine these two fields in ways that will contribute to them, both in an academic sense, and with the development of a system that could help people to self-manage their mental health effectively. Much existing research will be extremely useful in the design and development of the system, so as to draw on the conclusions of existing work, and make improvements on existing technologies.
+This project encompasses two key fields: personal informatics and mental health. These are two active areas of research, as will be shown and discussed in later sections. This project hopes to combine these two fields in ways that will contribute to them, both in an academic sense, and with the development of a software system that encompasses both of these fields, to aid people in the effective self management of their mental health and wellbeing.
+
+The existing research in these fields will be extremely useful in the design and development of the system and its requirements. These will be developed by drawing on the conclusions of existing work, and by making improvements on existing technologies.
+
+\subsection{Self-management in mental health}
+Self-management techniques and schemes have been shown to be effective in both treatment \parencite{wrapstudy} and recovery \parencite{selfmanagementrelapse}. Many schemes exist today and are growing in popularity, with these schemes being said to offer an \enquote{increasingly popular alternative to therapist-administered psychological therapies, offering the potential of increased access to cost-effective treatment} \parencite{selfhelpanxiety}.
+
+Much of the principle of self-management revolves around \enquote{empowerment} of the user \parencite{whoselfmanagement}. Empowerment involves the user in decisions about his or her mental health condition treatment, providing them with a level of control and influence \parencite{whoempowerment}. Although self-management and active engagement has been commonplace for physical long term health conditions for a long time, it has been much less widely used in the context of mental health \parencite{whoselfmanagement}. It is only fairly recently that this has become common in mental health treatment, with claims that it can be as effective as medical treatment \parencite{mhfselfmanagement}.
+
+For a long time, mental health patients were thought of as passive recipients of care, but attitudes have changed over recent years \parencite{cpselfmanagement}. It was discovered that empowering users significantly improved treatment and recovery, giving users the \enquote{knowledge, skills, and self-confidence} to \enquote{take care of their own health and manage to live life competently} \parencite{vahdatpatientinvolvement}.
+
+Many self-management schemes are based around teaching users specific skills, and providing them with the tools and techniques required to manage their mental health by themselves \parencite{selfmanagementuk}. The amount of clinical intervention required varies depending on the scheme, ranging from pure self help techniques (no clinical involvement) to guided self help (some clinical involvement), be that through face-to-face sessions, telephone or email \parencite{selfhelpanxiety}.
+
+There are lots of self-management techniques, many of which are common recommendations to those suffering from mental health conditions or poor mental health. Some of these common techniques will be discussed below, with regard to how they apply to this project, and how this project can aid execution of each technique.
+
+\subsubsection{Cognitive Behavioural Therapy (CBT) techniques}
+Cognitive Behavioural Therapy, or CBT, is a form of talking therapy that is extremely popular in modern mental health treatment. It is \enquote{one of the most extensively researched forms of psychotherapy}, which is \enquote{due in part to the ongoing adaptation of CBT for an increasingly
+wider range of disorders and problems} \parencite{butler2006empirical}.
+
+Although CBT itself is not a self-management technique, it involves users learning mental health management tools, known as CBT techniques, that can be used in daily life after treatment ends \parencite{babcpcbt}. CBT works by changing how a person interprets or reacts to things that happen to or around them, and teaching them to identify harmful, negative or unbalanced reactions \parencite{nhscbt}. This is in itself a self-management technique, and has been said to be one of the main reasons CBT has such impressively low relapse rates. A study by \citeauthor{butler2006empirical} (\citeyear{butler2006empirical}) revealed that for patients treated for depression, on average \enquote{only 29.5\% of CBT patients relapsed versus 60\% of patients treated with antidepressants}.
+
+CBT is a combination of two types of therapy: cognitive and behavioural \parencite{patientcbt}. Cognitive techniques relate to negative thoughts, and to what a person thinks, or how a person reacts emotionally to a situation or event \parencite{medscapecbt}. It is be unlikely that the system developed in the project will be able to directly measure the effectiveness of cognitive techniques.
+
+Behavioural techniques however often involves substituting alternate, less harmful behaviours for harmful ones \parencite{patientcbt}. If this behaviour is one measured by a system, such as exercise or social activity, its effectiveness could be measured by the system and reported to the user. This could allow the user to identify which CBT techniques are more useful to them, as well as the effect on their mental health of not employing these techniques. They could also identify when a technique or techniques become less effective, and either address this themselves or recognise this as a sign of relapse, and consider contacting a mental health clinician before their condition worsens.
+
+\subsubsection{Trigger identification}
+Triggers refer to events that can potentially result in relapses or negative impacts on mental health \parencite{samhsatriggers}. These events can \enquote{trigger} these issues. Users identify triggers and plan their responses in advance so that they can react appropriately to try to avoid negative consequences \parencite{samhsatriggers}.
+
+The aim of this system in regard to triggers is that, should a user experience a negative change in mood, they can view the data around that time and identify potential triggers that resulted in that negative change. They can also, in a similar way to CBT techniques, measure the effectiveness of their planned actions to triggers. If the user knows a trigger occurred, and a planned action was carried out, they can investigate how effective this reaction was in avoiding the negative consequences of the trigger.
+
+\subsubsection{Wellness Recovery Action Plan (WRAP)}
+Wellness Recovery Action Plan, or WRAP, is another popular and widely used system for self-management \parencite{mhrwrap}. There is some crossover with the above methods. A user creates their own WRAP, which includes (definitions taken from \parencite{mhrwrap}):
+\begin{itemize}
+\item A \enquote{Wellness Toolbox}. That is, resources such as contacting friends, exercising and maintaining a healthy diet.
+\item A daily maintenance plan; tasks to do every day to maintain wellness.
+\item Triggers; as discussed above.
+\item Early warning signs of worsening symptoms.
+\item A plan for when things are breaking down, or when things are getting much worse.
+\item A crisis plan; signs that inform others your care needs to be taken over, and what they should do.
+\item A post crisis plan; what to do to get yourself well again.
+\end{itemize}
+
+This clearly has some crossover with the above methods. Again, the system developed in this project would in theory be able to help with this. An early warning sign, or even later sign could be identified by the wellbeing data recorded in the system. The effectiveness of the daily maintenance plan and post crisis plan could also be measured, and potentially updated depending on the results of the data recorded. This also applies to the Wellness Toolbox.
+
+\subsubsection{Self-management schemes similarities}
+All three of these schemes have some common features. They all require:
+\begin{itemize}
+\item Identification/recognition of events that can cause negative consequences to mental health.
+\item Recognition of when these events happen and the effect of them.
+\item Planned actions to minimise/counteract the negative consequences of these events.
+\end{itemize}
+
+To do this, and to measure the effectiveness of these actions, some measurement of mental wellbeing needs to be made regularly. In theory, this would be best if made both before and after the trigger, as well as after the planned action (or a while after the trigger if no planned action is taken).
+
+This is particularly important for the purposes of this system. Only if this measurement is effective, efficient and recorded regularly will the system be able to aid in these self-management techniques. This is another area that requires research and a review of existing work, in order to decide the best way to allow the user to record their wellbeing easily and effectively.
+
+\subsection{Recording of mental health and wellbeing} \label{recordingmentalhealth}
+\subsubsection{Method of recording} \label{methodofrecording}
+
 
 \chapter{Requirements Specification}
 
