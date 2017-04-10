@@ -755,6 +755,7 @@ The API is the server; it is where storage and retrieval of all user data happen
 \item Must allow retrieval of user's recent tweets, if they have connected Twitter. This should be exactly as defined by Twitter's API, and not modified in any way.
 \item Must allow connection and storage of Strava credentials.
 \item Must allow retrieval of user's recent Strava data, if they have connected Twitter. This should be exactly as defined by Strava's API, and not modified in any way.
+\item Won't include connection of any applications other than Twitter and Strava, as these are being included as proofs of concept.
 \item Must accept and return data as JSON (JavaScript Object Notation).
 \item Must require authentication for any request that returns a user's data.
   \begin{enumerate}
@@ -767,6 +768,8 @@ The API is the server; it is where storage and retrieval of all user data happen
 
 \subsubsection{Non-functional}
 \begin{enumerate}
+\item Must be built using Node.js (a JavaScript runtime for writing server side JavaScript code) \parencite{nodejs} and Express (a \enquote{fast, unopinionated, minimalist web framework for Node.js}) \parencite{expressjs}. These are modern tools that will both speed up development and likely produce faster, more reliable, higher quality code. Node.js is very popular and, as a result, there exists lots of compatible open source software compatible that this project can take advantage of.
+\item Must use MySQL for database access (the \enquote{world's most popular open source database}) \parencite{mysql}. There is little reason to use anything else for database access for this project, as MySQL is suited for all the project's needs. There are alternatives, but for the purposes of this project, these would not provide any significant benefits over MySQL.
 \item Must store passwords in a secure, hashed format. This is so that, even if this database is somehow accessed, user's passwords will not be lost.
 \item Should be a RESTful API. REST is Representational State Transfer and employs a stateless architecture where each request is independent. This is a modern standard and best practise for building APIs. This stateless architecture means each request must be authenticated individually. Endpoints are implemented as resources such as /User and are accessed using http \enquote{verbs} (GET, PUT, PATCH, POST, DELETE) \parencite{httpmethods}.
 \item Must include extensive documentation.
