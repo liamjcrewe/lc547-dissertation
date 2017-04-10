@@ -558,7 +558,7 @@ The four systems reviewed in this section were similar to the proposed system in
 
 \chapter{Requirements Specification}
 \section{Introduction}
-This chapter will detail the functional and non functional requirements for the various areas of the system. These requirements were obtained and developed primarily from existing research in the area, as discussed in detail in section \ref{litsurvey}, as well as from personal experience and desires for the project. They will encompass the results of the literature survey, and the aims and objectives discussed in sections \ref{aims} and \ref{objectives} respectively.
+This chapter will detail the functional and non functional requirements for the various areas of the system. These requirements were obtained and developed primarily from existing research in the area, as discussed in detail in section \ref{litsurvey}, as well as from personal experience and desires for the project. They will encompass the results of the literature survey, and the aims and objectives discussed in sections \ref{aims} and \ref{objectives} respectively. Most of the requirements are unambiguous and intuitive, based on the sources just discussed. However, where a requirement seemed vague and/or its origins seemed to be unclear, an additional sentence or two has been included to justify the requirement, and explain both where it came from and why it is necessary.
 
 Many projects develop requirements from user interviews and surveys, but this wasn't done for this project for various reasons. Firstly, this is an academic project, so is better suited to requirements based on existing literature. Secondly, a goal of this system was to provide a proof of concept that can be built on in the future, rather than a full working system. It may be  advantageous in the development of requirements for future work to consult potential users from the various user groups. There are many possible users, such as those who do not suffer from a diagnosed mental health condition, those that are in treatment and those that are post-treatment. The opinions of all of these may be useful for future work and improvements to the system, but for this project only academic research, personal experience and desires for the project were considered, in order to limit the scope of the project and produce an extensible system for future research and development.
 
@@ -585,7 +585,6 @@ Won't have this time & These are explicitly defined as requirements that will no
 
 This project is of course, like many projects, time limited. This method of prioritisation was extremely useful in defining and limiting scope, and in deciding which functionality should be implemented first, and what could be dropped should problems occur and/or time constraints apply.
 
-\newpage
 \subsection{Further Terminology}
 The requirements also refer to \enquote{major} and \enquote{minor} bugs. These are defined in table \ref{table:bugsterminology}.
 \begin{table}[ht]
@@ -733,12 +732,53 @@ The API is the server; it is where storage and retrieval of all user data happen
 \subsubsection{Functional}
 \begin{enumerate}
 \item Must allow creation of users.
-\item Must allow 
+\item Should allow fetching of users.
+\item Should allow update of users.
+  \begin{enumerate}
+  \item Should allow update of email.
+  \item Should allow update of password.
+  \item Could allow deletion of users.
+  \item Could allow password recovery.
+  \item Could allow verification of user email.
+  \end{enumerate}
+\item Must allow storage of SWEMWBS wellbeing score.
+  \begin{enumerate}
+  \item Must allow storage of data and time of submission with wellbeing score.
+  \item Must include a copy of the SWEMWBS conversion table, as seen in appendix \ref{swemwbsconversiontable}
+  \item Must be able to convert raw to metric SWEMWBS score, using this table.
+  \end{enumerate}
+\item Must allow retrieval of recent SWEMWBS metric wellbeing scores, with date and time.
+  \begin{enumerate}
+  \item Could allow specification of how many score entries to return.
+  \end{enumerate}
+\item Must allow connection and storage of Twitter credentials
+\item Must allow retrieval of user's recent tweets, if they have connected Twitter. This should be exactly as defined by Twitter's API, and not modified in any way.
+\item Must allow connection and storage of Strava credentials.
+\item Must allow retrieval of user's recent Strava data, if they have connected Twitter. This should be exactly as defined by Strava's API, and not modified in any way.
+\item Must accept and return data as JSON (JavaScript Object Notation).
+\item Must require authentication for any request that returns a user's data.
+  \begin{enumerate}
+  \item Must allow user to provide a valid email and password in exchange for an authentication access token.
+  \item Must require a valid token to access user's data (i.e. all requests other than requests to create a user, or requests for a token).
+  \item Could allow refreshing of tokens before they expire.
+  \item Must prevent user's from accessing other user's data, or any other restricted data, regardless of access token.
+  \end{enumerate}
 \end{enumerate}
 
 \subsubsection{Non-functional}
 \begin{enumerate}
-\item One
+\item Must store passwords in a secure, hashed format. This is so that, even if this database is somehow accessed, user's passwords will not be lost.
+\item Should be a RESTful API. REST is Representational State Transfer and employs a stateless architecture where each request is independent. This is a modern standard and best practise for building APIs. This stateless architecture means each request must be authenticated individually. Endpoints are implemented as resources such as /User and are accessed using http \enquote{verbs} (GET, PUT, PATCH, POST, DELETE) \parencite{httpmethods}.
+\item Must include extensive documentation.
+  \begin{enumerate}
+  \item Must include documentation for developers on how to set up the project and get it running.
+  \item Must have documentation for all endpoints. This is absolutely essential to make the API professional and, more importantly, to make the entire SelfReflect system extensible. Developers must understand the API, be able to use the API, and be able to extend the API if this project is to be built upon in the future.
+  \end{enumerate}
+\item Should have automated tests. This section of the project deals with user data and security, so correct and reliable behaviour is essential. Also, while the API can be manually tested indirectly via the web and mobile apps, it cannot be manually tested directly, so automated tests are important.
+  \begin{enumerate}
+  \item Should have automated tests covering at least 70\% of lines of code.
+  \item Could have automated tests covering at least 95\% of lines of code.
+  \end{enumerate}
 \end{enumerate}
 
 \chapter{Design} \label{chap:design}
