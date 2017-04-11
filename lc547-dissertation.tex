@@ -599,7 +599,7 @@ Minor & These are unintended, but the system still meets the requirement in ques
 \end{tabular}
 \end{table}
 
-\section{Requirements}
+\section{Requirements} \label{reqs}
 \subsection{Mobile App}
 The mobile app is intended to be very small and simple. It is not a mobile version of the web app, but is instead a simple piece of software to allow users to record their wellbeing quickly using their phone (and hence carry out ecological momentary assessment, as discussed in section \ref{sec:ema}). For this reason, there are a fair amount of \enquote{won't} requirements, so as to keep the software simple and limit the scope. That being said, the requirements for the mobile app are as follows:
 
@@ -698,7 +698,7 @@ The web app is significantly larger, and incorporates most of the major contribu
 \subsubsection{Non-functional}
 \begin{enumerate}
 \item Must be built using React \parencite{react} and Redux \parencite{redux}, meaning it is built entirely in JavaScript.
-\item Should be a 'one page' application. That is, built using AJAX (asynchronous JavaScript and XML) requests only. This means there will be no full page requests after the initial request. This is what allows separation of functional requirements 8 and 9.
+\item Should be a \enquote{one page} application. That is, built using AJAX (asynchronous JavaScript and XML) requests only. This means there will be no full page requests after the initial request. This is what allows separation of functional requirements 8 and 9.
 \item Should use ReactD3 to build visualisations, which is an open source library for building charts using React \parencite{reactd3}.
 \item Should incorporate and be styled using Skeleton CSS, which is a \enquote{dead simple, responsive boilerplate} \parencite{skeletoncss}.
 \item Could be responsive due to the use of Skeleton CSS. That is, the application will adjust styling and work on various screen sizes. Note this is easily tested by simply resizing browser windows. Hence:
@@ -785,9 +785,29 @@ The API is the server; it is where storage and retrieval of all user data happen
 \end{enumerate}
 
 \chapter{Design} \label{chap:design}
+This chapter will detail the design of both the system as a whole, and the three separate parts of the system (mobile app, web app and API), with regard to the requirements specified in section \ref{reqs}.
 
-\ldots
+\section{Overall System}
+Many modern software systems are designed using a client-server architecture. That is, one server and many clients, such as for web pages. Additionally, many successful applications have external APIs, which allows developers of external applications to build their own interfaces to the data, accessed via the corresponding API. These are the same APIs this project will take advantage of, in order to fetch user data from existing applications, such as Twitter and Strava.
 
+The system developed in this project will take a similar approach to this client-server, API based design. Most systems developed using these methods include internally developed client applications, that access the data differently from externally developed applications. The system in this project however will not do this. The mobile and web apps will access the data entirely via the API, and as such will essentially be no different to applications developed externally by other developers, as shown in Figure \ref{fig:OverallSystem}. This encourages, and to an extent guarantees, maximum extensibility for the project. The internally developed client applications will have the same access to the data as externally developed applications, meaning there is no disparity between the abilities of internally and externally developed client applications.
+
+\begin{figure}[ht]
+\centering
+\caption{Overall System Architecture}
+\includegraphics[width=\textwidth]{i/OverallSystem.png}
+\label{fig:OverallSystem}
+\end{figure}
+
+\newpage
+\section{Mobile App}
+a
+
+\section{Web App}
+a
+
+\section{API}
+a
 
 \chapter{Implementation}
 
