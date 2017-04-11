@@ -629,7 +629,7 @@ The mobile app is intended to be very small and simple. It is not a mobile versi
 \subsubsection{Non-functional}
 \begin{enumerate}
 \item Should allow users to access the SWEMWBS questionnaire within 4 'taps' (email, password, log in, record). Note this of course does not include typing of email and password.
-\item Must be built using 'React Native' \parencite{reactnative} \parencite{reactnativegit} to maximise cross-platform code reuse between iPhone and Android.
+\item Must be built using \enquote{React Native} \parencite{reactnative} \parencite{reactnativegit} to maximise cross-platform code reuse between iPhone and Android.
 \item Should include documentation for developers on how to set up the project and get it running.
 \item Must be tested manually on iOS (iPhone), including testing by volunteer testers.
   \begin{enumerate}
@@ -785,7 +785,7 @@ The API is the server; it is where storage and retrieval of all user data happen
 \end{enumerate}
 
 \chapter{Design} \label{chap:design}
-This chapter will detail the design of both the system as a whole, and the three separate parts of the system (mobile app, web app and API), with regard to the requirements specified in section \ref{reqs}.
+This chapter will detail the design of both the system as a whole, and the three separate parts of the system (mobile app, web app and API), with regard to the requirements specified in section \ref{reqs}. Functional and non-functional requirements from this point onwards will be referred to as \enquote{F} and \enquote{NF} requirements respectively. Requirements referenced in each section will always refer to the corresponding section in section \ref{reqs}, unless explicitly stated.
 
 \section{Overall System}
 Many modern software systems are designed using a client-server architecture. That is, one server and many clients, such as for web pages. Additionally, many successful applications have external APIs, which allows developers of external applications to build their own interfaces to the data, accessed via the corresponding API. These are the same APIs this project will take advantage of, in order to fetch user data from existing applications, such as Twitter and Strava.
@@ -801,18 +801,93 @@ The system developed in this project will take a similar approach to this client
 
 \newpage
 \section{Mobile App}
+One internal client application that will communicate via the API is the SelfReflect mobile app. This is a fairly simple application, with the primary goal of allowing the user to record their mental health and wellbeing easily via a mobile app, in order to facilitate ecological momentary assessment.
+
+This application will be built in \enquote{React Native} \parencite{reactnative}. React Native is a framework for building native mobile apps using JavaScript. It uses the same native components as are used when developing in Objective-C or Java (for iOS and Android respectively), but uses JavaScript to assemble them. A huge advantage of this is that almost all code, if not all code, is cross-platform. This is the reason for NF2, NF4 and NF5. Although the mobile app will only be tested on iOS, it may well be as (or almost as) effective on Android, purely by virtue of the technologies used to build it.
+
+To facilitate the design of the mobile app, various \enquote{wireframes} were created to provide some plan as to how the application should look. These are low fidelity prototypes, and images of each will be included and referenced throughout this section.
+
+\subsection{Login and Register}
+The first page the user sees after opening the mobile app will be a simple login screen, with email and password fields, and two buttons: one to login, and one to navigate to a register screen. The wireframe for this screen can be seen in Figure \ref{fig:mobilelogin}.
+
+\begin{figure}[ht]
+\centering
+\caption{Mobile App Login Screen Wireframe}
+\includegraphics[width=0.3\textwidth]{i/mobilelogin.png}
+\label{fig:mobilelogin}
+\end{figure}
+
+The user can then either log in, satisfying F1, or navigate to the register screen, satisfying F3. The wireframe for the register screen can be seen in Figure \ref{fig:mobileregister}.
+
+\begin{figure}[ht]
+\centering
+\caption{Mobile App Register Screen Wireframe}
+\includegraphics[width=0.3\textwidth]{i/mobileregister.png}
+\label{fig:mobileregister}
+\end{figure}
+
+Both logging in and registering will then need to communicate with the SelfReflect API, in order to either create the user in the SelfReflect database, or to validate login credentials before allowing the user to log in. The mobile app must therefore be able to handle both successful and erroneous responses from the API (such as invalid password, email already exists, server error etc.), and give the user some feedback on these.
+
+A successful login will result in the API responding with an access token (see section \ref{sec:apiauth}). This will then have to be stored locally in the mobile app's state, so that it can be sent with subsequent requests, as discussed in the following sections.
+
+\subsection{Home Page}
+After logging in successfully, the user will be taken to a home page. This page will include:
+\begin{enumerate}
+\item A table of recent recordings, satisfying F6. Note this is a \enquote{could} requirement, so may be dropped if time constraints apply.
+\item A message to encourage the user to visit the SelfReflect web app, satisfying F7.
+\item A button to navigate to a SWEMWBS questionnaire, to record wellbeing.
+\end{enumerate}
+
+Also note that all pages (once logged in), will contain a button at the top of the page to log out of the app, satisfying F2. The wireframe for this home page can be seen in Figure \ref{fig:mobilehome}.
+
+\begin{figure}[ht]
+\centering
+\caption{Mobile App Home Screen Wireframe}
+\includegraphics[width=0.3\textwidth]{i/mobilehome.png}
+\label{fig:mobilehome}
+\end{figure}
+
+The table of recent recordings on this screen is, of course, dynamically generated as it is fetched from the API. As discussed earlier, this will require the mobile app to make a request to the API, using the access token obtained from the user logging in. The API will then respond with the user's recent recordings, and the table can be generated.
+
+Also, the button to record wellbeing satisfies NF1, as it allows users to get to the SWEMWBS questionnaire in 4 taps. These are: tap email (then input), tap password (then input), tap login, tap record button.
+
+\subsection{SWEMWBS Questions}
+If the user taps the \enquote{record wellbeing} button, they will navigate to the SWEMWBS questions, satisfying F4.1. As mobile screens are small, the questions will be presented to the user one at a time. All of these question screens will be similar, so only one wireframe was created, as can be seen in Figure \ref{fig:mobilequestion}. In this wireframe, \enquote{often} has been selected as an answer, hence the green background.
+
+\begin{figure}[ht]
+\centering
+\caption{Mobile App SWEMWBS Question Screen Wireframe}
+\includegraphics[width=0.3\textwidth]{i/mobilequestion.png}
+\label{fig:mobilequestion}
+\end{figure}
+
+The only small difference between different question screens is that the last question screen will contain a \enquote{submit} button, rather than a \enquote{next} button. Note that all questions are mandatory; the next buttons (and the submit button) will all be disabled until the question on that page has been answered.
+
+The submit button will sum the answers to all the questions and submit these via the SelfReflect API, satisfying F4.2. It will also compute the date and time of submission, and submit this alongside the computed wellbeing score, satisfying F5. It is important to compute this \enquote{client-side} rather than \enquote{server-side}, as this is (to the user) when the wellbeing was recorded. If this was computed server-side and some delay happened, the user could end up with a wellbeing recorded at a time significantly different from when they actually tapped submit. Computing this client-side makes this almost impossible, as long as date and time are computed and communicated correctly.
+
+\section{Web App}
+The second, larger internal client application that will communicate via the API is the SelfReflect web app. This is much more complex and has many more features than the mobile app. It allows everything the mobile app allows, but also enables the user to connect existing apps and produce visualisations from their data, fetched from both the SelfReflect API and other connected existing apps (Twitter and Strava).
+
+\section{API and Database}
+\subsection{API}
+\subsubsection{Authentication} \label{sec:apiauth}
+
+\subsection{Database}
+a
+
+\chapter{Implementation}
+\section{Mobile App}
 a
 
 \section{Web App}
 a
 
 \section{API}
+\subsection{API}
 a
 
-\chapter{Implementation}
-
-\ldots
-
+\subsection{Database}
+a
 
 \chapter{Testing}
 
