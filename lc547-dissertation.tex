@@ -829,7 +829,7 @@ The user can then either log in, satisfying F1, or navigate to the register scre
 
 Both logging in and registering will then need to communicate with the SelfReflect API, in order to either create the user in the SelfReflect database, or to validate login credentials before allowing the user to log in. The mobile app must therefore be able to handle both successful and erroneous responses from the API (such as invalid password, email already exists, server error etc.), and give the user some feedback on these.
 
-A successful login will result in the API responding with an access token (see Security and Authentication section). This will then have to be stored locally in the mobile app's state, so that it can be sent with subsequent requests, as discussed in the following sections.
+A successful login will result in the API responding with an access token (see section \ref{sec:apisecurity}). This will then have to be stored locally in the mobile app's state, so that it can be sent with subsequent requests, as discussed in the following sections.
 
 \subsection{Home Page}
 After logging in successfully, the user will be taken to a home page. This page will include:
@@ -977,12 +977,11 @@ This satisfies the requirements to have one visualisation per source (F14.1, F14
 
 These visualisations will be built using an open source project called \enquote{ReactD3} \parencite{reactd3}, satisfying NF3. This allows charts to be built fairly easily within the React framework, as long as data is provided in a compatible format. Making use of this library will significantly reduce development time, and will take advantage of the existing developmental effort, experience and testing that has already been carried out for this open source project.
 
-\section{API and Database}
-\subsection{API}
+\section{API}
 The API is the server of SelfReflect's client-server type model. It handles all data storage, user management, connecting of existing apps, fetching of existing apps data and security/authentication.
 
-\subsubsection{Choice of Technologies}
-\paragraph{JavaScript Object Notation (JSON)}
+\subsection{Choice of Technologies}
+\subsubsection{JavaScript Object Notation (JSON)}
 JSON will be both the accepted and returned format of data for the API, satisfying F11. This is a simple \enquote{key-value} format that is lightweight, popular and is of course very easy to process in JavaScript. This is a clear advantage to this project as all three software systems will be written in JavaScript. An example JSON object can be seen below:
 \begin{lstlisting}
 {
@@ -991,21 +990,21 @@ JSON will be both the accepted and returned format of data for the API, satisfyi
 }
 \end{lstlisting}
 
-\paragraph{Node.js}
+\subsubsection{Node.js}
 The API will be developed using \enquote{Node.js} \parencite{nodejs}. Node.js is a JavaScript runtime that allows server side code to be written using JavaScript. As \enquote{an asynchronous event driven JavaScript runtime, Node is designed to build scalable network applications} \parencite{nodejsabout}. It is massively successful and popular, and as such there exists lots of compatible open source software for Node.js.
 
-\paragraph{Express}
+\subsubsection{Express}
 Much like the mobile and web apps, and for many of the same reasons (development time, extensibility, faster, more modular code etc.), a framework will be used for the API. This is a framework specifically for Node.js called \enquote{Express} \parencite{expressjs}. This will significantly reduce development time, and Express claim that \enquote{creating a robust API is quick and easy} \parencite{expressjs}. Using these technologies therefore satisfies NF1.
 
 The justification for the choice of these technologies, and particularly of Express as a framework, is much the same as the justification for choosing React and Redux for the web app. This project is not researching the advantages and disadvantages of the various technologies, so while lots of research could be carried out and discussed, it would not be academically relevant to this project. These technologies were therefore chosen based on personal experience, preference and knowledge of the current state of the field of server side JavaScript and API development.
 
-\paragraph{MySQL}
+\subsubsection{MySQL}
 MySQL will be used for database access, satisfying NF2. As discussed in NF2, there are many options for database access that satisfy this project's needs, so for the purposes of this project it was simply important to select one. MySQL was chosen purely due to personal experience, as this will likely reduce development time at no additional cost.
 
-\subsubsection{RESTful API}
+\subsection{RESTful API}
 The API will be \enquote{RESTful}, satisfying NF4. \enquote{REST} is an architectural development methodology for APIs, and is said to \enquote{induce desirable properties, such as performance, scalability, and modifiability, that enable services to work best on the Web} \parencite{oraclerest}. For these and other reasons, this is a popular, common best practise standard for building APIs.
 
-REST is a stateless architecture, meaning all requests are independent from one another. This does pose a particular issue with regard to persisted login; most web applications handle persisted login via the use of sessions. These store some state on the server against some session identifier, then send cookies containing these session identifiers to clients. Clients then send these with every request and hence can remain logged in. However, this violates the stateless principle of REST. Storing access tokens on the server after a user has \enquote{logged in} would also violate this principle. This is a problem that requires a fairly subtle solution, and will be discussed in more detail in the Security and Authentication section later.
+REST is a stateless architecture, meaning all requests are independent from one another. This does pose a particular issue with regard to persisted login; most web applications handle persisted login via the use of sessions. These store some state on the server against some session identifier, then send cookies containing these session identifiers to clients. Clients then send these with every request and hence can remain logged in. However, this violates the stateless principle of REST. Storing access tokens on the server after a user has \enquote{logged in} would also violate this principle. This is a problem that requires a fairly subtle solution, and will be discussed in more detail in the Security and Authentication section (section \ref{sec:apisecurity}) later.
 
 Probably the most important aspect of REST is the methodology used to design how a client accesses the API. REST uses http \enquote{verbs} (GET, POST, PUT, PATCH, DELETE) \parencite{httpmethods} to access \enquote{resources} via \enquote{Uniform Resource Identifiers} (URIs), producing an interface that is usually very intuitive. Any resource that access data should map almost identically to the database table it accesses. For example, SelfReflect has users, so will likely have a users table in the database and a resource at \emph{/users}. Creation of a users would then consist of a POST request to this resource, whereas simply fetching user details would consist of a GET request to something like \emph{/users/1}, where 1 is the requested user's unique identifier in the database. Each of the http \enquote{verbs} can be seen in Table \ref{table:httpverbs}, with a description of what they are typically used for in RESTful APIs.
 
@@ -1025,8 +1024,8 @@ DELETE & Deletes a resource. \\  \hline
 \end{table}
 
 \newpage
-\subsubsection{Endpoints}
-This section will define the endpoints that will be implemented for the API,  how to access each of them, and which requirements each of the endpoints satisfies. These can be seen in Table \ref{tab:designendpoints}. Security and restriction of endpoints will not be discussed in this section (F12.2 and F12.4); see the Security and Authentication section for how this will be handled.
+\subsection{Endpoints}
+This section will define the endpoints that will be implemented for the API,  how to access each of them, and which requirements each of the endpoints satisfies. These can be seen in Table \ref{tab:designendpoints}. Security and restriction of endpoints will not be discussed in this section (F12.2 and F12.4); see section \ref{sec:apisecurity} for how this will be handled.
 
 \begin{longtable}{| p{6cm} | p{6cm} | p{2cm} |}
 \caption{API Planned Endpoints}
@@ -1043,14 +1042,14 @@ PUT /users/:id/twitter-credentials & Stores (creates) a user's Twitter access cr
 GET /users/:id/tweets & Get a user's recent tweets. & F7 \\ \hline
 PUT /users/:id/strava-credentials  & Stores (creates) a user's Strava access credentials. Note this will be an access token of some sort, not the user's username and password.& F8 \\ \hline
 GET /users/:id/strava-data  & Get a user's recent Strava exercise data. & F9 \\ \hline
-POST /tokens & Get an access token. Must provide a valid username and login for SelfReflect. This will be discussed further in the Security and Authentication section. & F12.1 \\ \hline
-PUT /tokens & Refresh an access token. Must provide a valid access token. This will be discussed further in the Security and Authentication section. & F12.3 \\ \hline
+POST /tokens & Get an access token. Must provide a valid username and login for SelfReflect. This will be discussed further in the section \ref{sec:apisecurity}. & F12.1 \\ \hline
+PUT /tokens & Refresh an access token. Must provide a valid access token. This will be discussed further in the section \ref{sec:apisecurity}. & F12.3 \\ \hline
 \end{longtable}
 
 \subsubsection{A Note on Unmentioned Requirements}
 As discussed in the web app design section, password recovery (F4.5) and email verification were dropped (F3.5). See section \ref{sec:webaccman} for justification of this.
 
-\subsubsection{Security and Authentication}
+\subsection{Security and Authentication} \label{sec:apisecurity}
 Data protection is incredibly important for any application that stores data about users. It is even more important for data that is sensitive, such as healthcare data, or in this case mental health and wellbeing data. Not only does SelfReflect store wellbeing data, it also enables access to a user's Twitter and Strava data. Only the user themselves should be able to access their SelfReflect, Twitter and Strava data; the data must be restricted from all other users and/or malicious attacks. For this reason, all endpoints that access a user's data (i.e. all endpoints other than POST /users, and the /tokens endpoints) must be restricted unless the user can be prove their right to access that endpoint.
 
 Additionally, SelfReflect must allow persisted login, so that user's do not have to repeatedly log in to the web or mobile app. The API must work out where requests are coming from. Achieving this is usually done by violating REST principles and storing some state on the server, via the use of sessions and cookies. This project aims to achieve this however without violating stateless REST principles.
@@ -1064,15 +1063,15 @@ In order to achieve this, the API will use JSON Web Tokens, or JWTs \parencite{j
 
 All endpoints that access restricted data will require a valid access token to be sent with the request, which can be obtained via the /tokens endpoints. If no token is sent, or any of the three conditions above are not met, the request will be rejected. This therefore provides all the security needed (satisfying F12.2 and F12.4), but does not store any state on the server, so does not violate stateless REST principles.
 
-\subsubsection{Passwords Security}
+\subsection{Secure Password Storage}
 A final security issue relates to the storage of passwords. If the database were to be \enquote{hacked}, it is desirable that passwords would still not be lost. Common practise to achieve this is to \enquote{hash} passwords. This involves putting passwords through a \enquote{one way algorithm}, meaning the original password cannot be obtained from the final result, even if the algorithm is known. This is often used for passwords, as applications do not actually need to know user's original passwords. The application can store the hashed password, then when an authentication request is received, the password can be put through the same one way algorithm and checked against the stored hash to make sure they are the same. This is a small cost to the application, and ensures that even if the database is hacked, the hacker does not have access to user's original passwords.
 
 SelfReflect will use hashing of passwords for these reasons. The algorithm it will use is called \enquote{bcrypt}. This \enquote{is currently the defacto secure standard for password hashing} \parencite{bcryptblog}. This algorithm, as of this project, is considered secure and unbroken. SelfReflect will also use \enquote{salts}, which are unique values (per password) that are appended to the password before it is hashed. A common way to reverse hashing algorithms is by brute forcing (using a computer to try every possible password until the correct password is found). Using a salt severely limits the ability to brute force sets of hashed passwords. The hacker would have to brute force every password individually, taking each salt into account, rather than being able to brute force them all at once. This means salts do not have to be secret; they simply have to be unique. Combining these techniques means passwords will be stored in a secure, irreversible, hashed format in the database. Passwords therefore cannot be lost even if the database is hacked, which satisfies NF3.
 
-\subsection{Database} \label{sec:databasedesign}
+\section{Database} \label{sec:databasedesign}
 a
 
-\subsubsection{Security}
+\subsection{Security}
 a
 
 \chapter{Implementation}
@@ -1083,10 +1082,9 @@ a
 a
 
 \section{API}
-\subsection{API}
 a
 
-\subsection{Database}
+\section{Database}
 a
 
 \chapter{Testing}
