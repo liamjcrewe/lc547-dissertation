@@ -697,7 +697,7 @@ The web app is significantly larger, and incorporates most of the major contribu
 
 \subsubsection{Non-functional}
 \begin{enumerate}
-\item Must be built using React \parencite{react} and Redux \parencite{redux}, meaning it is built entirely in JavaScript.
+\item Must be built using React \parencite{react} and Redux \parencite{redux}, meaning it is built almost entirely in JavaScript.
 \item Should be a \enquote{one page} application. That is, built using AJAX (asynchronous JavaScript and XML) requests only. This means there will be no full page requests after the initial request. This is what allows separation of functional requirements 8 and 9.
 \item Should use ReactD3 to build visualisations, which is an open source library for building charts using React \parencite{reactd3}.
 \item Should incorporate and be styled using Skeleton CSS, which is a \enquote{dead simple, responsive boilerplate} \parencite{skeletoncss}.
@@ -785,7 +785,7 @@ The API is the server; it is where storage and retrieval of all user data happen
 \end{enumerate}
 
 \chapter{Design} \label{chap:design}
-This chapter will detail the design of both the system as a whole, and the three separate parts of the system (mobile app, web app and API), with regard to the requirements specified in section \ref{reqs}. Functional and non-functional requirements from this point onwards will be referred to as \enquote{F} and \enquote{NF} requirements respectively. Requirements referenced in each section will always refer to the corresponding section in section \ref{reqs}, unless explicitly stated.
+This chapter will detail the design of both the system as a whole, and the three separate parts of the system (mobile app, web app and API), with regard to the requirements specified in section \ref{reqs}. Functional and non-functional requirements from this point onwards will be referred to as \enquote{F} and \enquote{NF} requirements respectively. Requirements referenced in each section will always refer to the corresponding section in section \ref{reqs}, unless explicitly stated. This chapter should cover all of the requirements in section \ref{reqs}, except for those that relate to testing and documentation, as they will be covered in the testing and implementation chapters respectively.
 
 \section{Overall System}
 Many modern software systems are designed using a client-server architecture. That is, one server and many clients, such as for web pages. Additionally, many successful applications have external APIs, which allows developers of external applications to build their own interfaces to the data, accessed via the corresponding API. These are the same APIs this project will take advantage of, in order to fetch user data from existing applications, such as Twitter and Strava.
@@ -866,7 +866,115 @@ The only small difference between different question screens is that the last qu
 The submit button will sum the answers to all the questions and submit these via the SelfReflect API, satisfying F4.2. It will also compute the date and time of submission, and submit this alongside the computed wellbeing score, satisfying F5. It is important to compute this \enquote{client-side} rather than \enquote{server-side}, as this is (to the user) when the wellbeing was recorded. If this was computed server-side and some delay happened, the user could end up with a wellbeing recorded at a time significantly different from when they actually tapped submit. Computing this client-side makes this almost impossible, as long as date and time are computed and communicated correctly.
 
 \section{Web App}
-The second, larger internal client application that will communicate via the API is the SelfReflect web app. This is much more complex and has many more features than the mobile app. It allows everything the mobile app allows, but also enables the user to connect existing apps and produce visualisations from their data, fetched from both the SelfReflect API and other connected existing apps (Twitter and Strava).
+The second, larger internal client application that will communicate via the API is the SelfReflect web app. This is much more complex and has many more features than the mobile app. It allows everything the mobile app allows, but also enables the user to connect existing apps and produce visualisations from their data, fetched from both the SelfReflect API and other connected existing apps (Twitter and Strava). Again, wireframes were created to facilitate the design of the web app, and will be included and referenced throughout this section.
+
+\subsection{Choice of Technologies}
+This application will be built in \enquote{React} \parencite{react} and \enquote{Redux} \parencite{redux}, satisfying NF1. React is a JavaScript framework/library, and Redux is a tool and development methodology for handling state in JavaScript applications. There are a huge number of potential advantages to incorporating both of these: faster software, more modular/functional code, shorter development time, better extensibility and various others. This is true for various frameworks however, not just React. 
+
+React was chosen over other frameworks for various reasons, such as personal experience and preference, React's popularity and the various advantages it provides over other frameworks. However, this project is not about with the benefits of React, or the comparison of JavaScript frameworks, so will not discuss these reasons in too much detail. For the purposes of this project, selecting some JavaScript framework was the important, and React and Redux were chosen due to personal experience, preference and knowledge of the current state of the field of JavaScript web development.
+
+Building the entire application in React means that all navigation will happen via updates to application state, rather than full page requests. This means the web app will be \enquote{one page}. That is, the original request will fetch the entire application, then the displayed page will simply depend on the state, which is updated via user actions. Server requests therefore will be made asynchronously, via \enquote{AJAX} requests. This satisfies NF2, and can create an interesting and smooth user experience compared to traditional web pages, as users never have to wait for full page refreshes.
+
+\subsection{Styling and Responsiveness}
+As with almost all web pages, CSS (Cascading Style Sheets) will be used to style the content of the web application. It is possible to write all CSS from scratch. However, there are a huge number of libraries to aid with styling, so as to reduce development time, and to make certain problems easier, such as producing responsive websites. The most popular of these is likely Bootstrap, developed at Twitter \parencite{bootstrapcss}. Bootstrap is a huge library that provides a great number of features: a \enquote{grid system}, styling for many base components, custom components, and jQuery plugins. However, this project will use Skeleton CSS instead \parencite{skeletoncss}. Skeleton also provides a simple grid system, and styling for some base and custom components. It is massively more lightweight than Bootstrap, while still providing everything this project requires.
+
+The grid system in these libraries is the feature that supports responsiveness of websites, allowing them to work on different sized screens. All elements are placed within the grid, which is twelve \enquote{columns} wide. The grid resizes as the screen size changes, so if there are not enough \enquote{free} columns for an element, it is placed on the next \enquote{row}. This should mean that using Skeleton CSS will satisfy NF4, NF5.1 and NF5.2, as long as the use of the grid system is implemented correctly.
+
+\subsection{Home}
+The first page the user sees when loading the web app is the home page, which contains some information about the project as a whole, and buttons to navigate to log in and register. The wireframe for this is seen in Figure \ref{fig:webhome}.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Home Screen Wireframe}
+\includegraphics[width=0.8\textwidth]{i/webhome.png}
+\label{fig:webhome}
+\end{figure}
+
+\newpage
+\subsection{Login and Register}
+If the user clicks login (either the button on the home page, or on the navigation bar), they will be directed to the login page, satisfying F1. The wireframe for this can be seen in Figure \ref{fig:weblogin}.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Login Screen Wireframe}
+\includegraphics[width=0.8\textwidth]{i/weblogin.png}
+\label{fig:weblogin}
+\end{figure}
+
+\newpage
+
+If the user clicks register (again either the button on the home page, or on the navigation bar), they will be directed to the register page, satisfying F3. The wireframe for this can be seen in Figure \ref{fig:webregister}.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Register Screen Wireframe}
+\includegraphics[width=0.8\textwidth]{i/webregister.png}
+\label{fig:webregister}
+\end{figure}
+
+Exactly as with the mobile app, both logging in and registering involve requests to the SelfReflect API. Again, this means the web app must be able to handle and give feedback on both successful and erroneous responses from the API. Also, again like the mobile app, the web app must store the token somewhere for use in subsequent requests.
+
+Token storage is a little more complicated for the web app however. Simply storing the token in the state of the web application satisfies F8, as the user can be logged in as long as the token exists and is valid. However, if the token is only stored in state, as soon as the user refreshes the page the token will be lost, which fails F9. This kind of persisted login behaviour is usually achieved through the use of \enquote{HTTP cookies} in web applications. However, cookies are sent in the header of every request automatically, which is not intended for this application. Thankfully, modern browsers provide \enquote{HTML Local Storage} \parencite{htmllocalstorage}, which allows applications to store data in the browser, and retrieve this data whenever they desire. This will be used in this project to satisfy F9. The web app will store the access token in local storage, retrieve it on page load, and hence allow persisted login for users in much the same way as using cookies.
+
+\subsection{Guide}
+After a valid login, the navigation bar changes and the user is automatically directed to the guide page, satisfying F15. The wireframe for this is shown in Figure \ref{fig:webguide}.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Guide Screen Wireframe}
+\includegraphics[width=0.8\textwidth]{i/webguide.png}
+\label{fig:webgude}
+\end{figure}
+
+Similar to the mobile app, all subsequent screens have a log out button in the top right corner, satisfying F2. Note this guide page also includes a prompt to download and use the SelfReflect mobile app, satisfying F6.
+
+\subsection{SWEMWBS Questionnaire}
+Clicking the record button will navigate the user to the SWEMWBS questionnaire, satisfying F4.1. This is on one page, and allows the user to scroll up/down as they select answers to each of the seven questions. At the bottom of the page there is a submit button which computes and submits total score, satisfying F4.2. Exactly like the mobile app (and for the same reasons), this computes date and time of submission, satisfying F5. The wireframe for this page can be seen in Figure \ref{fig:webrecord}. This image only shows the bottom of the screen. The first 4 questions are \enquote{off-screen} to the top.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App SWEMWBS Questionnaire Screen Wireframe}
+\includegraphics[width=0.8\textwidth]{i/webrecord.png}
+\label{fig:webrecord}
+\end{figure}
+
+\subsection{Account Management}
+The account screen will allow the user to edit their account details and connect existing apps. The wireframe for this page can be seen in Figure \ref{fig:webaccount}.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Account Screen Wireframe}
+\includegraphics[width=0.8\textwidth]{i/webaccount.png}
+\label{fig:webaccount}
+\end{figure}
+
+The edit email and edit password buttons will reveal simple forms that allow the user to update their email and password respectively. This satisfies F7.1 and F7.2. The connect Twitter and connect Strava buttons will direct the user to the required pages (from Twitter and Strava) to provide their credentials and connect the corresponding app. When the apps are connected, the access credentials returned from these apps will be sent to the SelfReflect API for storage, so that user data can be fetched from these apps later. This satisfies F10.1 and F11.1.
+
+\newpage
+\subsubsection{A Note on Unmentioned Requirements}
+Password recovery (F7.3) and email verification (F7.4) are not planned in the account management section, or any section, of the web app design. In carrying out the design and planning phase of this project, time constraints seemed to be fairly tight given the scale of the software development being undertaken. As these requirements were both \enquote{could} requirements, and neither would contribute academically to the research or findings of this project, both were considered not worth the time taken for development, and so were dropped at the design phase.
+
+\subsection{Analysis and Visualisations}
+The analysis page allows the user to select which sources they wish to include in their visualisation, then press generate to build and display the visualisations. The wireframe for this page can be seen in Figure \ref{fig:webanalysis}
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Analysis Screen Wireframe}
+\includegraphics[width=0.8\textwidth]{i/webanalysis.png}
+\label{fig:webanalysis}
+\end{figure}
+
+\newpage
+This will fetch data from SelfReflect, Twitter and Strava via the SelfReflect API, satisfying F13, F10.2 and F11.2. It will then process this data and build a graph with the selected visualisations included. The three chosen visualisations will be:
+\begin{enumerate}
+\item Average wellbeing per day from SelfReflect data.
+\item Number of tweets per day from Twitter data.
+\item Distance exercised per day (km) from Strava data.
+\end{enumerate}
+
+This satisfies the requirements to have one visualisation per source (F14.1, F14.2 and F14.3). Also, as all of these visualisations consist of integer numbers that are likely to be somewhat compatible, they can all be plotted on one graph, as shown in the wireframe. This therefore allows external sources to be compared with both SelfReflect, and with one another, hence satisfying F14.4 and F14.5.
+
+These visualisations will be built using an open source project called \enquote{ReactD3} \parencite{reactd3}, satisfying NF3. This allows charts to be built fairly easily within the React framework, as long as data is provided in a compatible format. Making use of this library will significantly reduce development time, and will take advantage of the existing developmental effort, experience and testing that has already been carried out for this open source project.
 
 \section{API and Database}
 \subsection{API}
