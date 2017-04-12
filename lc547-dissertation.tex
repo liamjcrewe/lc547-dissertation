@@ -1004,7 +1004,7 @@ MySQL will be used for database access, satisfying NF2. As discussed in NF2, the
 \subsubsection{RESTful API}
 The API will be \enquote{RESTful}, satisfying NF4. \enquote{REST} is an architectural development methodology for APIs, and is said to \enquote{induce desirable properties, such as performance, scalability, and modifiability, that enable services to work best on the Web} \parencite{oraclerest}. For these and other reasons, this is a popular, common best practise standard for building APIs.
 
-REST is a stateless architecture, meaning all requests are independent from one another. This does pose a particular issue with regard to persisted login; most web applications handle persisted login via the use of sessions. These store some state on the server against some session identifier, then send cookies containing these session identifiers to clients. Clients then send these with every request and hence can remain logged in. However, this violates the stateless principle of REST. Storing access tokens on the server after a user has \enquote{logged in} also violates this principle. This is a problem that requires a fairly subtle solution, and will be discussed in more detail in the Security and Authentication section (section \ref{sec:apiauth}) later.
+REST is a stateless architecture, meaning all requests are independent from one another. This does pose a particular issue with regard to persisted login; most web applications handle persisted login via the use of sessions. These store some state on the server against some session identifier, then send cookies containing these session identifiers to clients. Clients then send these with every request and hence can remain logged in. However, this violates the stateless principle of REST. Storing access tokens on the server after a user has \enquote{logged in} would also violate this principle. This is a problem that requires a fairly subtle solution, and will be discussed in more detail in the Security and Authentication section (section \ref{sec:apiauth}) later.
 
 Probably the most important aspect of REST is the methodology used to design how a client accesses the API. REST uses http \enquote{verbs} (GET, POST, PUT, PATCH, DELETE) \parencite{httpmethods} to access \enquote{resources} via \enquote{Uniform Resource Identifiers} (URIs), producing an interface that is usually very intuitive. Any resource that access data should map almost identically to the database table it accesses. For example, SelfReflect has users, so will likely have a users table in the database and a resource at \emph{/users}. Creation of a users would then consist of a POST request to this resource, whereas simply fetching user details would consist of a GET request to something like \emph{/users/1}, where 1 is the requested user's unique identifier in the database. Each of the http \enquote{verbs} can be seen in Table \ref{table:httpverbs}, with a description of what they are typically used for in RESTful APIs.
 
@@ -1012,7 +1012,7 @@ Probably the most important aspect of REST is the methodology used to design how
 \centering
 \caption{HTTP Verbs Usage in RESTful APIs}
 \label{table:httpverbs}
-\begin{tabular}{|p{3cm}|p{11cm}|}
+\begin{tabular}{|p{2cm}|p{12cm}|}
 \hline
 \textbf{Verb} & \textbf{Usage} \\ \hline
 GET &  To read a resource. Should not make any changes to data.  \\  \hline
@@ -1023,6 +1023,7 @@ DELETE & Deletes a resource. \\  \hline
 \end{tabular}
 \end{table}
 
+\newpage
 \subsubsection{Endpoints}
 a
 
