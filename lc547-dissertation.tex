@@ -13,6 +13,7 @@
   citestyle=authoryear,
   dateabbrev=false
 ]{biblatex}
+\usepackage{longtable}
 
 % Number enumerate sub enumerates
 \renewcommand{\labelenumii}{\theenumii}
@@ -772,7 +773,7 @@ The API is the server; it is where storage and retrieval of all user data happen
 \item Must use MySQL for database access (the \enquote{world's most popular open source database}) \parencite{mysql}. There is little reason to use anything else for database access for this project, as MySQL is suited for all the project's needs. There are alternatives, but for the purposes of this project, these would not provide any significant benefits over MySQL.
 \item Must store passwords in a secure, hashed format. This is so that, even if this database is somehow accessed, user's passwords will not be lost.
 \item Should be a RESTful API. REST is Representational State Transfer and employs a stateless architecture where each request is independent. This is a modern standard and best practise for building APIs. This stateless architecture means each request must be authenticated individually. Endpoints are implemented as resources such as /User and are accessed using http \enquote{verbs} (GET, POST, PUT, PATCH, DELETE) \parencite{httpmethods}.
-\item Must include extensive documentation.
+\item Must include extensive documentation that satisfies:
   \begin{enumerate}
   \item Must include documentation for developers on how to set up the project and get it running.
   \item Must have documentation for all endpoints. This is absolutely essential to make the API professional and, more importantly, to make the entire SelfReflect system extensible. Developers must understand the API, be able to use the API, and be able to extend the API if this project is to be built upon in the future.
@@ -828,7 +829,7 @@ The user can then either log in, satisfying F1, or navigate to the register scre
 
 Both logging in and registering will then need to communicate with the SelfReflect API, in order to either create the user in the SelfReflect database, or to validate login credentials before allowing the user to log in. The mobile app must therefore be able to handle both successful and erroneous responses from the API (such as invalid password, email already exists, server error etc.), and give the user some feedback on these.
 
-A successful login will result in the API responding with an access token (see section \ref{sec:apiauth}). This will then have to be stored locally in the mobile app's state, so that it can be sent with subsequent requests, as discussed in the following sections.
+A successful login will result in the API responding with an access token (see Security and Authentication section). This will then have to be stored locally in the mobile app's state, so that it can be sent with subsequent requests, as discussed in the following sections.
 
 \subsection{Home Page}
 After logging in successfully, the user will be taken to a home page. This page will include:
@@ -938,7 +939,7 @@ Clicking the record button will navigate the user to the SWEMWBS questionnaire, 
 \label{fig:webrecord}
 \end{figure}
 
-\subsection{Account Management}
+\subsection{Account Management} \label{sec:webaccman}
 The account screen will allow the user to edit their account details and connect existing apps. The wireframe for this page can be seen in Figure \ref{fig:webaccount}.
 
 \begin{figure}[ht]
@@ -1004,7 +1005,7 @@ MySQL will be used for database access, satisfying NF2. As discussed in NF2, the
 \subsubsection{RESTful API}
 The API will be \enquote{RESTful}, satisfying NF4. \enquote{REST} is an architectural development methodology for APIs, and is said to \enquote{induce desirable properties, such as performance, scalability, and modifiability, that enable services to work best on the Web} \parencite{oraclerest}. For these and other reasons, this is a popular, common best practise standard for building APIs.
 
-REST is a stateless architecture, meaning all requests are independent from one another. This does pose a particular issue with regard to persisted login; most web applications handle persisted login via the use of sessions. These store some state on the server against some session identifier, then send cookies containing these session identifiers to clients. Clients then send these with every request and hence can remain logged in. However, this violates the stateless principle of REST. Storing access tokens on the server after a user has \enquote{logged in} would also violate this principle. This is a problem that requires a fairly subtle solution, and will be discussed in more detail in the Security and Authentication section (section \ref{sec:apiauth}) later.
+REST is a stateless architecture, meaning all requests are independent from one another. This does pose a particular issue with regard to persisted login; most web applications handle persisted login via the use of sessions. These store some state on the server against some session identifier, then send cookies containing these session identifiers to clients. Clients then send these with every request and hence can remain logged in. However, this violates the stateless principle of REST. Storing access tokens on the server after a user has \enquote{logged in} would also violate this principle. This is a problem that requires a fairly subtle solution, and will be discussed in more detail in the Security and Authentication section later.
 
 Probably the most important aspect of REST is the methodology used to design how a client accesses the API. REST uses http \enquote{verbs} (GET, POST, PUT, PATCH, DELETE) \parencite{httpmethods} to access \enquote{resources} via \enquote{Uniform Resource Identifiers} (URIs), producing an interface that is usually very intuitive. Any resource that access data should map almost identically to the database table it accesses. For example, SelfReflect has users, so will likely have a users table in the database and a resource at \emph{/users}. Creation of a users would then consist of a POST request to this resource, whereas simply fetching user details would consist of a GET request to something like \emph{/users/1}, where 1 is the requested user's unique identifier in the database. Each of the http \enquote{verbs} can be seen in Table \ref{table:httpverbs}, with a description of what they are typically used for in RESTful APIs.
 
@@ -1025,14 +1026,50 @@ DELETE & Deletes a resource. \\  \hline
 
 \newpage
 \subsubsection{Endpoints}
-a
+This section will define the endpoints that will be implemented for the API,  how to access each of them, and which requirements each of the endpoints satisfies. These can be seen in Table \ref{tab:designendpoints}. Security and restriction of endpoints will not be discussed in this section (F12.2 and F12.4); see the Security and Authentication section for how this will be handled.
 
-\subsubsection{Security and Authentication} \label{sec:apiauth}
-a
+\begin{longtable}{| p{6cm} | p{6cm} | p{2cm} |}
+\caption{API Planned Endpoints}
+\label{tab:designendpoints} \\
+\hline
+\textbf{Endpoint} & \textbf{Description} & \textbf{Req(s) satisfied} \\ \hline
+POST /users & Creates a new user. & F1 \\ \hline
+GET /users/:id & Gets information about a user with the given id. & F2 \\ \hline
+PUT /users/:id & Updates a user with the given id. & F3.1, F3.2 \\ \hline
+DELETE /users/:id & Deletes the user with the given id. & F3.3 \\ \hline
+POST /users/:id/wellbeings & Stores (creates) a new recorded wellbeing, including data and time of recording. This will accept the raw score and store it against metric score, based on a static conversion table stored in the database. See section \ref{sec:databasedesign} for details. & F4, F4.1, F4.3. \\ \hline
+GET /users/:id/wellbeings?count=X & Gets a users recorded wellbeings, including data and time of recording. This will return \enquote{X} number of recordings, or fewer if less than X exist. There will need to be some sensible limit on X, such as 100. & F5, F5.1\\ \hline
+PUT /users/:id/twitter-credentials & Stores (creates) a user's Twitter access credentials. Note this will be an access token of some sort, not the user's username and password. & F6 \\ \hline
+GET /users/:id/tweets & Get a user's recent tweets. & F7 \\ \hline
+PUT /users/:id/strava-credentials  & Stores (creates) a user's Strava access credentials. Note this will be an access token of some sort, not the user's username and password.& F8 \\ \hline
+GET /users/:id/strava-data  & Get a user's recent Strava exercise data. & F9 \\ \hline
+POST /tokens & Get an access token. Must provide a valid username and login for SelfReflect. This will be discussed further in the Security and Authentication section. & F12.1 \\ \hline
+PUT /tokens & Refresh an access token. Must provide a valid access token. This will be discussed further in the Security and Authentication section. & F12.3 \\ \hline
+\end{longtable}
+
+\subsubsection{A Note on Unmentioned Requirements}
+As discussed in the web app design section, password recovery (F4.5) and email verification were dropped (F3.5). See section \ref{sec:webaccman} for justification of this.
+
+\subsubsection{Security and Authentication}
+Data protection is incredibly important for any application that stores data about users. It is even more important for data that is sensitive, such as healthcare data, or in this case mental health and wellbeing data. Not only does SelfReflect store wellbeing data, it also enables access to a user's Twitter and Strava data. Only the user themselves should be able to access their SelfReflect, Twitter and Strava data; the data must be restricted from all other users and/or malicious attacks. For this reason, all endpoints that access a user's data (i.e. all endpoints other than POST /users, and the /tokens endpoints) must be restricted unless the user can be prove their right to access that endpoint.
+
+Additionally, SelfReflect must allow persisted login, so that user's do not have to repeatedly log in to the web or mobile app. The API must work out where requests are coming from. Achieving this is usually done by violating REST principles and storing some state on the server, via the use of sessions and cookies. This project aims to achieve this however without violating stateless REST principles.
+
+In order to achieve this, the API will use JSON Web Tokens, or JWTs \parencite{jwtrfc}. JWTs are a method of encrypting and digitally signing JSON objects, in order to communicate securely. This will allow SelfReflect to encrypt tokens as strings to be sent to clients, and decode these strings as JSON objects. These decoded tokens, if valid, will contain the user id related to that token, as well as an expiry time. As the encryption key will be kept secret and stored server side, tokens cannot be faked. This means the SelfReflect API can check the following conditions:
+\begin{enumerate}
+\item The token is valid.
+\item The token is not expired. Tokens will be set to expire some sensible time after they are generate, such as 24 hours.
+\item The id of the decoded token matches the id of the requested resource.
+\end{enumerate}
+
+All endpoints that access restricted data will require a valid access token to be sent with the request, which can be obtained via the /tokens endpoints. If no token is sent, or any of the three conditions above are not met, the request will be rejected. This therefore provides all the security needed (satisfying F12.2 and F12.4), but does not store any state on the server, so does not violate stateless REST principles.
 
 \subsubsection{Passwords Security}
+A final security issue relates to the storage of passwords. If the database were to be \enquote{hacked}, it is desirable that passwords would still not be lost. Common practise to achieve this is to \enquote{hash} passwords. This involves putting passwords through a \enquote{one way algorithm}, meaning the original password cannot be obtained from the final result, even if the algorithm is known. This is often used for passwords, as applications do not actually need to know user's original passwords. The application can store the hashed password, then when an authentication request is received, the password can be put through the same one way algorithm and checked against the stored hash to make sure they are the same. This is a small cost to the application, and ensures that even if the database is hacked, the hacker does not have access to user's original passwords.
 
-\subsection{Database}
+SelfReflect will use hashing of passwords for these reasons. The algorithm it will use is called \enquote{bcrypt}. This \enquote{is currently the defacto secure standard for password hashing} \parencite{bcryptblog}. This algorithm, as of this project, is considered secure and unbroken. SelfReflect will also use \enquote{salts}, which are unique values (per password) that are appended to the password before it is hashed. A common way to reverse hashing algorithms is by brute forcing (using a computer to try every possible password until the correct password is found). Using a salt severely limits the ability to brute force sets of hashed passwords. The hacker would have to brute force every password individually, taking each salt into account, rather than being able to brute force them all at once. This means salts do not have to be secret; they simply have to be unique. Combining these techniques means passwords will be stored in a secure, irreversible, hashed format in the database. Passwords therefore cannot be lost even if the database is hacked, which satisfies NF3.
+
+\subsection{Database} \label{sec:databasedesign}
 a
 
 \subsubsection{Security}
