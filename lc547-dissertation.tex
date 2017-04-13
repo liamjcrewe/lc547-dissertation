@@ -1115,13 +1115,202 @@ This table is entirely static and will contain the SWEMWBS raw to metric score c
 \end{itemize}
 
 \chapter{Implementation}
+\section{Introduction}
+This chapter will detail the implementation of the design discussed in the previous chapter. It will explain specific implementation details where necessary (where implementation is not trivial), and will detail where the implementation changed from the design and why. Code snippets and images will be included and referenced throughout to aid explanation.
+
 \section{Mobile App}
-a
+The mobile app was developed using React Native, as discussed in the design section. Additionally, in order to reduce development time and avoid repeating work carried out by the software development community, an open source library called \enquote{Native Starter Kit} was used \parencite{nativestarterkit}. This library is a \enquote{starter kit that you can install on the fly to get the basic plumbing of React Native}, with the principle that there is \enquote{no need of reinventing the wheel} \parencite{nativestarterkit}. This provided a base app from which to build the SelfReflect mobile app, which included basic navigation, \enquote{boilerplate} code that is standard to any React Native project, and some example screens that could be adapted.
+
+\subsection{Login}
+The implemented login screen can be seen in Figure \ref{fig:mobileloginimpl}.
+
+\begin{figure}[ht]
+\centering
+\caption{Mobile App Implemented Login Screen}
+\includegraphics[width=0.3\textwidth]{i/mobileloginimpl.png}
+\label{fig:mobileloginimpl}
+\end{figure}
+
+This is very similar to the wireframe in the design section (Figure \ref{fig:mobilelogin}) with some small styling improvements. The login page has two interesting pieces of functionality: input validation and the login itself.
+
+\subsubsection{Login Input Validation}
+Input validation is relatively simple. The login button is disabled unless the user provides a valid email, and some password (i.e. non empty). The function in the following code snippet returns true if both of these conditions are met:
+
+\begin{lstlisting}
+inputsValid() {
+  return isValidEmail(this.state.email)
+    && this.state.password
+}
+\end{lstlisting}
+
+This does of course require some validation on the format of an email, hence the call to the isValidEmail function. Email validation is a topic that is debated regularly in web development, with some arguing for complex validation, and others arguing for simple validation with email verification. For this project, a very simple validation function was used. This simply checks the email matches a \enquote{something@something.something} format, as shown in the following code snippet:
+
+\begin{lstlisting}
+const simpleEmailRegex = /^(.+)@(.+)\.(.+)$/
+
+export default email => {
+  return simpleEmailRegex.test(email)
+}
+\end{lstlisting}
+
+The regular expression (or RegEx) in the above snippet is exactly the format previously described (\enquote{something@something.something}).
+
+Should either of the inputs fail validation, and error message will be displayed to the user, to inform the user which input is failing validation and why. This can be seen in Figure \ref{fig:mobileloginerror}.
+
+\begin{figure}[ht]
+\centering
+\caption{Mobile App Implemented Login Screen Validation Error}
+\includegraphics[width=0.3\textwidth]{i/mobileloginerror.png}
+\label{fig:mobileloginerror}
+\end{figure}
+
+\subsubsection{Login}
+When the user taps login, the email and password are sent to the SelfReflect API to check they are valid credentials. The code for posting user credentials to the server is shown in the following code snippet:
+\begin{lstlisting}
+login(onSuccess) {
+  return fetch(apiUrl + '/v1/tokens', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: this.state.email,
+      password: this.state.password,
+    })
+  })
+    .then(response => {
+      ...
+    })
+}
+\end{lstlisting}
+
+This executes an AJAX request which posts the login credentials, in JSON format, to the SelfReflect API endpoint \enquote{/v1/users}. Versioning was included in the API implementation, hence the \enquote{v1}, as will be discussed in section \ref{sec:apiimpl}.
+
+Some code has been removed from this function for this snippet. The removed code simply handles whatever response the app gets from the server. If the credentials sent are valid, the mobile app will receive a success response code and an access token. It can then store this access token for subsequent requests, and execute the onSuccess function. This function will navigate the user to the \enquote{logged in} area of the app. If the credentials are invalid, the app will receive an error response code, and the login screen will display an \enquote{Invalid email or password} message, in exactly the same way as the \enquote{Invalid email} message in Figure \ref{fig:mobileloginerror}. It is possible the app will receive some other response from the server, if the database is down for example, in which case the mobile app will simply display \enquote{Something went wrong. Please try again later}.
+
+\subsection{Register}
+The register screen is actually very similar to the login screen. The implemented register page can be seen in Figure \ref{fig:mobileregisterimpl}.
+
+Again, similar to the login screen, the register page does two main things: input validation and the register itself.
+
+\begin{figure}[ht]
+\centering
+\caption{Mobile App Implemented Register Screen}
+\includegraphics[width=0.3\textwidth]{i/mobileregisterimpl.png}
+\label{fig:mobileregisterimpl}
+\end{figure}
+
+\subsubsection{Register Input Validation}
+This is again very similar to the login input validation, with the additional check that the password and confirm password must match. The code to do this is seen in the following snippet:
+\begin{lstlisting}
+inputsValid() {
+  return isValidEmail(this.state.email)
+    && this.state.password
+    && (this.state.password === this.state.confirm);
+}
+\end{lstlisting}
+Again, like the login page, failed validation will result in the register button being disabled and an error message being displayed to the user, as seen in Figure \ref{fig:mobileregistererror}.
+
+\begin{figure}[ht]
+\centering
+\caption{Mobile App Implemented Register Screen Validation Error}
+\includegraphics[width=0.3\textwidth]{i/mobileregistererror.png}
+\label{fig:mobileregistererror}
+\end{figure}
+
+\newpage
+\subsubsection{Register}
+This is again similar to the functionality for login, but of course accesses a different endpoint of the SelfReflect API, in this case \enquote{/v1/users}. The code to register a user is shown below:
+\begin{lstlisting}
+register(onSuccess) {
+  return fetch(apiUrl + '/v1/users', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: this.state.email,
+      password: this.state.password,
+    })
+  })
+    .then(response => {
+      ...
+    })
+}
+\end{lstlisting}
+
+This is clearly extremely similar to the login code. This will become a similar theme throughout this entire chapter, and is due to the API having been buillt in a RESTful way; all accesses tend to follow a similar, \enquote{uniform} pattern. For this reason not all of these API accesses will be included in code snippets; they will simply be described, as they are almost all fairly similar. Again, the success and error codes are handled in much the same way, and displayed to the user if necessary, such as for \enquote{Email already exists} responses. In the case of register, the onSuccess function will navigate back to the login page, so the user can login with their newly created account.
+
+\subsection{Home}
+Once the user has logged in successfully, they will be navigated to the home screen, as seen in Figure \ref{fig:mobilehomeimpl}. For demonstration purposes, a test account with some existing wellbeing recordings was used.
+
+\begin{figure}[ht]
+\centering
+\caption{Mobile App Implemented Home Screen}
+\includegraphics[width=0.3\textwidth]{i/mobilehomeimpl.png}
+\label{fig:mobilehomeimpl}
+\end{figure}
+
+This is similar to the wireframe for the home screen in the design section (Figure \ref{fig:mobilehome}), with a few changes. Most of these changes are styling and other small changes, but one is the addition of the \enquote{Refresh recent recordings} button. The button simply repopulates the recent recordings table. During implementation it was discovered that if the user recorded their wellbeing on the web app, the only way to get the table in the mobile app to refresh would be to exit and reload the app, which was not very \enquote{user-friendly}. Adding this button solved this issue at little extra cost, as all the functionality to populate the table was already implemented.
+
+The logout button (the \enquote{power} button in the top left) simply navigates the user back to the login screen, which they then cannot get through without logging in again. The population of the last five recent recordings table however is a little more complicated.
+
+\subsubsection{Last 5 Recordings Table}
+The code to fetch a user's last five recordings is not vastly different to the API accesses in the login and register pages. However, this is now accessing user data, so the token (obtained at successful login) must be sent with the request. The code to fetch this data is seen below:
+
+\begin{lstlisting}
+fetchHistory(id, token) {
+  return fetch(apiUrl + '/v1/users/' + id + '/wellbeings?limit=5', {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    }
+  })
+    .then(response => {
+      ...
+    })
+\end{lstlisting}
+
+This limits the number of recent wellbeings the API responds with to five, as there are only five rows in the table. It also passes the token in the \enquote{Authorization} header of the request. This is how all restricted API endpoints are accessed by SelfReflect clients, and will again be seen throughout this chapter. The response is then stored in state, and the table can then be generated.
+
+The table is a simple grid of rows and columns. To generate the table, the app processes this stored data, by formatting dates and sorting in ascending order. It then simply maps over the processed wellbeing entries, and produces a row for each entry with two columns. The code to do this can be seen below:
+\begin{lstlisting}
+{this.props.history.map((wellbeing, i) =>
+  <Row key={i} style={styles.row}>
+    <Col style={styles.leftCol} size={3}>
+      <Text style={styles.text}>{wellbeing.date_recorded}</Text>
+    </Col>
+    <Col style={styles.rightCol} size={2}>
+      <Text style={styles.text}>{wellbeing.wellbeing}</Text>
+    </Col>
+ </Row>
+)}
+\end{lstlisting}
+
+This syntax is \enquote{JSX}. JSX is \enquote{a preprocessor step that adds XML syntax to JavaScript}, and is used to make \enquote{React a lot more elegant} \parencite{jsx}. It essentially allows HTML like code to be written within JavaScript, producing more readable and intuitive code.
+
+\subsection{SWEMWBS Questions}
+Tapping the record wellbeing button will navigate users to the SWEMWBS questions. This is implemented almost exactly as designed (Figure \ref{fig:mobilequestion}), and can be seen in FIgure \ref{fig:mobilequestionimpl}.
+
+\begin{figure}[ht]
+\centering
+\caption{Mobile App Implemented SWEMWBS Question Screen}
+\includegraphics[width=0.3\textwidth]{i/mobilequestionimpl.png}
+\label{fig:mobilequestionimpl}
+\end{figure}
+
+The next button on each question screen is disabled until an answer is selected. One change that was made from the design is the inclusion of the cancel button. This was implemented instead of the logout button, so that if a user wanted to cancel and go back to the home screen, they can do so without pressing back lots of times, or without having to log out and in again.
+
+The last question includes a submit button instead of a next button, which simply sums the scores to each of the answers (where \enquote{None of the time} has a score of 1, \enquote{Rarely} has a score of 2 etc.) and posts this to the \enquote{/v1/users/:id/wellbeings} endpoint, where \enquote{:id} is the user ID obtained on successful login. This code has not been included here as it is very similar to the API accesses described in previous sections. It again handles both successful and error responses from the server, by either navigating the user back to the home page on success, or displaying an error message on error. If successful, this also automatically updates the state that the recent recordings table (on the home screen) is generated from, based on the API response. This allows the user to instantly see that their wellbeing was recorded successfully.
 
 \section{Web App}
 a
 
-\section{API}
+\section{API} \label{sec:apiimpl}
 a
 
 \section{Database}
