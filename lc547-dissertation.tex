@@ -866,7 +866,7 @@ The only small difference between different question screens is that the last qu
 
 The submit button will sum the answers to all the questions and submit these via the SelfReflect API, satisfying F4.2. It will also compute the date and time of submission, and submit this alongside the computed wellbeing score, satisfying F5. It is important to compute this \enquote{client-side} rather than \enquote{server-side}, as this is (to the user) when the wellbeing was recorded. If this was computed server-side and some delay happened, the user could end up with a wellbeing recorded at a time significantly different from when they actually tapped submit. Computing this client-side makes this almost impossible, as long as date and time are computed and communicated correctly.
 
-\section{Web App}
+\section{Web App} \label{sec:webappdesign}
 The second, larger internal client application that will communicate via the API is the SelfReflect web app. This is much more complex and has many more features than the mobile app. It allows everything the mobile app allows, but also enables the user to connect existing apps and produce visualisations from their data, fetched from both the SelfReflect API and other connected existing apps (Twitter and Strava). Again, wireframes were created to facilitate the design of the web app, and will be included and referenced throughout this section.
 
 \subsection{Choice of Technologies}
@@ -924,7 +924,7 @@ After a valid login, the navigation bar changes and the user is automatically di
 \centering
 \caption{Web App Guide Screen Wireframe}
 \includegraphics[width=0.8\textwidth]{i/webguide.png}
-\label{fig:webgude}
+\label{fig:webguide}
 \end{figure}
 
 Similar to the mobile app, all subsequent screens have a log out button in the top right corner, satisfying F2. Note this guide page also includes a prompt to download and use the SelfReflect mobile app, satisfying F6.
@@ -1305,29 +1305,532 @@ Tapping the record wellbeing button will navigate users to the SWEMWBS questions
 
 The next button on each question screen is disabled until an answer is selected. One change that was made from the design is the inclusion of the cancel button. This was implemented instead of the logout button, so that if a user wanted to cancel and go back to the home screen, they can do so without pressing back lots of times, or without having to log out and in again.
 
-The last question includes a submit button instead of a next button, which simply sums the scores to each of the answers (where \enquote{None of the time} has a score of 1, \enquote{Rarely} has a score of 2 etc.) and posts this to the \enquote{/v1/users/:id/wellbeings} endpoint, where \enquote{:id} is the user ID obtained on successful login. This code has not been included here as it is very similar to the API accesses described in previous sections. It again handles both successful and error responses from the server, by either navigating the user back to the home page on success, or displaying an error message on error. If successful, this also automatically updates the state that the recent recordings table (on the home screen) is generated from, based on the API response. This allows the user to instantly see that their wellbeing was recorded successfully.
+The last question includes a submit button instead of a next button, which simply sums the scores to each of the answers (where \enquote{None of the time} has a score of 1, \enquote{Rarely} has a score of 2 etc.), computes the date and time of submission, and posts these to the \enquote{/v1/users/:id/wellbeings} endpoint, where \enquote{:id} is the user ID obtained on successful login. This code has not been included here as it is very similar to the API accesses described in previous sections. It again handles both successful and error responses from the server, by either navigating the user back to the home page on success, or displaying an error message on error. If successful, this also automatically updates the state that the recent recordings table (on the home screen) is generated from, based on the API response. This allows the user to instantly see that their wellbeing was recorded successfully.
+
+\subsection{Documentation}
+Documentation was written for the mobile app that includes a short description of SelfReflect and the SelfReflect mobile app, as well as instructions on how to install, set up  and run the mobile app for local development and testing. This documentation can be seen in appendix \ref{app:mobiledocs}.
 
 \section{Web App}
+Then web app was developed using the various technologies discussed in the design section (section \ref{sec:webappdesign}), including React, Redux and Skeleton CSS.
+
+\subsection{React and the Redux Store}
+Before the implementation of each page in the web app is described, the implementation of persistent state and the Redux store will be described. When developing a React application, the entire application is rendered based on state. Changes to the app, based on user input, are then simply changes to the state. React notices these changes, computes what will change due to this new state, then updates with the \enquote{document object model}, or DOM with these changes.
+
+Redux is a tool and development methodology for managing state in a React application, by creating a \enquote{store} that holds state. Large applications can become confusing due to a huge amount of state, so Redux helps to organise state in a uniform, modular way. Redux also allows \enquote{reducers} to be passed when creating the store. These define all possible ways to update the state in the store. This limits the ways state can be accessed/updated, and is one of the main ways Redux helps to arrange state and updates to state, in a uniform and organised way.
+
+\subsubsection{Initialising State}
+Another benefit Redux provides is the ability to initialise the store with some pre-loaded state. This is how persisted state was implemented in the web app. The following code does this:
+\begin{lstlisting}
+export const loadState = () => {
+  try {
+    const state = localStorage.getItem('state')
+
+    if (state === null) {
+      return
+    }
+
+    return JSON.parse(state)
+  } catch (_) {
+    return
+  }
+}
+
+...
+
+const persistedState = loadState()
+
+const store = createStore(reducers, persistedState)
+
+\end{lstlisting}
+This loads the state from \enquote{HTML Local Storage} \parencite{htmllocalstorage}, and initialises the store with this state. The user and token state is stored in browser memory (HTML Local Storage), then loaded when the web app is loaded. This persists user's login, as long as the token is not expired.
+
+\newpage
+\subsubsection{Persisting State}
+In order to store state in HTML Local Storage, another Redux feature was used. Redux allows attaching of \enquote{listeners} to the store. These are callback functions that are called every time the state changes. In order to store the user and token, the following code attaches a listener to the store:
+\begin{lstlisting}
+export const persistState = state => {
+  try {
+    const serializedState = JSON.stringify(state)
+
+    return localStorage.setItem('state', serializedState)
+  } catch (_) {
+    return
+  }
+}
+
+...
+
+store.subscribe(() => {
+  const user = store.getState().user
+  const token = store.getState().token
+
+  // If no user id in new state, user has logged out, so clear persisted state
+  if (!user.id) {
+    return clearState()
+  }
+
+  if (user.isLoading) {
+    return
+  }
+
+  if (!persistedState) {
+    return persistState({ user, token })
+  }
+
+  // If nothing changed, do nothing
+  if (equals(user, persistedState.user) &&
+      equals(token, persistedState.token)) {
+    return
+  }
+
+  persistState({ user, token })
+})
+\end{lstlisting}
+
+This code is invoked whenever the state changes in the store. It then checks to see if the user or token has changed in that state update, and persists these  in HTML Local Storage if either of these have changed.
+
+\subsubsection{Token Refresh}
+In order to refresh tokens that come close to expiry, the following code was added to add another listener to the Redux store:
+\begin{lstlisting}
+export const refreshToken = (dispatch, token) => {
+  return fetch(api + '/v1/tokens', {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token.value
+    }
+  })
+    .then(response => {
+      // Some error
+      if (response.status !== 200) {
+        return
+      }
+
+      // Success
+      return response.json()
+        .then(json => {
+          dispatch(setToken({ value: json.token, exp: json.exp }))
+        })
+    })
+    .catch(_ => {
+      return
+    })
+}
+
+...
+
+store.subscribe(throttle(300000, () => {
+  const token = store.getState().token
+  const nowInSeconds = Math.floor(Date.now() / 1000)
+
+  // If no token, or if token going to expire in more than an hour, do nothing
+  if (!token.value || (token.exp - 3600 > nowInSeconds)) {
+    return
+  }
+
+  refreshToken(store.dispatch, token)
+}))
+\end{lstlisting}
+
+This checks to see if the token exists and is going to expire in less than an hour. If these conditions are met, it refreshed the token using a PUT request to the \enquote{/v1/tokens} endpoint of the SelfReflect API.
+
+\subsubsection{Update User Information}
+In order to ensure the information about the currently logged in user stays as \enquote{up-to-date} as possible, a listener was added that regularly updates the user's information. This is so that if some other client was used to edit the email of a user, this would be updated and represented in the SelfReflect web app. The code to add this listener is shown below:
+
+\begin{lstlisting}
+const throttledFetchUser = throttle(300000, (dispatch, userId, token) => {
+  fetchUser(dispatch, userId, token)
+})
+
+...
+
+store.subscribe(() => {
+  const user = store.getState().user
+  const token = store.getState().token
+
+  // If already loading, user not logged in, or if token invalid, do nothing
+  if (user.isLoading || !user.id || !validateToken(token)) {
+    return
+  }
+
+  // If first time fetching, do not throttle
+  if (!user.email) {
+    return fetchUser(store.dispatch, user.id, token)
+  }
+
+  throttledFetchUser(store.dispatch, user.id, token)
+})
+\end{lstlisting}
+
+The fetchUser function (not shown) simply fetches the user's information by sending a GET request to the \enquote{/v1/users/:id}. It then updates the user's information in the Redux store state. One other thing of note in this code snippet is that the function is \enquote{throttled}. This limits how often this function can be called, so as not to slow down the application or add unnecessary load on the server. In this case the function is throttled to once every 300 seconds, or five minutes.
+
+\subsection{Home}
+The first screen the user sees when loading the web app is the home screen, which can be seen in Figure \ref{fig:webhomeimpl}.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Implemented Home Screen}
+\includegraphics[width=.8\textwidth]{i/webhomeimpl.png}
+\label{fig:webhomeimpl}
+\end{figure}
+
+This includes a short description of the SelfReflect system, and buttons to navigate to the log in and register screen. It also includes a background image which was just added to make the website a little more interesting and professional. This screen is slightly different depending on whether the user is logged in or not, the only difference being the log in and register buttons are not present when the user is logged in.
+
+\subsection{Login}
+Clicking the log in button either on the home page or in the navigation bar will navigate the user to the login screen, as can be seen in Figure \ref{fig:webloginimpl}.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Implemented Login Screen}
+\includegraphics[width=.8\textwidth]{i/webloginimpl.png}
+\label{fig:webloginimpl}
+\end{figure}
+
+Much like the mobile app, the web app login page handles the same two functions: input validation and login.
+
+\subsubsection{Login Input Validation}
+If input validation is failed, the log in button will do nothing. Input validation for the web app login form is done in exactly the same way as it was in the mobile app. For this reason, the code has not been included here as it is not significantly different to that of the mobile app. The login page with failed input validation can be seen in Figure \ref{fig:webloginerror}.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Implemented Login Screen Validation Error}
+\includegraphics[width=.8\textwidth]{i/webloginerror.png}
+\label{fig:webloginerror}
+\end{figure}
+
+\subsubsection{Login}
+The login functionality of the web app is almost identical to the login functionality of the mobile app. For this reason the code has not been included here. It is almost identical, except it handles responses (success/error) with Redux. After a successful login, the user is navigated to the guide page (see section \ref{subsec:guide}).
+
+\subsection{Register}
+Clicking the register button either on the home page or in the navigation bar will navigate the user to the register screen, as can be seen in Figure \ref{fig:webregisterimpl}.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Implemented Register Screen}
+\includegraphics[width=.8\textwidth]{i/webregisterimpl.png}
+\label{fig:webregisterimpl}
+\end{figure}
+
+Again the web app register page handles two functions: input validation and register. There are also two key changes to the implemented register page. Firstly, a disclaimer has been added. The web app was hosted live temporarily during this project for the purposes of testing, so this disclaimer in case someone accidentally found the live site. This is unlikely but was included anyway to be safe. The second change is the inclusion of the clear button. This allows users to quickly clear all inputs, should they make a mistake or wish to register another account for some reason.
+
+\newpage
+\subsubsection{Register Input Validation}
+This is again exactly the same as the mobile app. The register page with failed input validation can be seen in Figure \ref{fig:webregistererror}.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Implemented Register Screen Validation Error}
+\includegraphics[width=.8\textwidth]{i/webregistererror.png}
+\label{fig:webregistererror}
+\end{figure}
+
+
+\subsubsection{Register}
+Again, the register functionality is almost identical to that of the mobile app, so does not need to be described again. After a successful register, a success message appears to indicate the account has been created.
+
+\subsection{Guide} \label{subsec:guide}
+The guide page was implemented almost exactly like the wireframe in the design section (Figure \ref{fig:webguide}), but with some styling improvements. This can be seen in Figure \ref{fig:webguideimpl}.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Implemented Guide Screen}
+\includegraphics[width=.8\textwidth]{i/webguideimpl.png}
+\label{fig:webguideimpl}
+\end{figure}
+
+As Figure \ref{fig:webguideimpl} shows, the navigation bar is different if the user is logged in. Being logged in gives access to the guide, analysis and account pages. It also enables the log out button.
+
+As the entire web app is rendered and updated based on state, the log out button simply clears the relevant state. This is done with the following code:
+\begin{lstlisting}
+logout: () => {
+  dispatch(resetUser())
+  dispatch(resetToken())
+
+  dispatch(setSelectedTab('home'))
+}
+\end{lstlisting}
+
+This clears all state relevant to the user, clears the access token from state, and navigates the user back to the home page. This would, due to the listener described earlier, also clear the persisted state in HTML Local Storage. The user would therefore have to log in again to be able to access the \enquote{logged in} areas of the application.
+
+\subsection{Record/SWEMWBS Questionnaire}
+The SWEMWBS questionnaire can be found on the record page. This is almost identical to the wireframe in the design section (Figure \ref{fig:webrecord}). The top of the record page can be seen in FIgure \ref{fig:webrecordimpltop} and the bottom in FIgure \ref{fig:webrecordimplbottom}.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Implemented Record Screen Top of Page}
+\includegraphics[width=.75\textwidth]{i/webrecordimpltop.png}
+\label{fig:webrecordimpltop}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Implemented Record Screen Bottom of Page}
+\includegraphics[width=.75\textwidth]{i/webrecordimplbottom.png}
+\label{fig:webrecordimplbottom}
+\end{figure}
+
+The only significant change to the design is the addition of the clear button which, much like the register page, clears all of the answers to the questionnaire.
+
+The submit button is disabled until all the questions are answered. When it is enabled and pressed, the sum of the answers and the current date and time are calculated. These are then submitted to the SelfReflect API in exactly the same way as the questions in the mobile app. The user is then presented with a success message and the answers are cleared.
+
+\subsection{Account}
+The account page is divided into two areas: account management and connect existing apps. An overall view of the page can be seen in Figure \ref{fig:webaccountimpl}.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Implemented Account Screen}
+\includegraphics[width=.75\textwidth]{i/webaccountimpltop.png}
+\includegraphics[width=.75\textwidth]{i/webaccountimplbottom.png}
+\label{fig:webaccountimpl}
+\end{figure}
+
+\newpage
+\subsubsection{Account Management}
+The first section of the account page deals with account management. This section contains three \enquote{tabs}: view account, edit email and edit password. These can be seen in Figure \ref{fig:webaccounttabs}.
+\begin{figure}[ht]
+\centering
+\caption{Web App Implemented Account Management Tabs}
+\includegraphics[width=.48\textwidth]{i/webaccountviewtab.png} \\
+\includegraphics[width=.48\textwidth]{i/webaccountemailtab.png} \hfill
+\includegraphics[width=.48\textwidth]{i/webaccountpasswordtab.png}
+\label{fig:webaccounttabs}
+\end{figure}
+
+A change made from the design of this area (in Figure \ref{fig:webaccount}) was the addition of the view account tab. This was originally not included, but automatically displaying either of the edit forms seemed strange from a user experience standpoint. The user may simply want to view their details rather than edit them. This also provides some feedback for the user if they change their email, as the view account tab will automatically be updated to their new email.
+
+The edit email and edit password forms are relatively simple. They use the same validation rules as the register page, require the current password to be provided for security reasons, and send a PUT request to the \enquote{/v1/users/:id} endpoint of the SelfReflect API. The body of this request contains the full original user, with either the email or the newPassword field changed, for edit email and edit password respectively. See section \ref{sec:apiimplusers} for further details on this.
+
+Both of these forms contain a clear button, which work in exactly the same way as other clear buttons described in this chapter. They simply clear the inputs of that form. Both forms also handle successful and error responses from the server, and report these to the user.
+
+\subsubsection{Connect Existing Apps}
+The second area of this page is the connect existing apps area. This allows the user to connect Twitter and Strava to their SelfReflect account. The colours for the boxes surrounding the Twitter and Strava areas are taken from the respective logos for each of the applications.
+
+\paragraph{Twitter} This changed quite substantially from the design of the account page (Figure \ref{fig:webaccount}). The reason for this relates to both the web app and the API. During implementation it was found that Twitter provide \enquote{application-only authentication} \parencite{twitterapponly}. This allows an application to access certain endpoints of the Twitter API by authenticating itself, rather than the user. It also provides a higher rate limit for these endpoints.
+
+The details of the application only authentication will be discussed in section \ref{sec:apiconnecttwitter}, but one of these endpoints allows the SelfReflect API to fetch user timelines (i.e. recent tweets). For this reason Twitter does not need to be fully connected; SelfReflect simply needs the user's Twitter username to be able to fetch their tweets. This is therefore a \enquote{user level} update, so is implemented in almost exactly the same way as the edit email and edit password forms. The current password is required for security, and a PUT request is sent to \enquote{/v1/users/:id}, with the \emph{twitter\textunderscore username} field changed.
+
+The form itself contains elements discussed before; a clear button, handling of success and error responses, and basic twitter username validation. This validation is handled by the following code, which as the comment states, simply checks the username is between one and fifteen characters, and contains only letters, numbers and underscores:
+\begin{lstlisting}
+// Letters, numbers and underscores, and 1-15 characters
+export default twitter_username => (
+  twitter_username && /^[a-zA-Z0-9_]{1,15}$/.test(twitter_username)
+)
+\end{lstlisting}
+
+\paragraph{Strava} Strava does not provide application only authentication, and so must be fully connected to allow the SelfReflect to fetch the user's exercise data. This is a fairly complicated process that was made more complicated by the fact the the SelfReflect web app is a \enquote{one page} app. The following stages are required to connect a user's Strava account to any application:
+\begin{enumerate}
+\item Direct the user to Strava's authorisation page. If the user accepts, Strava will respond with a code.
+\item Exchange this code for a Strava access token.
+\item Use this access token in subsequent requests.
+\end{enumerate}
+
+The first of these stages is handled by the following code in the SelfReflect web app:
+\begin{lstlisting}
+import { authURL, clientId, redirectUri } from '../../../../config/strava'
+
+const onClickConnect = (userId, tokenValue) => () => {
+  const state = { userId, tokenValue }
+
+  window.open(authURL +
+    '?client_id=' + clientId +
+    '&state=' + JSON.stringify(state) +
+    '&response_type=code' +
+    '&redirect_uri=' + redirectUri
+  )
+}
+\end{lstlisting}
+
+This directs the user to the Strava authorisation page. It also provides two parameters of note:
+\begin{enumerate}
+\item \emph{state}. This is extremely important for stage 2 of connecting strava. It allows some state to be passed to Strava's authorization page, which is automatically passed back (unmodified) after the user accepts authorisation.
+\item \emph{redirect\textunderscore uri}. This is where Strava will direct the user, and hence pass the code and state to, after the user accepts authorisation. This is the reason SelfReflect being a one page application caused issues when connecting Strava. The web app originally only had one page, meaning there was not page to redirect to that would be able to handle the Strava authorisation. To handle this, another page had to be added to the web app. This is accessible at \enquote{/connectStrava} on the web app.
+\end{enumerate}
+
+This page handles part of stage 2 of connecting a user's Strava account. When the page is loaded, the GET parameters (state and code) are pulled from the address bar using the following code:
+\begin{lstlisting}
+const getParams = parse(window.location.search)
+const state = JSON.parse(getParams.state)
+\end{lstlisting}
+
+The page then simply sends the code to the SelfReflect API (using the userId and the SelfReflect token, as is required by the SelfReflect API), which exchanges the code for a Strava access token and stores it in the SelfReflect database against that user. The page gives user feedback on the progress of connecting Strava as this happens, as shown in Figure \ref{fig:webstravaloading} and Figure \ref{fig:webstravasuccess}.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Implemented Connect Strava Screen Loading Message}
+\includegraphics[width=.75\textwidth]{i/webstravaloading.png}
+\label{fig:webstravaloading}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Implemented Connect Strava Success Screen Success Message}
+\includegraphics[width=.75\textwidth]{i/webstravasuccess.png}
+\label{fig:webstravasuccess}
+\end{figure}
+
+\subsection{Analysis}
+The final page of the web app is the analysis page, which includes the visualisations. This page can be seen in Figure \ref{fig:webanalysisimpl}.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Implemented Analysis Screen}
+\includegraphics[width=.75\textwidth]{i/webanalysisimpl.png}
+\label{fig:webanalysisimpl}
+\end{figure}
+
+This is much like the design for this page (Figure \ref{fig:webanalysis}). The user can select which sources they wish to build the visualisation from, then press generate. There are three key aspects to generating the graph:
+\begin{enumerate}
+\item Fetch the data.
+\item Format the data.
+\item Build the graph with the data.
+\end{enumerate}
+
+\subsubsection{Fetching the Data}
+The data is fetched via the SelfReflect API. Each data requires a separate request, so a system was devised where functions do the following:
+\begin{itemize}
+\item Take some input data.
+\item If source is selected, fetch the data from one of the sources.
+\item Merge the input data and fetched data. If fetched data is nothing (if source is not selected), this will just result in the input data.
+\item Pass this merged data as input data to the next function in the \enquote{chain}.
+\end{itemize}
+This is a \enquote{functional} way of doing things and allows the functions to be chained, as in the following code:
+\begin{lstlisting}
+const sortByDate = sortBy(prop('timestamp'))
+
+const isWellbeing = sources.averageWellbeingPerDay
+const isNumTweets = sources.numTweetsPerDay
+const isDistance = sources.distanceExercisedPerDay
+
+return fetchAverageWellbeingPerDay(isWellbeing, [], userId, token, data => {
+  fetchNumTweetsPerDay(isNumTweets, data, userId, token, data => {
+    fetchDistanceExercisedPerDay(isDistance, data, userId, token, data => {
+      data = sortByDate(data)
+
+      dispatch(updateIsLoading(false))
+
+      dispatch(updateGraphData(data))
+    })
+  })
+})
+\end{lstlisting}
+
+This means should extra sources be added in the future, it would be relatively easy to add them as an extra function in this chain. This simply then sorts the data by date, which is a unix timestamp, and updates this data in the state of the application, which the graph can then be built from. Note that these fetch functions also handle the formatting of the data.
+
+\subsubsection{Formatting the Data}
+Data is received from the SelfReflect API in its raw format, and it extremely unlikely that any two sources will return data in the same or even compatible ways. In the case of SelfReflect, Twitter and Strava this is true; three entirely different representations are used. Plus, the open source software used to generate the graph requires the data be provided in a very specific format.
+
+In order to do this, raw data that is received from the SelfReflect API is processed after it is received into a consistent format. This involves converting all dates to unix timestamps, and merging data from multiple sources that happen to be from the same day. This allows multiple series on the same graph. The code has not been included for this as it is large and repetitive, but it essentially sorts dates and data so that one set of merged data is produced that can be passed directly to the graph. An example of this merged data format would be:
+\begin{lstlisting}
+[
+  {
+    "timestamp":1492041600000,
+    "totalWellbeing":42.269999999999996,
+    "numWellbeings":2,
+    "averageWellbeing":21.134999999999998,
+    "numTweets":13,
+    "distanceExercised":15
+  },
+  {
+    ...
+  },
+  ...
+]
+\end{lstlisting}
+The calculation of distance exercised and number of tweets is straightforward. For events on a repeated day, the total is just added to the previous total. The average wellbeing however is a little more complicated. This requires the totalWellbeing and numWellbeings to be updated throughout. Once all the data had been processed, an extra iteration is carried out in which the average wellbeing for each day is calculated, by dividing the total wellbeing on that day by the number of wellbeing recordings on that day.
+
+\subsubsection{Building the Graph}
+Once the data is processed into this format and updated in state, generating the graph is easy. The only thing left to do is define the series of the chart, and generate the graph. In order to define the chart series, the selected sources are mapped over, and an array of objects representing each chart series is formed. This contains aspects such as the name of the field in the data, the display name of the series, the colour of the series and styling. The colour of each chart is the same colour as the surrounding box on the account page to aid clarity; blue for Twitter, orange for Strava. The code to generate the chart series is shown below:
+\begin{lstlisting}
+const getChartSeries = sources => {
+  return map(source => {
+    switch (source) {
+      case 'averageWellbeingPerDay':
+        return {
+          field: 'averageWellbeing',
+          name: 'Average wellbeing per day (SelfReflect)',
+          color: '#555555',
+          style: thickerLine
+        }
+      case 'numTweetsPerDay':
+        return {
+          field: 'numTweets',
+          name: 'Number of tweets per day (Twitter)',
+          color: '#1da1f3',
+          style: thickerLine
+        }
+      case 'distanceExercisedPerDay':
+        return {
+          field: 'distanceExercised',
+          name: 'Distance exercised per day (km) (Strava)',
+          color: '#fc4c02',
+          style: thickerLine
+        }
+      default:
+        return
+    }
+  }, keys(sources))
+}
+\end{lstlisting}
+
+The data and chart series are then simply passed as properties to the ReactD3 chart, as in the following code:
+\begin{lstlisting}
+<LineChart
+    data={data}
+    chartSeries={chartSeries}
+    x={data => {
+      return new Date(data.timestamp)
+    }}
+    xScale='time'
+/>
+\end{lstlisting}
+
+This generates the graph, a full example of which can be seen in Figure \ref{fig:webanalysisgraph}. The user can also then deselect/reselect a source, and as the graph is built entirely from state, it will automatically remove this series from the graph and resize/rescale where possible. The only restriction on this is the user cannot select a source they did not initially select, as the data will not have been \enquote{fetched}. To do this the user must select the desired source and press the generate button again.
+
+\begin{figure}[ht]
+\centering
+\caption{Web App Implemented Visualisation}
+\includegraphics[width=\textwidth]{i/webanalysisgraph.png}
+\label{fig:webanalysisgraph}
+\end{figure}
+
+\newpage
+\subsection{Responsiveness}
+
+
+\subsection{Documentation}
 a
 
 \section{API} \label{sec:apiimpl}
 a
 
+\subsection{Connect Twitter} \label{sec:apiconnecttwitter}
+
+
+\subsection{Connect Strava} \label{sec:apiconnectstrava}
+
+
+\subsection{Users Endpoint} \label{sec:apiimplusers}
+
 \section{Database}
 a
 
+
+
+
+
 \chapter{Testing}
+\section{Automated}
+a
 
-\ldots
-
+\section{User Testing}
+a
 
 \chapter{Results and Discussion}
-
 \ldots
 
 
 \chapter{Conclusions and Future Work}
-
 \ldots
 
 \printbibliography
@@ -1340,10 +1843,24 @@ a
   \label{swemwbsconversiontable}
 \end{figure}
 
+\newpage
 \begin{figure}[ht]
   \centering
   \includegraphics[width =.7\textwidth]{i/swemwbsconversiontable2.png}
 \end{figure}
+
+\newpage
+\section{Mobile App Documentation} \label{app:mobiledocs}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=.9\textwidth]{i/mobiledocs1.png}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=.9\textwidth]{i/mobiledocs2.png}
+\end{figure}
+
 \end{appendices}
 
 \end{document}
