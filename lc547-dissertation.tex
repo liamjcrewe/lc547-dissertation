@@ -1081,11 +1081,12 @@ An entity-relationship diagram for the planned database can be seen in Figure \r
 
 \begin{figure}[ht]
 \centering
-\caption{Database Planned Entity-Relationship Diagram}
+\caption{Planned Database Entity-Relationship Diagram}
 \includegraphics[width=0.8\textwidth]{i/selfreflectdb.png}
 \label{fig:dberd}
 \end{figure}
 
+\newpage
 This shows each of the tables, the columns in them, the types of each of these columns, and the relationships between tables.
 
 \subsection{User Table}
@@ -2015,8 +2016,16 @@ A huge amount of documentation was written for the SelfReflect API. This documen
 
 This full documentation is very large, and can be seen in appendix \ref{app:apidocs}.
 
+\newpage
 \section{Database}
-a
+The database was implemented almost exactly as discussed in the database design section (section \ref{sec:databasedesign}). The only change relates to the change in how Twitter was connected for a user. The Twitter token column in the users table was renamed to \emph{twitter\textunderscore username}. The final entity-relationship diagram for the implemented database can be seen in Figure \ref{fig:dberdimpl}.
+
+\begin{figure}[ht]
+\centering
+\caption{Implemented Database Entity-Relationship Diagram}
+\includegraphics[width=0.8\textwidth]{i/dberdimpl.png}
+\label{fig:dberdimpl}
+\end{figure}
 
 \chapter{Testing}
 \section{Automated}
