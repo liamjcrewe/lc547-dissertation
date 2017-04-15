@@ -1063,7 +1063,7 @@ In order to achieve this, the API will use JSON Web Tokens, or JWTs \parencite{j
 
 All endpoints that access restricted data will require a valid access token to be sent with the request, which can be obtained via the /tokens endpoints. If no token is sent, or any of the three conditions above are not met, the request will be rejected. This therefore provides all the security needed (satisfying F12.2 and F12.4), but does not store any state on the server, so does not violate stateless REST principles.
 
-\subsection{Secure Password Storage}
+\subsection{Secure Password Storage} \label{subsec:secpass}
 A final security issue relates to the storage of passwords. If the database were to be \enquote{hacked}, it is desirable that passwords would still not be lost. Common practise to achieve this is to \enquote{hash} passwords. This involves putting passwords through a \enquote{one way algorithm}, meaning the original password cannot be obtained from the final result, even if the algorithm is known. This is often used for passwords, as applications do not actually need to know user's original passwords. The application can store the hashed password, then when an authentication request is received, the password can be put through the same one way algorithm and checked against the stored hash to make sure they are the same. This is a small cost to the application, and ensures that even if the database is hacked, the hacker does not have access to user's original passwords.
 
 SelfReflect will use hashing of passwords for these reasons. The algorithm it will use is called \enquote{bcrypt}. This \enquote{is currently the defacto secure standard for password hashing} \parencite{bcryptblog}. This algorithm, as of this project, is considered secure and unbroken. SelfReflect will also use \enquote{salts}, which are unique values (per password) that are appended to the password before it is hashed. A common way to reverse hashing algorithms is by brute forcing (using a computer to try every possible password until the correct password is found). Using a salt severely limits the ability to brute force sets of hashed passwords. The hacker would have to brute force every password individually, taking each salt into account, rather than being able to brute force them all at once. This means salts do not have to be secret; they simply have to be unique. Combining these techniques means passwords will be stored in a secure, irreversible, hashed format in the database. Passwords therefore cannot be lost even if the database is hacked, which satisfies NF3.
@@ -1894,6 +1894,24 @@ app.get('/v1/users/:id', (req, res) => {
 \end{lstlisting}
 
 This checks the user id is valid, then checks the user id matches that of the requested resource. Combining this token generation and authentication middleware provides all authentication required for restricted endpoints in the SelfReflect API.
+
+\subsection{Secure Password Storage}
+In order to implement secure password storage and hashing, as described in section \ref{subsec:secpass}, an open source library called \enquote{node.bcrypt.js} was used, which simply implements \emph{bcrypt} hashing and is compatible with Node.js \parencite{nodebcrypt}. This is implemented using the following code:
+\begin{lstlisting}
+const saltRounds = 10
+...
+bcrypt.hash(password, saltRounds, (err, hash) => {
+  ...
+  connection.query(
+    'INSERT INTO user (email, password, twitter_username) VALUES (?, ?, ?)',
+    [email, hash, twitter],
+    (err, result) => {
+      ...
+    }
+  )
+})
+\end{lstlisting}
+This is the code used to create a user in the database. This hashes the password, then inserts the resultant hash in the database in the password field for the user. Note that this library automatically generates and uses a salt. Salt rounds can be increased or decreased; more salt rounds provides added security at the cost of processing speed. Ten salt rounds is the default that is recommended by the author of the open source library, so this was used for the SelfReflect API.
 
 \subsection{Users Endpoints} \label{sec:apiimplusers}
 The endpoints implemented are almost identical to those described in section \ref{sec:apiendpoints}. They will not all be described in detail here as are very simple and intuitive, and hence the code is not particularly interesting. Creation of users for example consists of a simple function that extracts email and password from the request, performs some validation (checks fields exist, checks email not already in use), then performs a simple MySQL insert to insert an entry into the database. Full descriptions of all of these endpoints have been detailed in the documentation, as seen in section \ref{sec:apidocs}. The only endpoints that will be discussed are those that relate to external APIs (Twitter and Strava).
