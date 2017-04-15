@@ -780,8 +780,8 @@ The API is the server; it is where storage and retrieval of all user data happen
   \end{enumerate}
 \item Should have automated tests. This section of the project deals with user data and security, so correct and reliable behaviour is essential. Also, while the API can be manually tested indirectly via the web and mobile apps, it cannot be manually tested directly, so automated tests are important.
   \begin{enumerate}
-  \item Should have automated tests covering at least 70\% of lines of code.
-  \item Could have automated tests covering at least 95\% of lines of code.
+  \item Should have automated tests covering at least 70\% of lines of testable code.
+  \item Could have automated tests covering at least 95\% of lines of testable code.
   \end{enumerate}
 \end{enumerate}
 
@@ -2020,6 +2020,7 @@ A huge amount of documentation was written for the SelfReflect API. This documen
 \begin{itemize}
 \item A short description of SelfReflect and the SelfReflect API.
 \item Instructions on how to install, set up and run the API for local development and testing.
+\item How to run the automated tests.
 \item Specific details and instructions on how API authentication works.
 \item Documentation for every endpoint, including:
   \begin{itemize}
@@ -2034,9 +2035,8 @@ A huge amount of documentation was written for the SelfReflect API. This documen
 
 This full documentation is very large, and can be seen in appendix \ref{app:apidocs}.
 
-\newpage
 \section{Database}
-The database was implemented almost exactly as discussed in the database design section (section \ref{sec:databasedesign}). The only change relates to the change in how Twitter was connected for a user. The Twitter token column in the users table was renamed to \emph{twitter\textunderscore username}. The final entity-relationship diagram for the implemented database can be seen in Figure \ref{fig:dberdimpl}.
+The database was implemented almost exactly as discussed in the database design section (section \ref{sec:databasedesign}), using MySQL. The only change relates to the change in how Twitter was connected for a user. The Twitter token column in the users table was renamed to \emph{twitter\textunderscore username}. The final entity-relationship diagram for the implemented database can be seen in Figure \ref{fig:dberdimpl}.
 
 \begin{figure}[ht]
 \centering
@@ -2046,8 +2046,40 @@ The database was implemented almost exactly as discussed in the database design 
 \end{figure}
 
 \chapter{Testing}
-\section{Automated}
-a
+\section{Introduction}
+Two types of testing were carried out to fully test the system: automated testing for the API, and user testing for the entire system. The API is tested indirectly by user testing, but cannot be tested directly by users, so automated testing was implemented. This was essential as the API deals with user data, security and authentication. These are very important features and so it was essential to test these, and ensure the implemented code works correctly and reliably.
+
+\section{Automated Testing}
+\subsection{Technologies}
+To implement tests for the API, various open source libraries were used:
+\begin{enumerate}
+\item \emph{Mocha}: \enquote{a feature-rich JavaScript test framework running on Node.js and in the browser, making asynchronous testing simple and fun} \parencite{mocha}. This is the basic framework for writing the tests.
+\item \emph{Chai}: An \enquote{assertion library for node} \parencite{chai}. This makes some assertions more readable and easier to understand.
+\item \emph{Istanbul}: Used for code coverage calculation and reports. \enquote{Istanbul instruments your ES5 and ES2015+ JavaScript code with line counters, so that you can track how well your unit-tests exercise your codebase} \parencite{instanbul}.
+\item \emph{Supertest}: A \enquote{high-level abstraction for testing HTTP} \parencite{supertest}. Used for writing \enquote{API tests} which send HTTP requests to the SelfReflect API.
+\end{enumerate}
+
+\subsection{Method}
+The details of all the tests and their specific implementation will not be discussed here. A set of tests were written for each endpoint, so that for every endpoint:
+\begin{itemize}
+\item Every success response was tested.
+\item Every error response to a valid request was tested, such as duplicate emails. Duplicate emails is a valid request that returns an error response.
+\item Every error response to invalid request was tested, such as requesting information for a user id that is not authenticated, or providing no authentication token.
+\end{itemize}
+
+In order to test some more complicated endpoints, such as Twitter and Strava, test accounts had to be created for each of these applications. The tests could then use these accounts, and as these accounts are controlled, assertions could be made on the expected response from Twitter and Strava.
+
+\subsection{Code Coverage}
+In the requirements section for the API (section \ref{subsec:apireqs}), non-functional requirements 6.1 and 6.2 relate to covering at least 70\% and 95\% of lines of testable code respectively. The reason the word testable was included here is because some lines are near impossible to \emph{meaningfully} test. An example of this is an error thrown by the operating system. Another might be errors thrown by MySQL itself, if the database becomes inaccessible for whatever reason. This is almost impossible to recreate in a test case without making the test arbitrary and meaningless. In order to remove these lines from the code coverage calculation, Istanbul can be told to ignore specific lines using specific code comments.
+
+Once these scenarios were ignored from the code coverage calculation, only testable lines of code remained. The automated tests managed to cover all of these testable lines, achieving 100\% test coverage and satisfying both non-functional requirements 6.1 and 6.2. This code coverage report is shown in Figure \ref{fig:codecoverage}.
+
+\begin{figure}[ht]
+\centering
+\caption{API 100\% Lines Code Coverage Report}
+\includegraphics[width=\textwidth]{i/codecoverage.png}
+\label{fig:codecoverage}
+\end{figure}
 
 \section{User Testing}
 a
