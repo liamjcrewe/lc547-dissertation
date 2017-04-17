@@ -708,12 +708,6 @@ The web app is significantly larger, and incorporates most of the major contribu
   \item Could work on tablets.
   \item Should be tested on various browser window sizes to test responsiveness, with regard to each requirement.
   \end{enumerate}
-\item Should run in three major modern internet browsers.
-  \begin{enumerate}
-  \item Must run in Google Chrome.
-  \item Should run in Safari.
-  \item Should run in Firefox.
-  \end{enumerate}
 \item Should include documentation for developers on how to set up the project and get it running.
 \item Must be tested manually, including testing by volunteer testers.
   \begin{enumerate}
@@ -2047,7 +2041,7 @@ The database was implemented almost exactly as discussed in the database design 
 
 \chapter{Testing}
 \section{Introduction}
-Two types of testing were carried out to fully test the system: automated testing for the API, and user testing for the entire system. The API is tested indirectly by user testing, but cannot be tested directly by users, so automated testing was implemented. This was essential as the API deals with user data, security and authentication. These are very important features and so it was essential to test these, and ensure the implemented code works correctly and reliably.
+Throughout the entire implementation of the project, manual testing was carried out to check all functionality was implemented correctly. However, this is not sufficient to fully test the system. In order to do this, two further types of testing were carried out: automated testing for the API, and user testing for the entire system. The API is tested indirectly by user testing, but cannot be tested directly by users, so automated testing was implemented. This was essential as the API deals with user data, security and authentication. These are very important features and so it was essential to test these, and ensure the implemented code works correctly and reliably.
 
 \section{Automated Testing}
 \subsection{Technologies}
@@ -2081,12 +2075,21 @@ Once these scenarios were ignored from the code coverage calculation, only testa
 \label{fig:codecoverage}
 \end{figure}
 
+\newpage
 \section{User Testing}
-a
+The user testing of the system was designed with three key goals in mind:
+\begin{enumerate}
+\item Test the \emph{functionality} of the system. That is, check that users can successfully use all the implemented features of the system.
+\item Test the \emph{usability} of the system. That is, check how easy it is for users to use the various features of the system, and get feedback on how this could be improved.
+\item Get suggestions for improvements and additional features from users who have tested the system.
+\end{enumerate}
+
+In order to test these, volunteer user's were asked to carry out a series of tasks for the mobile app, then a series of tasks for the web app. These tasks can be seen in appendix \ref{app:testing:tasks}. As long as all users could carry these tasks out successfully, this covered goal number 1. Users were then asked to answer a questionnaire, with a set of questions for each of the mobile and web app. These questions were designed to cover goals 2 and 3. Some questions asked the user how easy it was to carry out the separate tasks, on a simple one to five scale (goal 2), while other asked the user to report any issues they found and for suggestions for improvements and additional features (goal 3). This questionnaire can be seen in appendix \ref{app:testing:questionnaire}.
+
+This testing was carried out by a number of volunteer users. Research carried out by \citeauthor{nielsenfiveusers} (\citeyear{nielsenfiveusers}) recommends using five users. This article stated that testing with five users \enquote{lets you find almost as many usability problems as you'd find using many more test participants}. However, the testing carried out in this project was not just usability testing; it also tested functionality and aimed to get feedback on suggestions, as discussed above. For this reason ten users were selected to carry out the user testing and answer the questionnaire. These users were of a variety of ages, and had a variety of technical proficiencies.
 
 \chapter{Results and Discussion}
 \ldots
-
 
 \chapter{Conclusions and Future Work}
 \ldots
@@ -2195,6 +2198,32 @@ a
   \centering
   \includegraphics[width=.9\textwidth]{i/apidocs15.png}
   \includegraphics[width=.9\textwidth]{i/apidocs16.png}
+\end{figure}
+
+\clearpage
+\section{User Testing Tasks} \label{app:testing:tasks}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=.8\textwidth]{i/testingtasks.png}
+\end{figure}
+
+\clearpage
+\section{User Testing Tasks} \label{app:testing:questionnaire}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{i/testingquestionnaire1.png}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{i/testingquestionnaire2.png}
+  \includegraphics[width=\textwidth]{i/testingquestionnaire3.png}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{i/testingquestionnaire4.png}
+  \includegraphics[width=\textwidth]{i/testingquestionnaire5.png}
 \end{figure}
 
 \end{appendices}
