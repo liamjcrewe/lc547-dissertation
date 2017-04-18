@@ -2076,7 +2076,7 @@ Once these scenarios were ignored from the code coverage calculation, only testa
 \end{figure}
 
 \newpage
-\section{User Testing}
+\section{User Testing} \label{sec:usertesting}
 The user testing of the system was designed with three key goals in mind:
 \begin{enumerate}
 \item Test the \emph{functionality} of the system. That is, check that users can successfully use all the implemented features of the system.
@@ -2084,12 +2084,88 @@ The user testing of the system was designed with three key goals in mind:
 \item Get suggestions for improvements and additional features from users who have tested the system.
 \end{enumerate}
 
-In order to test these, volunteer user's were asked to carry out a series of tasks for the mobile app, then a series of tasks for the web app. These tasks can be seen in appendix \ref{app:testing:tasks}. As long as all users could carry these tasks out successfully, this covered goal number 1. Users were then asked to answer a questionnaire, with a set of questions for each of the mobile and web app. These questions were designed to cover goals 2 and 3. Some questions asked the user how easy it was to carry out the separate tasks, on a simple one to five scale (goal 2), while other asked the user to report any issues they found and for suggestions for improvements and additional features (goal 3). This questionnaire can be seen in appendix \ref{app:testing:questionnaire}.
+In order to test these, volunteer user's were asked to carry out a series of tasks for the mobile app, then a series of tasks for the web app. These tasks can be seen in appendix \ref{app:testing:tasks}. Any failures or errors that occurred in simply carrying out these tasks were recorded, covering goal 1. Users were then asked to answer a questionnaire, with a set of questions for each of the mobile and web app. These questions were designed to cover goals 2 and 3. Some questions asked the user how easy it was to carry out the separate tasks, on a simple one to five scale (goal 2), while other asked the user to report any issues they found and for suggestions for improvements and additional features (goal 3). This questionnaire can be seen in appendix \ref{app:testing:questionnaire}.
 
 This testing was carried out by a number of volunteer users. Research carried out by \citeauthor{nielsenfiveusers} (\citeyear{nielsenfiveusers}) recommends using five users. This article stated that testing with five users \enquote{lets you find almost as many usability problems as you'd find using many more test participants}. However, the testing carried out in this project was not just usability testing; it also tested functionality and aimed to get feedback on suggestions, as discussed above. For this reason ten users were selected to carry out the user testing and answer the questionnaire. These users were of a variety of ages, and had a variety of technical proficiencies.
 
 \chapter{Results and Discussion}
-\ldots
+The complete results of the testing can be seen in appendix \ref{app:testing:results}. These results will be discussed for each of the mobile app and web app, with reference to the goals of the user testing as detailed in section \ref{sec:usertesting}. These are, in short: functionality, usability, and improvements and/or additional features.
+
+\section{Functionality Testing}
+The initial plan was to record any failures or errors that occurred while users were carrying out the set of testing tasks. However, none of these failures or errors occurred; all ten volunteer test users managed to complete the entire set of tasks successfully, for both the mobile app and the web app, albeit some users slower than others.
+
+\section{Mobile App}
+The first three mobile app questions used a scale of one to five, where one is \enquote{very easy} and five is \enquote{very difficult}. Of these questions, the vast majority of answers were rated one or two. Also, for the fourth question, all users responded stating the table was either \enquote{very clear} or \enquote{clear}. These results suggest that the overall usability of the system was very good. However, some answers did highlight usability issues and areas for improvement. The answers for the first three questions that were greater than two will be discussed in the following section, as well as other usability issues identified, including why the user found this an issue, and what could be done to improve usability. These future usability changes will then be summarised in section \ref{subsec:mobusabilityimpr}.
+
+\subsection{Usability Testing Issues}
+\subsubsection{Account Creation}
+One user answered four for the \enquote{create an account} task. This same user answered the question regarding issues with the mobile app with the statement \enquote{confused by being on log in screen when asked to create an account}. This related more to the testing process than the app itself. As the user had the task of creating an account in mind, they expected the account creation screen to be the first screen they saw, rather than having to go find it. This could be resolved by simply having a more clear testing process, by explaining the process more thoroughly to the user, having clearer instructions, or setting the first screen the user sees as the registration screen.
+
+\subsubsection{Recording Wellbeing}
+Two users answered three for the \enquote{record your wellbeing} task. These users explained this (in the question about issues with the mobile app) by saying they were a little confused how to record wellbeing from the home screen, and by stating that their initial instinct was to try to fill out the \enquote{last 5 recordings} table rather than press the record button. These users suggested that the record button could be made more obvious, by making it bigger, brighter or highlighting it somehow.
+
+\subsubsection{Log Out}
+Another usability issue identified by testers related to logging out of the application. Users tended to notice the log out \enquote{symbol}, but thought it was a power symbol for the device, not a log out button. They therefore spent a long time deliberating before trying the log out button to see if that was the correct way to log out. Although users managed this eventually without help, many suggested that this could be clearer. The overwhelming majority of the user that suggested this stated that including the words \enquote{log out}, either next to or instead of the symbol, would improve the usability of the system.
+
+\subsection{Summary of Future Usability Improvements} \label{subsec:mobusabilityimp}
+Given the feedback on the usability of the system, the following changes could be made in future iterations of the SelfReflect mobile app:
+\begin{itemize}
+\item Make buttons (particularly record button) bigger and more obvious.
+\item Change log out button to have the words \enquote{log out} written next to it.
+\end{itemize}
+
+\subsection{Summary of Improvements and/or Additional Features}
+The last two questions in the mobile app section asked for: suggestions for improvements that could be made to existing features, and suggestions for additional features the user would like added to the mobile app. A summary of the suggestions obtained from the responses to these questions can be seen below:
+\begin{itemize}
+\item Improvement: Add a link to the web app to the message that encourages users to visit the SelfReflect web app.
+\item Additional feature: Account management. Two users suggested this, with one requesting the entire account tab from the web app, and the other simply requesting the ability to change email and password. Either way, account management could be a useful feature to be added in future iterations of the SelfReflect mobile app.
+\item Improvement: One user suggested the SelfReflect title could be a logo or could use a more interesting font. This is something that would very likely be improved in future development of the system, and the very simple logo was used as a \enquote{placeholder} as this system was developed as a proof of concept.
+\end{itemize}
+
+\section{Web App}
+The first seven mobile app questions used the scale of one to five. Again the vast majority of answers were one or two. In fact, the web app responses were more positive than that of the mobile app. Only one user answered three or above for only one of the questions, as will be discussed in the following section, along with other usability issues identified, and the changes that could be made to improve usability. As with the mobile app, these future usability changes will be summarised in section \ref{subsec:webusabilityimp}.
+
+\subsection{Usability Testing Issues}
+\subsubsection{Edit Email and/or Password}
+One user answered three for the \enquote{change email or password} question. This user answered the question regarding issues with the web app by stating the edit email/password buttons were a little hard to find. This could be an outlier, as nine out of ten users responded with two or below. Also, this user responded with three, so this is still a relatively good score. However, this result cannot be ignored and so the edit buttons could potentially be improved by making them bigger or more obvious in some way.
+
+\subsubsection{Form Submission Success Messages}
+Some responses to the questionnaire noted that the \enquote{success} messages for form submissions (i.e. register, edit email, edit password) were quite small and not too clear. This could therefore be improved by making the success message larger and bolder (increasing the font weight).
+
+\subsection{Summary of Future Usability Improvements} \label{subsec:webusabilityimp}
+Given the feedback on the usability of the system, the following changes could be made in future iterations of the SelfReflect web app:
+\begin{itemize}
+\item Make edit email and password buttons bigger and more obvious.
+\item Make success more noticeable by making them larger and by increasing the font weight to make them bolder.
+\end{itemize}
+
+\subsection{Summary of Improvements and/or Additional Features}
+\subsubsection{General Web App}
+The two questions that asked suggestions for improvements and/or additional features were also asked for the web app. A summary of the suggestions obtained from the responses to these questions can be seen below:
+\begin{itemize}
+\item Improvement: Make the guide page more interesting. This could be done by adding images, colour or simply structuring the page slightly differently.
+\item Improvement: More interesting SelfReflect logo or font. As with the mobile app, this is something that would very likely be improved in future development of the system.
+\item Additional feature: Different graphs types, formats and display options, such as pie charts and bar charts. Several users suggested this, and it would definitely be an area for development in future iterations of the SelfReflect web app.
+\item Additional feature: Export facility for generated visualisations. The user could download an image of the generated graph to show to a professional to analyse. Another option for this is the ability to download the graph data as a csv file (comma separated values file), which could be imported into other systems.
+\end{itemize}
+
+\subsubsection{Additional Sources}
+The second last question of the questionnaire asked users for suggestions for additional sources. These suggestions are summarised below:
+\begin{itemize}
+\item Music based apps: Spotify, Apple music.
+\item Extra social media apps: Facebook, Instagram.
+\item Extra fitness apps: Fitbit, Garmin fitness, smart watches.
+\item Diet and food tracking apps.
+\item Sleep and sleeping pattern tracking apps.
+\item Entertainment apps: Netflix or game usage.
+\end{itemize}
+
+\subsubsection{Additional Options Within Existing Sources}
+The last question of the questionnaire asked users for suggestions for additional options \emph{within} existing sources. These suggestions are summarised below:
+\begin{itemize}
+\item Twitter: Number of likes, retweets, replies, individual tweets or times refreshed, time spent on app without posting.
+\item Strava: pace analysis, time exercised per day, distance ran/cycled/swam per day, number of steps, time at rest, calories burned per day (if provided by Strava).
+\end{itemize}
 
 \chapter{Conclusions and Future Work}
 \ldots
@@ -2227,7 +2303,7 @@ This testing was carried out by a number of volunteer users. Research carried ou
 \end{figure}
 
 \clearpage
-\section{User Testing Questionnaire Responses}
+\section{User Testing Questionnaire Responses} \label{app:testing:results}
 \begin{figure}[ht]
   \centering
   \includegraphics[width=.9\textwidth]{i/testingresponses1.png}
