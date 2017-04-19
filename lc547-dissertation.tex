@@ -173,8 +173,6 @@ The goal of this is not to produce a system with an extensive variety of sources
 
 \end{itemize}
 
-%%%%%%%%%% @TODO:
-%% May need to update this later. Depends what goes in each section.
 \section{Dissertation Structure}
 \textbf{Chapter 1: Introduction}
 
@@ -186,29 +184,27 @@ This chapter delves deeper into the research relevant to this project. It consid
 
 \textbf{Chapter 3: Requirements Specification}
 
-This chapter details the functional and non functional requirements for the system, as derived from the project aims and objectives, and the literature survey. It also discusses the gathering, development and terminology of these requirements.
+This chapter details the functional and non functional requirements for each of the three parts of the system, as derived from the project aims and objectives and the literature survey. It also discusses the gathering, development and terminology of these requirements.
 
 \textbf{Chapter 4: Design}
 
-This chapter details the design of the three parts of the system (API, mobile app and web app), in order to fulfil the requirements as defined in chapter 3.
+This chapter details the design of the three separate parts of the system (API, mobile app and web app), as well as the database, in order to fulfil the requirements as defined in chapter 3.
 
 \textbf{Chapter 5: Implementation}
 
-This chapter details the implementation of the design as defined in chapter 4.
+This chapter details the implementation of the design as defined in chapter 4, including code snippets, images and explanations of the implemented system.
 
 \textbf{Chapter 6: Testing}
 
-This chapter first discussed automated testing, then continues to detail the methods used for testing functionality, usability and feasibility of the system, using volunteer testers.
+This chapter first discusses automated testing, then continues to detail the user testing of the system, carried out by volunteer testers, in order to test the functionality and usability, and to obtain suggestions for improvements and additional features from users.
 
 \textbf{Chapter 7: Results and Discussion}
 
-This chapter presents the results of the testing by the volunteer testers. It then discusses these results, improvements that could be made to the system based on these results, and the feasibility of the system as a tool to aid in self management of mental health and wellbeing.
+This chapter presents the results of the testing by the volunteer testers. It then discusses these results, and summaries usability improvements, feature improvements and additional features that could be added. It also discusses additional sources and visualisations that could be added to the system, based on user responses.
 
 \textbf{Chapter 8: Conclusion and Future Work}
 
-This chapter summarises the project and discusses its successes and failures. It also details areas for improvement and for future work.
-
-%%%%%%%%%%
+This chapter concludes the project and summarises what was achieved. It also details areas for future work based on the work and achievements of this project.
 
 \chapter{Literature Survey} \label{litsurvey}
 \section{Introduction} \label{introduction}
@@ -2088,7 +2084,7 @@ In order to test these, volunteer user's were asked to carry out a series of tas
 
 This testing was carried out by a number of volunteer users. Research carried out by \citeauthor{nielsenfiveusers} (\citeyear{nielsenfiveusers}) recommends using five users. This article stated that testing with five users \enquote{lets you find almost as many usability problems as you'd find using many more test participants}. However, the testing carried out in this project was not just usability testing; it also tested functionality and aimed to get feedback on suggestions, as discussed above. For this reason ten users were selected to carry out the user testing and answer the questionnaire. These users were of a variety of ages, and had a variety of technical proficiencies.
 
-\chapter{Results and Discussion}
+\chapter{Results and Discussion} \label{chap:results}
 The complete results of the testing can be seen in appendix \ref{app:testing:results}. These results will be discussed for each of the mobile app and web app, with reference to the goals of the user testing as detailed in section \ref{sec:usertesting}. These are, in short: functionality, usability, and improvements and/or additional features.
 
 \section{Functionality Testing}
@@ -2139,7 +2135,7 @@ Given the feedback on the usability of the system, the following changes could b
 \item Make success more noticeable by making them larger and by increasing the font weight to make them bolder.
 \end{itemize}
 
-\subsection{Summary of Improvements and/or Additional Features}
+\subsection{Summary of Improvements and/or Additional Features} \label{subsec:addsources}
 \subsubsection{General Web App}
 The two questions that asked suggestions for improvements and/or additional features were also asked for the web app. A summary of the suggestions obtained from the responses to these questions can be seen below:
 \begin{itemize}
@@ -2167,8 +2163,35 @@ The last question of the questionnaire asked users for suggestions for additiona
 \item Strava: pace analysis, time exercised per day, distance ran/cycled/swam per day, number of steps, time at rest, calories burned per day (if provided by Strava).
 \end{itemize}
 
-\chapter{Conclusions and Future Work}
-\ldots
+\chapter{Conclusion and Future Work}
+\subsection{Conclusion}
+This project researched the huge scale of the problem of mental health conditions in the UK, and the lack of funding faced by mental health services. It identified of self management as a way to reduce the demand for mental health services, in people out of treatment, in treatment and post treatment. It also discussed personal informatics and its relation to mental health, as well as the modern state of user data, including the many apps that both record data about users, and make this data accessible via APIs.
+
+This project aimed to take advantage of this data by building a software system to aid in the self management of mental health, called SelfReflect. SelfReflect allows users to record their mental wellbeing and, via the use of personal informatics and ecological momentary assessment, produce visualisations to identify relationships between their mental wellbeing and data fetched from existing external apps.
+
+The literature survey found that helping a user to understand their mental health, and involving them in treatment, can be hugely beneficial to their recovery. It identified the government developed and tested SWEMWBS questionnaire as the best method for recording wellbeing. It also provided further insight into the field of personal informatics, both in general and in the context of mental wellbeing. Physical exercise and social media were identified as two example types of data that research suggests have some significant effect on mental wellbeing. It then identified four similar systems in the field, analysed these, and identified where SelfReflect could differentiate itself and contribute to the fields of mental health self management and personal informatics.
+
+SelfReflect was then designed and implemented, which included three separate pieces of software. This consisted of an API and two client applications that communicate with the API: a mobile app and a web app.
+
+The API handled authentication and data storage/retrieval, including storing credentials and fetching data from external APIs. The mobile app was  designed to be very simple, to allow account creation, log in and recording of wellbeing, with the goal of encouraging ecological momentary assessment. The web app was more complex, encompassing all features of the mobile app, as well as allowing account management (including connecting external APIs), and data analysis via a visualisation building tool.
+
+The two sources implemented in this project were Twitter and Strava. One visualisation was included for each of these, as well as SelfReflect itself: average wellbeing per day for SelfReflect, number of tweets per day for Twitter, and distance exercised per day (in km) for Strava. The scope of the system was defined very early in the project to only include these two sources and three visualisations. These two sources were implemented as proofs of concept, to investigate the possibility of building these visualisations, and to develop the base system. The entire software system was developed to be extensible; to be built on in future projects. For this reason suggestions for future work are important and key conclusions for this project.
+
+The API was tested using automated tests, with the justification that it both deals with data storage/retrieval and cannot be tested directly manually. Ten volunteer users then carried user testing. This consisted of a set of tasks for each of the mobile and web app, and the answering of a questionnaire. This testing aimed to test the functionality and usability of the system, gather user's suggestions for improvements and/or additional features to the software, and gather user's suggestions for additional sources and/or additional visualisations for existing sources. These responses were then collated, discussed, summarised and identified as areas of future work that could improve or expand the system.
+
+SelfReflect provides a hugely extensible framework for future development, including testing and extensive documentation. Two sources have been connected already, and a visualisation building tool has been implemented, that could allow users to identify activities that positively or negatively affect their mental wellbeing. This provides a base system for future work, that could expand SelfReflect into an \emph{extensive} personal informatics system to aid in the self management of mental health and wellbeing.
+
+\subsection{Future Work}
+There are three key areas for future work: system improvements and additional features, system source expansion and system feasibility research.
+
+\subsubsection{System Improvements and Additional Features}
+These were detailed and summarised in the results and discussion chapter of this project (chapter \ref{chap:results}). This consists of further development to improve the usability of the system, as well as additional features such as account management for the mobile app, and export functionality for visualisations.
+
+\subsubsection{System Source Expansion}
+This is, and was always going to be, a key area for future work for this project. Twitter and Strava were included as proofs of concept, with one visualisations built for each. The system has been designed to be extensible to add lots more of these, in order to provide an extensive personal informatics system to aid in the self management of mental health and wellbeing. Users provided a large number of suggestions for these, both in terms of additional sources and/or visualisations within existing sources, as seen in section \ref{subsec:addsources}.
+
+\subsubsection{System Feasibility Research}
+Either using the current system, or after further projects to improve and expand the software system, the feasibility of the software as a tool to aid in the self management of mental health and wellbeing needs to be investigated. This would need to be an organised, controlled study to measure the effectiveness of the system. Possible aims of this research could be to investigate how effective the system can be as a tool for those who are suffering from mental health conditions or poor mental wellbeing, which users it is most useful for, the opinion of mental health specialists on the feasibility of the system, and many others. Most importantly however, future research should establish whether SelfReflect, or an expanded version of it, could truly help to tackle the huge problem of poor mental health in the UK, and whether this could reduce the demand for treatment from the underfunded and oversubscribed NHS mental health services.
 
 \printbibliography
 
