@@ -212,7 +212,7 @@ This chapter concludes the project and summarises what was achieved. It also det
 
 \chapter{Literature Survey} \label{litsurvey}
 \section{Introduction} \label{introduction}
-This literature survey will identify the various fields this project relates to. It will then present and critique existing work related to these fields, both in the form of academic research and existing technologies. By doing so, it will discuss what exactly this project hopes to contribute to these fields, how it plans to do so, and how this contribution would be useful.
+This literature survey will identify the various fields this project relates to. It will then present and critique existing work relating to these fields, both in the form of academic research and existing technologies. By doing so, it will discuss what exactly this project hopes to contribute to these fields, how it plans to do so, and how this contribution would be useful.
 
 This project encompasses two key fields: personal informatics and mental health. These are two active areas of research, as will be shown and discussed in later sections. This project hopes to combine these two fields in ways that will contribute to them, both in an academic sense, and with the development of a software system that encompasses both of these fields, to aid people in the effective self management of their mental health and wellbeing.
 
@@ -237,7 +237,7 @@ Although CBT itself is not a self-management technique, it involves users learni
 
 CBT is a combination of two types of therapy: cognitive and behavioural \parencite{patientcbt}. Cognitive techniques relate to negative thoughts, and to what a person thinks, or how a person reacts emotionally to a situation or event \parencite{medscapecbt}. It is be unlikely that the system developed in the project will be able to directly measure the effectiveness of cognitive techniques.
 
-Behavioural techniques however often involves substituting alternate, less harmful behaviours for harmful ones \parencite{patientcbt}. If this behaviour is one measured by a system, such as exercise or social activity, its effectiveness could be measured by the system and reported to the user. This could allow the user to identify which CBT techniques are more useful to them, as well as the effect on their mental health of not employing these techniques. They could also identify when a technique or techniques become less effective, and either address this themselves or recognise this as a sign of relapse, and consider contacting a mental health clinician before their condition worsens.
+Behavioural techniques however involve substituting alternate, less harmful behaviours for harmful ones \parencite{patientcbt}. If this behaviour is one measured by a system, such as exercise or social activity, its effectiveness could be measured by the system and reported to the user. This could allow the user to identify which CBT techniques are more useful to them, as well as the effect on their mental health of not employing these techniques. They could also identify when a technique or techniques become less effective, and either address this themselves or recognise this as a sign of relapse, and consider contacting a mental health clinician before their condition worsens.
 
 \subsubsection{Trigger Identification}
 Triggers refer to events that can potentially result in relapses or negative impacts on mental health \parencite{samhsatriggers}. These events can \enquote{trigger} these issues. Users identify triggers and plan their responses in advance so that they can react appropriately to try to avoid negative consequences \parencite{samhsatriggers}.
@@ -245,12 +245,12 @@ Triggers refer to events that can potentially result in relapses or negative imp
 The aim of this system in regard to triggers is that, should a user experience a negative change in mood, they can view the data around that time and identify potential triggers that resulted in that negative change. They can also, in a similar way to CBT techniques, measure the effectiveness of their planned actions to triggers. If the user knows a trigger occurred, and a planned action was carried out, they can investigate how effective this reaction was in avoiding the negative consequences of the trigger.
 
 \subsubsection{Wellness Recovery Action Plan (WRAP)}
-Wellness Recovery Action Plan, or WRAP, is another popular and widely used system for self-management \parencite{mhrwrap}. There is some crossover with the above methods. A user creates their own WRAP, which includes (definitions taken from \parencite{mhrwrap}):
+Wellness Recovery Action Plan, or WRAP, is another popular and widely used system for self-management \parencite{mhrwrap}. A user creates their own WRAP, which includes (definitions taken from \parencite{mhrwrap}):
 \begin{itemize}
 \item A \enquote{Wellness Toolbox}. That is, resources such as contacting friends, exercising and maintaining a healthy diet.
 \item A daily maintenance plan; tasks to do every day to maintain wellness.
 \item Triggers; as discussed above.
-\item Early warning signs of worsening symptoms.
+\item Defined early warning signs of worsening symptoms.
 \item A plan for when things are breaking down, or when things are getting much worse.
 \item A crisis plan; signs that inform others your care needs to be taken over, and what they should do.
 \item A post crisis plan; what to do to get yourself well again.
@@ -266,40 +266,40 @@ All three of these schemes have some common features. They all require:
 \item Planned actions to minimise/counteract the negative consequences of these events.
 \end{itemize}
 
-To do this, and to measure the effectiveness of these actions, some measurement of mental wellbeing needs to be made regularly. In theory, this would be best if made both before and after the trigger, as well as after the planned action (or a while after the trigger if no planned action is taken).
+To do this, and to measure the effectiveness of these actions, some measurement of mental wellbeing needs to be made regularly. In theory, this would be best if made both before and after the trigger, as well as after the planned action (or some time after the trigger if no planned action is taken).
 
 This is particularly important for the purposes of this system. Only if this measurement is effective, efficient and recorded regularly will the system be able to aid in these self-management techniques. This is another area that requires research and a review of existing work, in order to decide the best way to allow the user to record their wellbeing easily and effectively.
 
 \subsection{Recording of Mental Health and Wellbeing} \label{recordingmentalhealth}
 \subsubsection{Method of Recording} \label{methodofrecording}
-There are two key ways to record a person's wellbeing: self-rating and observer rating. For the purposes of this project, self-rating will be used, as the application is designed for self-management. Regardless of the fact that this is necessary for this project, self-rating methods may well be more effective anyway. A study in 2011, published in the journal of mental health, investigated the effectiveness of various measures from the point of view of service users \parencite{crawford2011selecting}.
+There are two key ways to record a person's wellbeing: self-rating and observer rating. For the purposes of this project, self-rating will be used, as the application is designed for self-management.
 
-This study highlighted the importance service users place on measures rated by the patient. The participants in the study even \enquote{expressed surprise, and in some instances disbelief, that outcome measures based entirely on the judgements of researchers or clinicians could be used to judge a person’s response to treatment}. This study will be particular useful when discussing how to record mental health and wellbeing.
+Regardless of the fact that this is necessary for this project, self-rating methods may well be more effective anyway. A study in 2011, published in the journal of mental health, investigated the effectiveness of various measures from the point of view of service users \parencite{crawford2011selecting}. This study highlighted the importance service users place on measures rated by the patient. The participants in the study even \enquote{expressed surprise, and in some instances disbelief, that outcome measures based entirely on the judgements of researchers or clinicians could be used to judge a person’s response to treatment}. This study will be particular useful when discussing how to record mental health and wellbeing.
 
 \subsubsection{Ecological Momentary Assessment (EMA)} \label{sec:ema}
 Ecological momentary assessment (EMA) refers to a method of data collection in which a person can \enquote{report on symptoms, affect and behaviour close in time to experience} \parencite{moskowitz2006ecological}. This strongly relates to this project, as a key aim is to allow users to record their wellbeing regularly and easily, allowing EMA. EMA has \enquote{a number of advantages over more traditional methods for the assessment of patients}, and has been shown to \enquote{permit more sensitive assessments} and \enquote{enable more wide-ranging and detailed measurements of mood and behaviour} \parencite{moskowitz2006ecological}.
 
 \subsubsection{Questionnaire Length and Response Burden} \label{questionnairelength}
-Another important consideration is the length of the method used to record wellbeing. This relates to a concept known as \enquote{response burden}. That is, the effort required by a user to answer a questionnaire \parencite{rolstad2011response}. The initial proposal for this project was for the questionnaire length to be just one field, rating a mood or wellbeing on a simple scale. However, research shows that users accused questionnaires that are too short of not being able to \enquote{properly assess the complex
+Another important consideration is the length of the method used to record wellbeing. This relates to a concept known as \enquote{response burden}. That is, the effort required by a user to answer a questionnaire \parencite{rolstad2011response}. The initial proposal for this project was for the questionnaire to be just one field, rating a mood or wellbeing on a simple scale. However, research shows that users accused questionnaires that are too short of not being able to \enquote{properly assess the complex
 outcomes they are designed to measure} \parencite{crawford2011selecting}.
 
 Questionnaires that are too long however have been shown to result in a lower response rate, and faster, shorter, more uniform responses to later questions \parencite{galesic2009effects}. This is possibly due to the questionnaire having too large a response burden for the user. The user may become bored or disillusioned with the measure and think less about responses.
 
-A high response burden poses another problem for this project, in that this system aims to allow users to record their wellbeing quickly and easily. A higher response burden could lead to the user delaying the recording of their wellbeing, which would then not count as EMA. To overcome this, the system must implement some trade off between response burden, and obtaining meaningful measures of mental health and wellbeing.
+A high response burden poses another problem for this project, in that this system aims to allow users to record their wellbeing quickly and easily. A higher response burden could lead to the user delaying the recording of their wellbeing, which would then not count as EMA. To overcome this, the system must implement some trade off between response burden and obtaining meaningful measures of mental health and wellbeing.
 
 \subsubsection{Outcome Measures}
-In both mental and physical health, measurements of a patient's progress and the efficacy of their treatment are often referred to as \enquote{outcome measures} \parencite{pediaoutcomemeasures}. These measures are said to allow health services to improve quality of service, but can also be used in the context of tracking a patient's mental health and wellbeing. These measures come in many forms, and fall into various possible categories: general outcome measures, patient rated outcome measures (PROMS), outcome measures for use with children, outcome measures for emotional difficulties and various others \parencite{mhpoutcomemeasures}. As discussed in section \ref{methodofrecording} above, we are only interested in self-rating methods, and hence will only investigate patient reported outcome measures.
+In both mental and physical health, measurements of a patient's progress and the efficacy of their treatment are often referred to as \enquote{outcome measures} \parencite{pediaoutcomemeasures}. These measures are said to allow health services to improve quality of service, but can also be used in the context of tracking a patient's mental health and wellbeing. These measures come in many forms, and fall into various possible categories: general outcome measures, patient rated outcome measures (PROMS), outcome measures for use with children, outcome measures for emotional difficulties and various others \parencite{mhpoutcomemeasures}. As discussed above, we are only interested in self-rating methods, and hence will only investigate patient reported outcome measures.
 
 \subsection{Which Outcome Measure(s)?} \label{whichoutcomemeasures}
 There are many condition specific outcome measures, for example the \enquote{Patient Health Questionnaire} (PHQ-9) for depression \parencite{kroenke2001phq}, and the \enquote{Generalized Anxiety Disorder} (GAD7) questionnaire for generalised anxiety disorder \parencite{spitzer2006brief}.
 
-These condition specific questionnaires may well be more effective than generic wellbeing questionnaires. This project however will focus on the more generic examples. This is due to the fact that the key goal of this project is to investigate the combinations of user provided wellbeing data with user specific API data. The scope of the project does not allow for investigation and development of a new or custom outcome measure. Neither does it allow for the inclusion of multiple condition specific outcome measures. A key goal of the application is that it is generic, and at least somewhat applicable to the majority of the general population, in regards to keeping track of their mental health and wellbeing.
+These condition specific questionnaires may well be more effective than generic wellbeing questionnaires, but this project will focus on the more generic examples. This is due to the fact that the key goal of this project is to investigate the combinations of user provided wellbeing data with user specific API data. The scope of the project does not allow for investigation and development of a new or custom outcome measure. Neither does it allow for the inclusion of multiple condition specific outcome measures. Another key goal of the application is that it is generic, and at least somewhat applicable to the majority of the general population, with regard to keeping track of their mental health and wellbeing.
 
 For these reasons the project will implement an existing, well established patient reported outcome measure. Some examples of existing, popular outcome measures will be discussed, as will their appropriateness for use in this project. Candidates to be discussed (one of which will be included in the system) are: the \enquote{European Quality of Life instrument} (EQ-5D), the \enquote{Recovery Star}, the \enquote{Warwick-Edinburgh Mental Wellbeing Scale} (WEMWBS), and its short version, the \enquote{Short WEMWBS} (SWEMWBS).
 
 \newpage
 \subsubsection{European Quality of Life instrument (EQ-5D)}
-The \enquote{European Quality of Life instrument} (EQ-5D) is a \enquote{standardized instrument for use as a measure of health outcome} \parencite{eq5dabout}. The questionnaire consists of two pages. The user answers 5 questions on a scale from \enquote{no problem} to \enquote{unable to do} in areas such as mobility and self care, then scores their mood on a scale of 1 to 100 \parencite{eq5duse}. An example EQ-5D can be seen in Figure \ref{fig:eq5d} (images from \parencite{eq5duse}):
+The \enquote{European Quality of Life instrument} (EQ-5D) is a \enquote{standardized instrument for use as a measure of health outcome} \parencite{eq5dabout}. The questionnaire consists of two pages. The user answers 5 questions on a scale ranging from \enquote{no problem} to \enquote{unable to do}, in areas such as mobility and self care, then scores their mood on a scale of 1 to 100 \parencite{eq5duse}. An example EQ-5D can be seen in Figure \ref{fig:eq5d} (images from \parencite{eq5duse}):
 
 \begin{figure}[ht]
 \caption{The European Quality of Life Instrument}
@@ -308,7 +308,7 @@ The \enquote{European Quality of Life instrument} (EQ-5D) is a \enquote{standard
 \label{fig:eq5d}
 \end{figure}
 
-The EQ-5D has been shown to be useful for common mental health conditions such as mild to moderate depression \parencite{brazier2010eq}, which may well be appropriate for this system. However, it is possible it suffers from an issue discussed in the section \ref{questionnairelength} above; it is too short. In fact, in the study by \citeauthor{crawford2011selecting}, it was this questionnaire that participants raised concerns about with regard to it being too short to properly assess complex outcomes \parencite{crawford2011selecting}.
+The EQ-5D has been shown to be useful for common mental health conditions such as mild to moderate depression \parencite{brazier2010eq}, which may well be appropriate for this system. However, it is possible that it suffers from an issue discussed in the section \ref{questionnairelength} above; it is too short. In fact, in the study by \citeauthor{crawford2011selecting}, it was this questionnaire that participants raised concerns about with regard to it being too short to properly assess complex outcomes \parencite{crawford2011selecting}.
 
 \newpage
 \subsubsection{Mental Health Recovery Star (MHRS)}
@@ -322,7 +322,7 @@ The \enquote{Mental Health Recovery Star} (MHRS) is part of a set of outcome mea
 \end{figure}
 
 This measure has been \enquote{received enthusiastically by both
-mental health service providers and service users} \parencite{dickens2012recovery}. A study by \citeauthor{killaspy2012psychometric} aimed to analyse the psychometric properties of the MHRS \parencite{killaspy2012psychometric}. It found some positive results, revealing that 85\% of participants found the MHRS useful in areas such as planning support and tracking their recovery. It also found that 70\% of participants said the MHRS was easy to use. However, this study only considered MHRS recorded either by staff or collaboratively with staff and user.
+mental health service providers and service users} \parencite{dickens2012recovery}. A study by \citeauthor{killaspy2012psychometric} (\citeyear{killaspy2012psychometric}) aimed to analyse the psychometric properties of the MHRS. This had some positive results, revealing that 85\% of participants found the MHRS useful in areas such as planning support and tracking their recovery. It also found that 70\% of participants said the MHRS was easy to use. However, this study only considered MHRS recorded either by staff or collaboratively with staff and user.
 
 Staff or collaborative recording is common with the MHRS; many staff are given training in order to guide users in using the measure. In fact, training is now a requirement to gain a license to use the star \parencite{starlicense}. Clearly this poses an issue for this project. Assuming a license could be obtained without training (which may be unlikely), it is possible that this training issue could be overcome with computerised tutorials and careful user experience design. However, this would still require the user to learn how to use the MHRS, and would be more complicated than a more simple, intuitive outcome measure.
 
@@ -341,15 +341,14 @@ These questions and responses can be seen in Figure \ref{fig:wemwbs} (table from
 \label{fig:wemwbs}
 \end{figure}
 
-The fact that WEMWBS was developed for the general population is particular useful to this project, as a general purpose, simple scale is exactly what this project requires. Another strength of this scale is that it results in a single score, which is simply a sum of the responses. Each response is scored 1-5, giving a score of 14-70 for the full questionnaire \parencite{wemwbsscoring}. This is beneficial to this project as a single score can be easily recorded and mapped against other data such as date/time, or user specific API data such as social media activity.
+The fact that WEMWBS was developed for the general population is particular useful to this project, as a general purpose, simple scale is exactly what this project requires. Another strength of this scale is that it produces a single score, which is simply a sum of the responses. Each response is scored 1-5, giving a score of 14-70 for the full questionnaire \parencite{wemwbsscoring}. This is beneficial to this project as a single score can be easily recorded and mapped against other data such as date/time, or user specific API data such as social media activity.
 
-The study by \citeauthor{crawford2011selecting} found the WEMWBS to be largely successful, in that it achieved one of the highest ratings among participants \parencite{crawford2011selecting}. This study identified another key problem with various outcome measures. This was the use of negatively phrased questions, as users said it can be \enquote{upsetting to be asked long lists of questions about difficulties associated with mental ill
-health}. The WEMWBS was commended by participants for phrasing items positively, where poor mental health would be recognised by a lack of these positive terms, rather than the presence of negative terms.
+The study by \citeauthor{crawford2011selecting} (\citeyear{crawford2011selecting}) found the WEMWBS to be largely successful, in that it achieved one of the highest ratings among participants. This study identified another key problem with various outcome measures, which was the use of negatively phrased questions, as users said it can be \enquote{upsetting to be asked long lists of questions about difficulties associated with mental ill health}. The WEMWBS was commended by participants for phrasing items positively, where poor mental health would be recognised by a lack of these positive terms, rather than the presence of negative terms.
 
 A problem with WEMWBS however is the length of the questionnaire, in that it consists of 14 items. This shouldn't be too time consuming for the user as the questions are not open ended, and are relatively simple. However, again regarding the aim of a high response frequency, a shorter questionnaire may be more effective for the purposes of this project. Thankfully, a shorter version of the WEMWBS exists; the \enquote{Short WEMWBS} (SWEMWBS).
 
 \subsubsection{Short WEMWBS (SWEMWBS)} \label{swemwbssection}
-The \enquote{Short WEMWBS} (SWEMWBS) is a shorter version of the WEMWBS, consisting of a 7 item scale rather than a 14 item scale \parencite{swemwbs}. The questions on the short version are a subset of those on the full version, so retain the advantages of being positively worded. In order to compare the two scales, the score obtained from the shorter version is mapped to an equivalent longer version score via a conversion table. This conversion table can be seen in appendix \ref{swemwbsconversiontable}.
+The \enquote{Short WEMWBS} (SWEMWBS) is a shorter version of the WEMWBS, consisting of a 7 item scale rather than a 14 item scale \parencite{swemwbs}. The questions on the short version are a subset of those on the full version, so retain the advantages of being positively worded. In order to compare the two scales, the score obtained from the shorter version is mapped to a \enquote{metric} score via a conversion table. This conversion table can be seen in appendix \ref{swemwbsconversiontable}.
 \newpage
 The questions in the SWEMWBS can be seen in Figure \ref{fig:swemwbs} (table from \parencite{swemwbsquestions}):
 \begin{figure}[ht]
@@ -373,7 +372,7 @@ The SWEMWBS will be used for this project as it seems to provide a good trade of
 Personal informatics can be defined as software that is designed to \enquote{help individuals collect personal information to improve self-understanding}, allowing them to \enquote{promote positive behaviors} such as \enquote{healthy living, energy conservation, etc.} \parencite{li2012personal}.
 
 \subsection{Stages of Personal Informatics}
-A study by \citeauthor{li2010stage} developed a 5 stage model to represent personal informatics systems, consisting of \enquote{preparation, collection, integration, reflection, and action} \parencite{li2010stage}.
+A study by \citeauthor{li2010stage} (\citeyear{li2010stage}) developed a 5 stage model to represent personal informatics systems, consisting of \enquote{preparation, collection, integration, reflection, and action}.
 \newpage
 
 This study produced a diagrammatic representation of these stages, which is shown in Figure \ref{fig:5stagespi}.
@@ -394,7 +393,7 @@ This project hopes to minimise the risk of this, in that most of the data used w
 \subsubsection{Collection}
 This stage is, as expected, the stage where people collect information about themselves. There are two key methods of collection: active and passive. That is, either the user has to enter information themselves, or it is recorded automatically.
 
-Active collection can result in problems where users \enquote{lacked time, lacked motivation, or did not remember to collect information} \parencite{li2010stage}. In the case of US health apps, \citeauthor{krebs2015health} found that \enquote{about half of the respondents (427/934, 45.7\%) had stopped using some health apps, primarily due to high data entry burden, loss of interest, and hidden costs} \parencite{krebs2015health}. It is for this reason that some applications \enquote{are beginning to shift from requiring active tracking to
+Active collection can result in problems where users \enquote{lacked time, lacked motivation, or did not remember to collect information} \parencite{li2010stage}. In the case of US health apps, \citeauthor{krebs2015health} (\citeyear{krebs2015health}) found that \enquote{about half of the respondents (427/934, 45.7\%) had stopped using some health apps, primarily due to high data entry burden, loss of interest, and hidden costs}. It is for this reason that some applications \enquote{are beginning to shift from requiring active tracking to
 support for passive tracking} \parencite{rooksby2014personal}.
 
 An aim of this project is to implement a solution that combines these two types of collection, and results in a form of compromise. If most data is collected from applications the user already uses, this can be viewed as passive collection in the context of this system (even if the user actively recorded this data on another system). This means that the active collection within this system can be kept as small as possible (just the SWEMWBS questionnaire).
@@ -405,26 +404,26 @@ It is possible that in the future wearable technologies will be able to track we
 This stage combines and transforms data for the user. The amount of user input that is required varies, but in the case of this project this should require no user involvement. The system should already have wellbeing data, and user credentials for external applications, so should be able to integrate the data automatically.
 
 \subsubsection{Reflection}
-This stage involves the user interrogating the data, and being presented with visualisations in order to reflect on the data. Building these visualisations in an effective way is not easy. \citeauthor{keim2008visual} (\citeyear{keim2008visual}) stated that while \enquote{the capacity to collect and store new data rapidly grows, the ability to analyze these data volumes increases at much lower rates}.
+This stage involves the user interrogating their data, and being presented with visualisations in order to reflect on the data. Building these visualisations in an effective way is not easy. \citeauthor{keim2008visual} (\citeyear{keim2008visual}) stated that while \enquote{the capacity to collect and store new data rapidly grows, the ability to analyze these data volumes increases at much lower rates}.
 
 Presentation and visualisations are large challenges for this project, and will be discussed further in section \ref{visualisations}.
 
 \subsubsection{Action}
 This stage relates to how users respond to the reflection stage. \enquote{Some systems alert the user to take
-actions} based on some arbitrary criteria \parencite{li2010stage}. However, this project will leave this section entirely user driven, in order to limit the scope of the project.
+actions} based on some arbitrary criteria \parencite{li2010stage}. However, this project will leave this section entirely user driven, in order to limit the scope of the project, and to avoid giving any sort of clinical advice.
 
 \subsection{Types of Data Tracked}
-A huge number of people are collecting and recording data about themselves, whether this is by choice or is automatic. For example, it is reported that there are approximately 15 million users Twitter users in the UK, and around 60\% of the UK population has a Facebook account \parencite{smdemographics}. These applications record lots of data about users, but this is usually not the primary reason people use social media. In fact, a study by \citeauthor{whiting2013people} (\citeyear{whiting2013people}) found that there are ten key reasons people use social media: \enquote{social interaction, information seeking, pass time, entertainment, relaxation,
+A huge number of people are collecting and recording data about themselves, whether this is by choice or is automatic. For example, it is reported that there are approximately 15 million Twitter users in the UK, and around 60\% of the UK population has a Facebook account \parencite{smdemographics}. These applications record lots of data about users, but this is usually not the primary reason people use social media. In fact, a study by \citeauthor{whiting2013people} (\citeyear{whiting2013people}) found that there are ten key reasons people use social media: \enquote{social interaction, information seeking, pass time, entertainment, relaxation,
 communicatory utility, convenience utility, expression of opinion, information sharing, and
 surveillance/knowledge about others}. Information storage is clearly a requirement and side product of many of these, but is not the primary motivation.
 
 In terms of self-tracking by choice, a study by \citeauthor{krebs2015health} (\citeyear{krebs2015health}) reported that, in the US, 58.23\% of smartphone users \enquote{had downloaded a health related mobile app}. It also found that most participants used these apps \enquote{at least daily}.
 
-There are many examples of applications that collect data, falling into various categories. Two examples of these categories are exercise data on apps like Strava \parencite{strava} and social media activity data on apps like Facebook \parencite{facebook} or Twitter \parencite{twitter}. These forms of personal informatics applications will be discussed later, with regard to their relevance to mental health and wellbeing.
+There are many examples of applications that collect data, falling into various categories. Two examples of these categories are: exercise data on apps like Strava \parencite{strava} and social media activity data on apps like Facebook \parencite{facebook} or Twitter \parencite{twitter}. These forms of personal informatics applications will be discussed later, with regard to their relevance to mental health and wellbeing.
 
 This data is collected for a number of reasons, such as:
 \begin{itemize}
-\item To tailor content to the user, whether that content be trends, adverts, suggested \enquote{accounts} or \enquote{friends}.
+\item To tailor content to the user, whether that content be trends, adverts, suggested \enquote{accounts} or suggested \enquote{friends}.
 \item To report statistics such as how much the user has exercised, and whether they have hit certain targets. Note that this encompasses more areas of personal informatics than the above reason. It allows the user to not only collect data about themselves, but to carry out some analysis on the data.
 \end{itemize}
 
@@ -477,7 +476,7 @@ It seems that challenge 2 and 4 are caused primarily by the system trying to pre
 
 Predicting what the user will find useful is clearly difficult, which may be solved by providing lots of visualisations. However, this method can lead to challenge 1: overloading of information. This is the case with Exist, as will be discussed in section \ref{exist}.
 
-The solution that this project will trial to overcome these three challenges (1, 2 and 4) is: do not try to predict the visualisations the user wants, but rather implement a tool allow the user to build custom visualisations themselves. That is, allow the user to select which data they want to be included in the displayed visualisation.
+The solution that this project will trial to overcome these three challenges (1, 2 and 4) is: do not try to predict the visualisations the user wants, but rather implement a tool allow the user to build custom visualisations themselves. That is, allow the user to select which data sources they want to be included in the displayed visualisation.
 
 \section{Existing Systems} \label{existingsystems}
 This section will focus on systems that interpret and produce visualisations. While there are similar systems from the context of data collection, the collection system for the proposed project is a very small, simple part of the overall system. Also, the justification of collection method has been discussed already in section \ref{whichoutcomemeasures} above.
@@ -485,7 +484,7 @@ This section will focus on systems that interpret and produce visualisations. Wh
 This section will consider four similar systems, and discuss the similarities and differences between each system and the system proposed in this project.
 
 \subsection{Optimism}
-Optimism \parencite{optimism} is similar to the proposed system in a mental health context. It allows users to self track their mood, wellbeing and many other things, in order to self-manage their mental health this way. Optimism apps are designed for users with Depression, Bipolar, Anxiety or PTSD.
+Optimism \parencite{optimism} is similar to the proposed system from a mental health context. It allows users to self track their mood, wellbeing and many other things, in order to self-manage their mental health this way. Optimism apps are designed for users with Depression, Bipolar, Anxiety or PTSD.
 
 \newpage
 Some images of the optimism system can be seen in Figure \ref{fig:optimism} (images from \parencite{optimism}):
@@ -515,7 +514,7 @@ The system proposed in this project instead has the ability to record a very res
 
 Zenobase seems to be extremely flexible, and allows the user to interrogate their data in a large number of ways. As a side effect of this, it is quite complex to use and understand. Having tested the system, this does not seem to be due to the design, but due to the flexibility and large number of ways that Zenobase allows users to visualise their data.
 
-This flexibility is clearly an advantage for those users that want it, and the proposed project would not hope to compete with Zenobase in this respect. However, the higher difficulty and complexity may not be accepted by all users, especially those that are not as serious about interrogating their data.
+This flexibility is clearly an advantage for those users that want it, and the proposed project would not hope to compete with Zenobase in this respect. However, the higher difficulty and complexity may not be accepted by all users, especially those that are not willing to spend the time learning to use a fairly complex system to be able to interrogate their data.
 
 \subsection{Fluxstream}
 Like Zenobase, Fluxstream \parencite{fluxstream} also allows users to provide API credentials (via \enquote{connectors}), import their data, and build visualisations from this imported data.
@@ -526,7 +525,6 @@ It does seem to be very powerful in collating data. The timeline feature for exa
 
 The BodyTrack app includes a \enquote{grapher}, allowing the user to build custom visualisations.
 
-\newpage
 An image of this can be seen in Figure \ref{fig:fluxstream} (image taken from video on \parencite{fluxstream}):
 \begin{figure}[ht]
 \centering
@@ -539,8 +537,9 @@ This again seems very flexible, but also complicated and very difficult to use, 
 
 Another issue is that there doesn't seem to be a way to record or import data manually into Fluxstream. Also, Fluxstream does not currently support any mental health and wellbeing tracking apps. This means that it may be impossible, or at least very difficult, for users to use Fluxstream as a mental health tracking/self management tool.
 
+\newpage
 \subsection{Summary}
-The four systems reviewed in this section were similar to the proposed system in different ways. Reviewing these existing systems provided some extremely useful insight on how the proposed project can differentiate itself from similar systems. A summary of these insights is provided below:
+The four systems reviewed in this section were similar to the proposed system in varying ways. Reviewing these existing systems provided some extremely useful insight on how the proposed system can differentiate itself from similar systems. A summary of these insights is provided below:
 \begin{itemize}
 \item The system will combine user submitted mental health and wellbeing data with API data.
   \begin{itemize}
