@@ -558,13 +558,13 @@ The four systems reviewed in this section were similar to the proposed system in
 
 \chapter{Requirements Specification}
 \section{Introduction}
-This chapter will detail the functional and non functional requirements for the various areas of the system. These requirements were obtained and developed primarily from existing research in the area, as discussed in detail in section \ref{litsurvey}, as well as from personal experience and desires for the project. They will encompass the results of the literature survey, and the aims and objectives discussed in sections \ref{aims} and \ref{objectives} respectively. Most of the requirements are unambiguous and intuitive, based on the sources just discussed. However, where a requirement seemed vague and/or its origins seemed to be unclear, an additional sentence or two has been included to justify the requirement, and explain both where it came from and why it is necessary.
+This chapter will detail the functional and non functional requirements for the various areas of the system. These requirements were obtained and developed primarily from existing research in the area, as discussed in detail in chapter \ref{litsurvey}, as well as from personal experience and desires for the project. They will encompass the results of the literature survey, and the aims and objectives discussed in sections \ref{aims} and \ref{objectives} respectively. Most of the requirements are unambiguous and intuitive, based on the sources just discussed. However, where a requirement seemed vague and/or its origins seemed to be unclear, an additional sentence or two has been included to justify the requirement, and explain both where it came from and why it is necessary.
 
-Many projects develop requirements from user interviews and surveys, but this wasn't done for this project for various reasons. Firstly, this is an academic project, so is better suited to requirements based on existing literature. Secondly, a goal of this system was to provide a proof of concept that can be built on in the future, rather than a full working system. It may be  advantageous in the development of requirements for future work to consult potential users from the various user groups. There are many possible users, such as those who do not suffer from a diagnosed mental health condition, those that are in treatment and those that are post-treatment. The opinions of all of these may be useful for future work and improvements to the system, but for this project only academic research, personal experience and desires for the project were considered, in order to limit the scope of the project and produce an extensible system for future research and development.
+Many projects develop requirements from user interviews and surveys, but this wasn't done for this project for various reasons. Firstly, this is an academic project, so is better suited to requirements based on existing literature. Secondly, a goal of this system was to provide a proof of concept that can be built on in the future, rather than a full working system. It may be  advantageous in the development of requirements for future work to consult potential users from the various user groups. There are many possible users, such as those who do not suffer from a diagnosed mental health condition, those that are not in treatment, those that are in treatment and those that are post-treatment. The opinions of all of these may be useful for future work and improvements to the system, but for this project only academic research, personal experience and desires for the project were considered, in order to limit the scope of the project and produce an extensible system for future research and development.
 
 \section{Requirements Structure and Terminology}
 \subsection{Structure}
-This project consisted of the development of three separate software systems: a mobile app, a web app and an \enquote{application programming interface} (API). These separate software systems were intentionally designed to be entirely separate from one another, as will be discussed further in chapter \ref{chap:design}. This is important to mention here because, as a result of this, the requirements are divided into three separate sections; one for each of the separate software systems. Each of these sections is then divided into functional and non-functional requirements, where functional requirements describe \enquote{what the system does}, and non-functional requirements describe \enquote{how the system works}.
+This project will consist of the development of three separate software systems: a mobile app, a web app and an \enquote{application programming interface} (API). These systems are intentionally designed to be entirely separate from one another, as will be discussed further in chapter \ref{chap:design}. This is important to mention here because, as a result of this, the requirements are divided into three separate sections; one for each of the separate software systems. Each of these sections is then divided into functional and non-functional requirements, where functional requirements describe \enquote{what the system does}, and non-functional requirements describe \enquote{how the system works}.
 
 \subsection{Prioritisation Terminology}
 These requirements use the \enquote{MoSCoW} method for prioritisation \parencite{moscowmethod}. This is a technique that consists of the terminology seen in Table \ref{table:moscow} (term descriptions derived from \parencite{moscowmethod}).
@@ -579,11 +579,12 @@ These requirements use the \enquote{MoSCoW} method for prioritisation \parencite
 Must have & These are needed for the \textbf{M}inimum \textbf{U}sable \textbf{S}ubse\textbf{t} (\textbf{MUST}) of requirements. That is, they are absolutely required for the system to be viable. Without them, the system does not fulfil a primary goal, provides no value, or is unsafe in some way. \\  \hline
 Should have & These are important but not absolutely vital. If they are not completed, some workaround may be possible. The system will still be viable and usable, but may be inefficient or awkward to use. \\ \hline
 Could have & These are desirable but not as important as \enquote{should have} requirements. They very much depend on time constraints, and can often be dropped if deadlines are approaching. Although they improve the system, they are not really necessary for the system to be viable. \\ \hline
-Won't have this time & These are explicitly defined as requirements that will not be met by the system in this release. Explicitly defining these is useful for limiting the scope of a project/release, as it prevents ambiguity and these requirements from being introduced as extra work at a later date. \\ \hline
+Won't have this time & These are explicitly defined as requirements that will not be met by the system in this release. Explicitly defining these is useful for limiting the scope of a project/release, as it prevents ambiguity and prevents these requirements from being introduced as extra work at a later date. \\ \hline
 \end{tabular}
 \end{table}
 
-This project is of course, like many projects, time limited. This method of prioritisation was extremely useful in defining and limiting scope, and in deciding which functionality should be implemented first, and what could be dropped should problems occur and/or time constraints apply.
+\newpage
+This project is of course, like many projects, time limited. This method of prioritisation was extremely useful in defining and limiting scope, deciding which functionality should be implemented first, and deciding what could be dropped should problems occur and/or time constraints apply.
 
 \subsection{Further Terminology}
 The requirements also refer to \enquote{major} and \enquote{minor} bugs. These are defined in Table \ref{table:bugsterminology}.
@@ -601,7 +602,7 @@ Minor & These are unintended, but the system still meets the requirement in ques
 
 \section{Requirements} \label{reqs}
 \subsection{Mobile App}
-The mobile app is intended to be very small and simple. It is not a mobile version of the web app, but is instead a simple piece of software to allow users to record their wellbeing quickly using their phone (and hence carry out ecological momentary assessment, as discussed in section \ref{sec:ema}). For this reason, there are a fair amount of \enquote{won't} requirements, so as to keep the software simple and limit the scope. That being said, the requirements for the mobile app are as follows:
+The mobile app is intended to be very small and simple. It is not a mobile version of the web app, but is instead a simple piece of software to allow users to record their wellbeing quickly using their phone (and hence carry out ecological momentary assessment, as discussed in section \ref{sec:ema}). For this reason, there are a fair amount of \enquote{won't} requirements, in order to keep the software simple and limit the scope. That being said, the requirements for the mobile app are as follows:
 
 \subsubsection{Functional}
 \begin{enumerate}
@@ -648,7 +649,7 @@ The mobile app is intended to be very small and simple. It is not a mobile versi
 \end{enumerate}
 
 \subsection{Web App}
-The web app is significantly larger, and incorporates most of the major contributing features of this project, including connecting existing apps and building and viewing visualisations. The web app does almost everything, if not everything the mobile app does, and more. Also note that security is not discussed here, as all data is accessed via the API, so security is a requirement of the API, not the web app.
+The web app is significantly larger, and incorporates most of the major contributing features of this project, including connecting existing apps and building and viewing visualisations. The web app does almost everything, if not everything,% the mobile app does, and more. Also note that security is not discussed here, as all data is accessed via the API, so security is a requirement of the API, not the web app.
 
 \subsubsection{Functional}
 \begin{enumerate}
@@ -681,9 +682,9 @@ The web app is significantly larger, and incorporates most of the major contribu
   \item Must store this information for use in subsequent requests to Strava's API, to fetch user's data.
   \item Must be able to fetch user's Strava data.
   \end{enumerate}
-\item Won't include connection of any applications other than Twitter and Strava, as these are being included as proofs of concept.
+\item Won't include connection of any applications other than Twitter and Strava, as these are the only sources being included as proofs of concept.
 \item Must be able to fetch user's SelfReflect wellbeing data.
-\item Must allow user to build visualisations combining these any of three sources of data (SelfReflect wellbeing data, Twitter data and Strava data).
+\item Must allow user to build visualisations combining any of these three sources of data (SelfReflect wellbeing data, Twitter data and Strava data).
   \begin{enumerate}
   \item Must provide one visualisation built from SelfReflect wellbeing data.
   \item Must provide one visualisation built from Twitter data.
