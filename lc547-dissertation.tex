@@ -2047,13 +2047,13 @@ The database was implemented almost exactly as discussed in the database design 
 
 \chapter{Testing}
 \section{Introduction}
-Throughout the entire implementation of the project, manual testing was carried out to check all functionality was implemented correctly. However, this is not sufficient to fully test the system. In order to do this, two further types of testing were carried out: automated testing for the API, and user testing for the entire system. The API is tested indirectly by user testing, but cannot be tested directly by users, so automated testing was implemented. This was essential as the API deals with user data, security and authentication. These are very important features and so it was essential to test these, and ensure the implemented code works correctly and reliably.
+Throughout the entire implementation of the project, manual testing was carried out to check all functionality was working and was implemented correctly. However, this is not sufficient to fully test the system. In order to do this, two further types of testing were carried out: automated testing for the API, and user testing for the entire system. The API is tested indirectly by user testing, but cannot be tested directly by users, so automated testing was implemented. This was essential as the API deals with user data, security and authentication. These are very important features and so it was essential to test these, and ensure the implemented code works correctly and reliably.
 
 \section{Automated Testing}
 \subsection{Technologies}
 To implement tests for the API, various open source libraries were used:
 \begin{enumerate}
-\item \emph{Mocha}: \enquote{a feature-rich JavaScript test framework running on Node.js and in the browser, making asynchronous testing simple and fun} \parencite{mocha}. This is the basic framework for writing the tests.
+\item \emph{Mocha}: A \enquote{feature-rich JavaScript test framework running on Node.js and in the browser, making asynchronous testing simple and fun} \parencite{mocha}. This is the basic framework used for writing the tests.
 \item \emph{Chai}: An \enquote{assertion library for node} \parencite{chai}. This makes some assertions more readable and easier to understand.
 \item \emph{Istanbul}: Used for code coverage calculation and reports. \enquote{Istanbul instruments your ES5 and ES2015+ JavaScript code with line counters, so that you can track how well your unit-tests exercise your codebase} \parencite{instanbul}.
 \item \emph{Supertest}: A \enquote{high-level abstraction for testing HTTP} \parencite{supertest}. Used for writing \enquote{API tests} which send HTTP requests to the SelfReflect API.
@@ -2062,8 +2062,8 @@ To implement tests for the API, various open source libraries were used:
 \subsection{Method}
 The details of all the tests and their specific implementation will not be discussed here. A set of tests were written for each endpoint, so that for every endpoint:
 \begin{itemize}
-\item Every success response was tested.
-\item Every error response to a valid request was tested, such as duplicate emails. Duplicate emails is a valid request that returns an error response.
+\item The expected success response was tested.
+\item Every error response to a valid request was tested, such as duplicate emails (providing a duplicate email is a valid request that returns an error response).
 \item Every error response to invalid request was tested, such as requesting information for a user id that is not authenticated, or providing no authentication token.
 \end{itemize}
 
@@ -2072,7 +2072,7 @@ In order to test some more complicated endpoints, such as Twitter and Strava, te
 \subsection{Code Coverage}
 In the requirements section for the API (section \ref{subsec:apireqs}), non-functional requirements 6.1 and 6.2 relate to covering at least 70\% and 95\% of lines of testable code respectively. The reason the word testable was included here is because some lines are near impossible to \emph{meaningfully} test. An example of this is an error thrown by the operating system. Another might be errors thrown by MySQL itself, if the database becomes inaccessible for whatever reason. This is almost impossible to recreate in a test case without making the test arbitrary and meaningless. In order to remove these lines from the code coverage calculation, Istanbul can be told to ignore specific lines using specific code comments.
 
-Once these scenarios were ignored from the code coverage calculation, only testable lines of code remained. The automated tests managed to cover all of these testable lines, achieving 100\% test coverage and satisfying both non-functional requirements 6.1 and 6.2. This code coverage report is shown in Figure \ref{fig:codecoverage}.
+Once these very limited scenarios were ignored from the code coverage calculation, only testable lines of code remained. The automated tests managed to cover all of these testable lines, achieving 100\% test coverage and satisfying both non-functional requirements 6.1 and 6.2. The code coverage report proving this test coverage is shown in Figure \ref{fig:codecoverage}.
 
 \begin{figure}[ht]
 \centering
@@ -2090,9 +2090,9 @@ The user testing of the system was designed with three key goals in mind:
 \item Get suggestions for improvements and additional features from users who have tested the system.
 \end{enumerate}
 
-In order to test these, volunteer user's were asked to carry out a series of tasks for the mobile app, then a series of tasks for the web app. These tasks can be seen in appendix \ref{app:testing:tasks}. Any failures or errors that occurred in simply carrying out these tasks were recorded, covering goal 1. Users were then asked to answer a questionnaire, with a set of questions for each of the mobile and web app. These questions were designed to cover goals 2 and 3. Some questions asked the user how easy it was to carry out the separate tasks, on a simple one to five scale (goal 2), while other asked the user to report any issues they found and for suggestions for improvements and additional features (goal 3). This questionnaire can be seen in appendix \ref{app:testing:questionnaire}.
+In order to test these, volunteer users were asked to carry out a series of tasks for the mobile app, then a series of tasks for the web app. These tasks can be seen in appendix \ref{app:testing:tasks}. In order to test the visualisations properly, an account with data already on it was required. For this reason, a test account was created, with some wellbeing data already created in the SelfReflect database, and with existing Twitter and Strava accounts already connected. Any failures or errors that occurred in simply carrying out these tasks were recorded, covering goal 1. Users were then asked to answer a questionnaire, with a set of questions for each of the mobile and web app. These questions were designed to cover goals 2 and 3. Some questions asked the user how easy it was to carry out the separate tasks, on a simple one to five scale (goal 2), while others asked the user to report any issues they found and for suggestions for improvements and additional features (goal 3). This questionnaire can be seen in appendix \ref{app:testing:questionnaire}.
 
-This testing was carried out by a number of volunteer users. Research carried out by \citeauthor{nielsenfiveusers} (\citeyear{nielsenfiveusers}) recommends using five users. This article stated that testing with five users \enquote{lets you find almost as many usability problems as you'd find using many more test participants}. However, the testing carried out in this project was not just usability testing; it also tested functionality and aimed to get feedback on suggestions, as discussed above. For this reason ten users were selected to carry out the user testing and answer the questionnaire. These users were of a variety of ages, and had a variety of technical proficiencies.
+This testing was carried out by a number of volunteers. Research carried out by \citeauthor{nielsenfiveusers} (\citeyear{nielsenfiveusers}) recommended using five users. This article stated that testing with five users \enquote{lets you find almost as many usability problems as you'd find using many more test participants}. However, the testing carried out in this project was not just usability testing; it also tested functionality and aimed to get suggestions from users, as discussed above. For this reason, ten users were selected to carry out the user testing and answer the questionnaire. These users were of a variety of ages, and had a variety of technical proficiency levels.
 
 \chapter{Results and Discussion} \label{chap:results}
 The complete results of the testing can be seen in appendix \ref{app:testing:results}. These results will be discussed for each of the mobile app and web app, with reference to the goals of the user testing as detailed in section \ref{sec:usertesting}. These are, in short: functionality, usability, and improvements and/or additional features.
