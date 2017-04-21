@@ -1133,12 +1133,11 @@ Input validation is relatively simple. The login button is disabled unless the u
 
 \begin{lstlisting}
 inputsValid() {
-  return isValidEmail(this.state.email)
-    && this.state.password
+  return isValidEmail(this.state.email) && this.state.password
 }
 \end{lstlisting}
 
-This does of course require some validation on the format of an email, hence the call to the isValidEmail function. Email validation is a topic that is debated regularly in web development, with some arguing for complex validation, and others arguing for simple validation with email verification. For this project, a very simple validation function was used. This simply checks the email matches a \enquote{something@something.something} format, as shown in the following code snippet:
+This does of course require some validation on the format of an email, hence the call to the isValidEmail function. Email validation is a topic that is debated regularly in web development, with some arguing for complex validation, and others arguing for simple validation with email verification. For this project, a very simple validation function was used. This simply checks the email matches a \emph{something@something.something} format, as shown in the following code snippet:
 
 \begin{lstlisting}
 const simpleEmailRegex = /^(.+)@(.+)\.(.+)$/
@@ -1148,9 +1147,9 @@ export default email => {
 }
 \end{lstlisting}
 
-The regular expression (or RegEx) in the above snippet is exactly the format previously described (\enquote{something@something.something}).
+The regular expression (or RegEx) in the above snippet is exactly the format previously described (\emph{something@something.something}).
 
-Should either of the inputs fail validation, and error message will be displayed to the user, to inform the user which input is failing validation and why. This can be seen in Figure \ref{fig:mobileloginerror}.
+Should either of the inputs fail validation, an error message will be displayed to the user, to inform the user which input is failing validation and why. This can be seen in Figure \ref{fig:mobileloginerror}.
 
 \begin{figure}[ht]
 \centering
@@ -1180,12 +1179,12 @@ login(onSuccess) {
 }
 \end{lstlisting}
 
-This executes an AJAX request which posts the login credentials, in JSON format, to the SelfReflect API endpoint \emph{/v1/users}. Versioning was included in the API implementation, hence the \enquote{v1}, as will be discussed in section \ref{sec:apiimpl}.
+This executes an AJAX request which posts the login credentials, in JSON format, to the SelfReflect API endpoint \emph{/v1/tokens}. Versioning was included in the API implementation, hence the \enquote{v1}, as will be discussed in section \ref{sec:apiimpl}.
 
-Some code has been removed from this function for this snippet. The removed code simply handles whatever response the app gets from the server. If the credentials sent are valid, the mobile app will receive a success response code and an access token. It can then store this access token for subsequent requests, and execute the onSuccess function. This function will navigate the user to the \enquote{logged in} area of the app. If the credentials are invalid, the app will receive an error response code, and the login screen will display an \enquote{Invalid email or password} message, in exactly the same way as the \enquote{Invalid email} message in Figure \ref{fig:mobileloginerror}. It is possible the app will receive some other response from the server, if the database is down for example, in which case the mobile app will simply display \enquote{Something went wrong. Please try again later}.
+Some code has been removed from the function in this snippet. The removed code simply handles whatever response the app gets from the server. If the credentials sent are valid, the mobile app will receive a success response code and an access token. It can then store this access token for subsequent requests, and execute the onSuccess function. This function will navigate the user to the \enquote{logged in} area of the app. If the credentials are invalid, the app will receive an error response code, and the login screen will display an \enquote{Invalid email or password} message, in exactly the same way as the \enquote{Invalid email} message in Figure \ref{fig:mobileloginerror}. It is possible the app will receive some other response from the server, if the database is down for example, in which case the mobile app will simply display \enquote{Something went wrong. Please try again later}.
 
 \subsection{Register}
-The register screen is actually very similar to the login screen. The implemented register page can be seen in Figure \ref{fig:mobileregisterimpl}.
+The register screen is very similar to the login screen. The implemented register page can be seen in Figure \ref{fig:mobileregisterimpl}.
 
 Again, similar to the login screen, the register page does two main things: input validation and the register itself.
 
@@ -1236,7 +1235,7 @@ register(onSuccess) {
 }
 \end{lstlisting}
 
-This is clearly extremely similar to the login code. This will become a similar theme throughout this entire chapter, and is due to the API having been buillt in a RESTful way; all accesses tend to follow a similar, \enquote{uniform} pattern. For this reason not all of these API accesses will be included in code snippets; they will simply be described, as they are almost all fairly similar. Again, the success and error codes are handled in much the same way, and displayed to the user if necessary, such as for \enquote{Email already exists} responses. In the case of register, the onSuccess function will navigate back to the login page, so the user can login with their newly created account.
+This is clearly extremely similar to the login code. This will become a similar theme throughout this entire chapter, and is due to the API having been buillt in a RESTful way; all accesses tend to follow a similar, \enquote{uniform} pattern. For this reason not all of these API accesses will be included in code snippets; they will simply be described, as they are almost all fairly similar. Again, the success and error codes are handled in much the same way, and displayed to the user if necessary, such as for \enquote{Email already exists} responses. In the case of register, the onSuccess function will navigate back to the login page, so the user can log in with their newly created account.
 
 \subsection{Home}
 Once the user has logged in successfully, they will be navigated to the home screen, as seen in Figure \ref{fig:mobilehomeimpl}. For demonstration purposes, a test account with some existing wellbeing recordings was used.
@@ -1270,9 +1269,9 @@ fetchHistory(id, token) {
     })
 \end{lstlisting}
 
-This limits the number of recent wellbeings the API responds with to five, as there are only five rows in the table. It also passes the token in the \enquote{Authorization} header of the request. This is how all restricted API endpoints are accessed by SelfReflect clients, and will again be seen throughout this chapter. The response is then stored in state, and the table can then be generated.
+This limits the number of recent wellbeings the API responds with to five, as there are only five rows in the table. It also passes the token in the \emph{Authorization} header of the request. This is how all restricted API endpoints are accessed by SelfReflect clients, and will again be seen throughout this chapter. The response is then stored in state, allowing the table to be populated.
 
-The table is a simple grid of rows and columns. To generate the table, the app processes this stored data, by formatting dates and sorting in ascending order. It then simply maps over the processed wellbeing entries, and produces a row for each entry with two columns. The code to do this can be seen below:
+The table is a simple grid of rows and columns. To generate the table, the app processes this stored data, by formatting dates and sorting entries in ascending date order. It then simply maps over the processed wellbeing entries, and produces a row for each entry with two columns: one for date recorded and one for wellbeing. The code to do this can be seen below:
 \begin{lstlisting}
 {this.props.history.map((wellbeing, i) =>
   <Row key={i} style={styles.row}>
@@ -1286,10 +1285,10 @@ The table is a simple grid of rows and columns. To generate the table, the app p
 )}
 \end{lstlisting}
 
-This syntax is \enquote{JSX}. JSX is \enquote{a preprocessor step that adds XML syntax to JavaScript}, and is used to make \enquote{React a lot more elegant} \parencite{jsx}. It essentially allows HTML like code to be written within JavaScript, producing more readable and intuitive code.
+This syntax is \enquote{JSX}. JSX is \enquote{a preprocessor step that adds XML syntax to JavaScript}, and is used to make \enquote{React a lot more elegant} \parencite{jsx}. It essentially allows code that looks similar to HTML to be written within JavaScript, producing more readable and intuitive code.
 
 \subsection{SWEMWBS Questions}
-Tapping the record wellbeing button will navigate users to the SWEMWBS questions. This is implemented almost exactly as designed (Figure \ref{fig:mobilequestion}), and can be seen in FIgure \ref{fig:mobilequestionimpl}.
+Tapping the record wellbeing button will navigate users to the SWEMWBS questions. This is implemented almost exactly as in the design chapter (Figure \ref{fig:mobilequestion}), and can be seen in Figure \ref{fig:mobilequestionimpl}.
 
 \begin{figure}[ht]
 \centering
@@ -1300,7 +1299,9 @@ Tapping the record wellbeing button will navigate users to the SWEMWBS questions
 
 The next button on each question screen is disabled until an answer is selected. One change that was made from the design is the inclusion of the cancel button. This was implemented instead of the logout button, so that if a user wanted to cancel and go back to the home screen, they can do so without pressing back lots of times, or without having to log out and in again.
 
-The last question includes a submit button instead of a next button, which simply sums the scores to each of the answers (where \enquote{None of the time} has a score of 1, \enquote{Rarely} has a score of 2 etc.), computes the date and time of submission, and posts these to the \emph{/v1/users/:id/wellbeings} endpoint, where \enquote{:id} is the user ID obtained on successful login. This code has not been included here as it is very similar to the API accesses described in previous sections. It again handles both successful and error responses from the server, by either navigating the user back to the home page on success, or displaying an error message on error. If successful, this also automatically updates the state that the recent recordings table (on the home screen) is generated from, based on the API response. This allows the user to instantly see that their wellbeing was recorded successfully.
+The last question includes a submit button instead of a next button, which simply sums the scores to each of the answers (where \enquote{None of the time} has a score of 1, \enquote{Rarely} has a score of 2 etc.), computes the date and time of submission, and posts these to the \emph{/v1/users/:id/wellbeings} endpoint, where \emph{:id} is the user ID obtained on successful login. This code has not been included here as it is very similar to the API accesses described in previous sections. It again handles both successful and error responses from the server, by either navigating the user back to the home page on success, or displaying an error message on error.
+
+If successful, this also automatically updates the state that the recent recordings table (on the home screen) is generated from with the new wellbeing entry, based on the API response. This allows the user to instantly see that their wellbeing was recorded successfully.
 
 \subsection{Documentation}
 Documentation was written for the mobile app that includes a short description of SelfReflect and the SelfReflect mobile app, as well as instructions on how to install, set up and run the mobile app for local development and testing. This documentation can be seen in appendix \ref{app:mobiledocs}.
