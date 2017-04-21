@@ -1804,10 +1804,10 @@ Like the mobile app, documentation includes a short description of SelfReflect a
 
 \section{API} \label{sec:apiimpl}
 \subsection{Versioning}
-Early in the implementation of the API, versioning was added. This is the reason all endpoints start with \emph{/v1/}. The fact that this was not included in the original design was an oversight, as this is a common, best practise feature to add to modern APIs. It means that applications can be developed to work with the API without fear of continued development or breaking changes. If some change is made to improve the API that breaks backwards-compatibility, this can be created as a \emph{/v2/} endpoint. Existing applications that use the API can then choose to continue to use the old endpoint, or upgrade to the new endpoint with minimal downtime.
+Early in the implementation process of the API, versioning was added. This is the reason all endpoints start with \emph{/v1/}. The fact that this was not included in the original design was an oversight, as this is a common, best practise feature to add to modern APIs. It means that applications can be developed to work with the API without fear of continued development or breaking changes. If some change is made to improve the API that breaks backwards-compatibility, this can be created as a \emph{/v2/} endpoint. Existing applications that use the API can then choose to continue to use the old endpoint, or upgrade to the new endpoint with minimal downtime.
 
 \subsection{Technologies and Basic Implementation}
-The API was developed using the technologies discussed in section \ref{sec:apidesign}: Node.js, Express and MySQL. Express is used to generate a base app. Callback functions can then be attached to this base app to define the endpoints of the API. These define what to do when this endpoint is hit. The app is then set to listen on a specific port. An example of this (which is a subset of the SelfReflect API code) can be seen below. This example includes adding the POST \emph{/v1/tokens} endpoint to the express app.
+The API was developed using the technologies discussed in section \ref{sec:apidesign}: Node.js, Express and MySQL. Express is used to generate a base app. Callback functions can then be attached to this base app to define the endpoints of the API. These define what to do when each endpoint is hit. The app is then set to listen on a specific port. An example of this (which is a subset of the SelfReflect API code) can be seen below. This example includes adding the \emph{POST /v1/tokens} endpoint to the express app.
 \begin{lstlisting}
 let app = express()
 
@@ -1829,7 +1829,7 @@ export default server
 
 \subsection{Tokens Endpoints and Authenticating Requests}
 \subsubsection{Generating and Refreshing Tokens}
-The tokens endpoints handle the validation of credentials, and generation of tokens. The most significant endpoint is POST \emph{/v1/tokens}. This receives email and password, then checks the email exists and the password is correct. If either of these fail, it responds with a \emph{403 (Forbidden)} error. If both succeed, it uses an open source library called node-jsonwebtoken \parencite{nodejwt} to sign and generate a JSON Web Token. The following code generates the token, and sets it in the response:
+The tokens endpoints handle the validation of credentials, and generation of tokens. The most significant endpoint is \emph{POST /v1/tokens}. This receives email and password, then checks the email exists and the password is correct. If either of these fail, it responds with a \emph{403 (Forbidden)} error. If both succeed, it uses an open source library called \enquote{node-jsonwebtoken} \parencite{nodejwt} to sign and generate a JSON Web Token. The following code generates the token, and sets it in the response:
 \begin{lstlisting}
 const generateToken = (id, expiry, res) => {
   jwt.sign({ id: id, exp: expiry }, secret, {}, (err, token) => {
@@ -1845,7 +1845,7 @@ This generates the token using a secret, which is stored on the server and is ke
 In the case of a PUT \emph{/v1/tokens} request, email and password are not required. If a valid token is set in the request header, this is enough to authenticate the request, so a fresh token can be sent in the response, with the same user id as the provided token.
 
 \subsubsection{Authenticating Requests and Accessing Restricted Endpoints}
-As discussed in the design section of the api (section \ref{sec:apisecurity}), many endpoints require authentication as they access or modify user's data. The token, obtained from valid requests to the \emph{/v1/tokens} endpoints, must be sent in the \enquote{Authorization} header of all requests to restricted endpoints. All users endpoints are restricted, except for creation of a user, as the user cannot authenticate if they do not have an account.
+As discussed in the design section of the api (section \ref{sec:apisecurity}), many endpoints require authentication as they access or modify user's data. The token, obtained from valid requests to the \emph{/v1/tokens} endpoints, must be sent in the \emph{Authorization} header of all requests to restricted endpoints. All \emph{/v1/users/:id} endpoints are restricted. The only users endpoint that is not restricted is \emph{/v1/users} (for account creation), as the user cannot authenticate if they do not have an account.
 
 In order to add this check to all of the required endpoints, \enquote{middleware} was used. This middleware sits between the received request and the callback functions for each endpoint. Another piece of open source software called \enquote{express-jwt} \parencite{expressjwt} was used to achieve this. The usage of this can be seen in the following code:
 \begin{lstlisting}
@@ -1870,7 +1870,7 @@ app.use((err, req, res, next) => {
   }
 })
 \end{lstlisting}
-This intercepts all endpoints other than \emph{/v1/users} (for user creation), and POST \emph{/v1/users}, as this does not require a token to be provided. The middleware will then throw an \enquote{UnauthorizedError} unless both of the following conditions are met:
+This intercepts all endpoints other than \emph{/v1/users} (for user creation), and \emph{POST /v1/tokens}, as this does not require a token to be provided. The middleware will then throw an \enquote{UnauthorizedError} unless both of the following conditions are met:
 \begin{itemize}
 \item A token is provided.
 \item The token is valid, i.e. can be decoded using the server secret.
@@ -1914,7 +1914,7 @@ bcrypt.hash(password, saltRounds, (err, hash) => {
 This is the code used to create a user in the database. This hashes the password, then inserts the resultant hash in the database in the password field for the user. Note that this library automatically generates and uses a salt. Salt rounds can be increased or decreased; more salt rounds provides added security at the cost of processing speed. Ten salt rounds is the default that is recommended by the author of the open source library, so this was used for the SelfReflect API.
 
 \subsection{Users Endpoints} \label{sec:apiimplusers}
-The endpoints implemented are almost identical to those described in section \ref{sec:apiendpoints}. They will not all be described in detail here as are very simple and intuitive, and hence the code is not particularly interesting. Creation of users for example consists of a simple function that extracts email and password from the request, performs some validation (checks fields exist, checks email not already in use), then performs a simple MySQL insert to insert an entry into the database. Full descriptions of all of these endpoints have been detailed in the documentation, as seen in section \ref{sec:apidocs}. The only endpoints that will be discussed are those that relate to external APIs (Twitter and Strava).
+The endpoints implemented are almost identical to those described in section \ref{sec:apiendpoints}. They will not all be described in detail here as are very simple and intuitive, and hence the code is not particularly interesting. Creation of users for example consists of a simple function that extracts email and password from the request, performs some validation (checks fields exist, checks email not already in use), then performs a simple MySQL insert to insert an entry into the database. Full descriptions of all of these endpoints have been detailed in the documentation, as discussed in section \ref{sec:apidocs}. The only endpoints that will be discussed in detail here are those that relate to external APIs (Twitter and Strava).
 
 \subsection{Twitter} \label{sec:apiconnecttwitter}
 \subsubsection{Connect Twitter}
@@ -2020,14 +2020,14 @@ A huge amount of documentation was written for the SelfReflect API. This documen
 \begin{itemize}
 \item A short description of SelfReflect and the SelfReflect API.
 \item Instructions on how to install, set up and run the API for local development and testing.
-\item How to run the automated tests.
+\item Instructions on how to run the automated tests.
 \item Specific details and instructions on how API authentication works.
 \item Documentation for every endpoint, including:
   \begin{itemize}
-  \item The name, method (GET, POST etc.) and URI of the endpoint.
+  \item The name, method (GET, POST etc.), and URI of the endpoint.
   \item Whether or not this endpoint requires an authentication token (is restricted).
   \item A description of what this endpoint is used for.
-  \item The body field(s) required in the body of a request to this endpoint.
+  \item The body field(s) required in the body of a request to this endpoint, if any.
   \item All possible error responses, including status codes, messages and the reason for these errors.
   \item Information about the success response, including status code and an example success response body.
   \end{itemize}
@@ -2036,7 +2036,7 @@ A huge amount of documentation was written for the SelfReflect API. This documen
 This full documentation is very large, and can be seen in appendix \ref{app:apidocs}.
 
 \section{Database}
-The database was implemented almost exactly as discussed in the database design section (section \ref{sec:databasedesign}), using MySQL. The only change relates to the change in how Twitter was connected for a user. The Twitter token column in the users table was renamed to \emph{twitter\textunderscore username}. The final entity-relationship diagram for the implemented database can be seen in Figure \ref{fig:dberdimpl}.
+The database was implemented almost exactly as discussed in the database design section (section \ref{sec:databasedesign}), using MySQL. The only change relates to the change in how Twitter was connected for a user. The Twitter token column in the users table was simply renamed to \emph{twitter\textunderscore username}. The final entity-relationship diagram for the implemented database can be seen in Figure \ref{fig:dberdimpl}.
 
 \begin{figure}[ht]
 \centering
