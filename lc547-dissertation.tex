@@ -690,7 +690,7 @@ The web app is significantly larger, and incorporates most of the major contribu
   \item Must provide one visualisation built from Twitter data.
   \item Must provide one visualisation built from Strava data.
   \item Should allow Twitter and Strava data to be directly compared to SelfReflect wellbeing data in some way, via these visualisations.
-  \item Could also allow these data sources to be directly compared with one another in some way, via these visualisations.
+  \item Could also allow all three data sources to be directly compared with one another in some way, via these visualisations.
   \item Won't include interactive visualisations (such as \enquote{zoom}, \enquote{click and drag} etc.).
   \end{enumerate}
 \item Should provide a guide/help page for the user, with a \enquote{step-by-step} guide on how to use the system.
@@ -706,7 +706,7 @@ The web app is significantly larger, and incorporates most of the major contribu
   \begin{enumerate}
   \item Could work on mobile phones.
   \item Could work on tablets.
-  \item Should be tested on various browser window sizes to test responsiveness, with regard to each requirement.
+  \item Should be tested on various browser window sizes to test responsiveness.
   \end{enumerate}
 \item Should include documentation for developers on how to set up the project and get it running.
 \item Must be tested manually, including testing by volunteer testers.
@@ -749,15 +749,15 @@ The API is the server; it is where storage and retrieval of all user data happen
 \item Must allow connection and storage of Twitter credentials
 \item Must allow retrieval of user's recent tweets, if they have connected Twitter. This should be exactly as defined by Twitter's API, and not modified in any way.
 \item Must allow connection and storage of Strava credentials.
-\item Must allow retrieval of user's recent Strava data, if they have connected Twitter. This should be exactly as defined by Strava's API, and not modified in any way.
-\item Won't include connection of any applications other than Twitter and Strava, as these are being included as proofs of concept.
+\item Must allow retrieval of user's recent Strava data, if they have connected Strava. This should be exactly as defined by Strava's API, and not modified in any way.
+\item Won't include connection of any applications other than Twitter and Strava, as these are the only sources being included as proofs of concept.
 \item Must accept and return data as JSON (JavaScript Object Notation).
 \item Must require authentication for any request that returns a user's data.
   \begin{enumerate}
   \item Must allow user to provide a valid email and password in exchange for an authentication access token.
   \item Must require a valid token to access user's data (i.e. all requests other than requests to create a user, or requests for a token).
-  \item Could allow refreshing of tokens before they expire.
-  \item Must prevent user's from accessing other user's data, or any other restricted data, regardless of access token.
+  \item Could allow refreshing of tokens before they expire, by allowing user to provide a valid token in exchange for a fresh one.
+  \item Must prevent users from accessing other user's data, or any other restricted data, regardless of access token.
   \end{enumerate}
 \end{enumerate}
 
@@ -766,8 +766,8 @@ The API is the server; it is where storage and retrieval of all user data happen
 \item Must be built using Node.js (a JavaScript runtime for writing server side JavaScript code) \parencite{nodejs} and Express (a \enquote{fast, unopinionated, minimalist web framework for Node.js}) \parencite{expressjs}. These are modern tools that will both speed up development and likely produce faster, more reliable, higher quality code. Node.js is very popular and, as a result, there exists lots of compatible open source software compatible that this project can take advantage of.
 \item Must use MySQL for database access (the \enquote{world's most popular open source database}) \parencite{mysql}. There is little reason to use anything else for database access for this project, as MySQL is suited for all the project's needs. There are alternatives, but for the purposes of this project, these would not provide any significant benefits over MySQL.
 \item Must store passwords in a secure, hashed format. This is so that, even if this database is somehow accessed, user's passwords will not be lost.
-\item Should be a RESTful API. REST is Representational State Transfer and employs a stateless architecture where each request is independent. This is a modern standard and best practise for building APIs. This stateless architecture means each request must be authenticated individually. Endpoints are implemented as resources such as /User and are accessed using http \enquote{verbs} (GET, POST, PUT, PATCH, DELETE) \parencite{httpmethods}.
-\item Must include extensive documentation that satisfies:
+\item Should be a RESTful API. REST is Representational State Transfer and employs a stateless architecture where each request is independent. This is a modern standard and best practise for building APIs. This stateless architecture means each request must be authenticated individually. Endpoints are implemented as resources such as \emph{/users/} and are accessed using http \enquote{verbs} (GET, POST, PUT, PATCH, DELETE) \parencite{httpmethods}.
+\item Must include extensive documentation that satisfies the following requirements:
   \begin{enumerate}
   \item Must include documentation for developers on how to set up the project and get it running.
   \item Must have documentation for all endpoints. This is absolutely essential to make the API professional and, more importantly, to make the entire SelfReflect system extensible. Developers must understand the API, be able to use the API, and be able to extend the API if this project is to be built upon in the future.
@@ -783,7 +783,7 @@ The API is the server; it is where storage and retrieval of all user data happen
 This chapter will detail the design of both the system as a whole, and the three separate parts of the system (mobile app, web app and API), with regard to the requirements specified in section \ref{reqs}. Functional and non-functional requirements from this point onwards will be referred to as \enquote{F} and \enquote{NF} requirements respectively. Requirements referenced in each section will always refer to the corresponding section in section \ref{reqs}, unless explicitly stated. This chapter should cover all of the requirements in section \ref{reqs}, except for those that relate to testing and documentation, as they will be covered in the testing and implementation chapters respectively.
 
 \section{Overall System}
-Many modern software systems are designed using a client-server architecture. That is, one server and many clients, such as for web pages. Additionally, many successful applications have external APIs, which allows developers of external applications to build their own interfaces to the data, accessed via the corresponding API. These are the same APIs this project will take advantage of, in order to fetch user data from existing applications, such as Twitter and Strava.
+Many modern software systems are designed using a client-server architecture. That is, one server and many clients, such as for web pages. Additionally, many successful applications have external APIs, which allow developers of external applications to build their own interfaces to the data, accessed via the corresponding API. These are the same APIs this project will take advantage of in order to fetch user data from existing applications, such as Twitter and Strava.
 
 The system developed in this project will take a similar approach to this client-server, API based design. Most systems developed using these methods include internally developed client applications, that access the data differently from externally developed applications. The system in this project however will not do this. The mobile and web apps will access the data entirely via the API, and as such will essentially be no different to applications developed externally by other developers, as shown in Figure \ref{fig:OverallSystem}. This encourages, and to an extent guarantees, maximum extensibility for the project. The internally developed client applications will have the same access to the data as externally developed applications, meaning there is no disparity between the abilities of internally and externally developed client applications.
 
@@ -798,7 +798,7 @@ The system developed in this project will take a similar approach to this client
 \section{Mobile App}
 One internal client application that will communicate via the API is the SelfReflect mobile app. This is a fairly simple application, with the primary goal of allowing the user to record their mental health and wellbeing easily via a mobile app, in order to facilitate ecological momentary assessment.
 
-This application will be built in \enquote{React Native} \parencite{reactnative}. React Native is a framework for building native mobile apps using JavaScript. It uses the same native components as are used when developing in Objective-C or Java (for iOS and Android respectively), but uses JavaScript to assemble them. A huge advantage of this is that almost all code, if not all code, is cross-platform. This is the reason for NF2, NF4 and NF5. Although the mobile app will only be tested on iOS, it may well be as (or almost as) effective on Android, purely by virtue of the technologies used to build it.
+This application will be built using \enquote{React Native} \parencite{reactnative}. React Native is a framework for building native mobile apps using JavaScript. It uses the same native components that are used when developing in Objective-C or Java (for iOS and Android respectively), but uses JavaScript to assemble them. A huge advantage of this is that almost all code, if not all code, is cross-platform. This is the reason for NF2, NF4 and NF5. Although the mobile app will only be tested on iOS, it may well be as (or almost as) effective on Android, purely by virtue of the technologies used to build it.
 
 To facilitate the design of the mobile app, various \enquote{wireframes} were created to provide some plan as to how the application should look. These are low fidelity prototypes, and images of each will be included and referenced throughout this section.
 
@@ -826,7 +826,7 @@ Both logging in and registering will then need to communicate with the SelfRefle
 A successful login will result in the API responding with an access token (see section \ref{sec:apisecurity}). This will then have to be stored locally in the mobile app's state, so that it can be sent with subsequent requests, as discussed in the following sections.
 
 \subsection{Home Page}
-After logging in successfully, the user will be taken to a home page. This page will include:
+After logging in successfully, the user will be taken to the home page. This page will include:
 \begin{enumerate}
 \item A table of recent recordings, satisfying F6. Note this is a \enquote{could} requirement, so may be dropped if time constraints apply.
 \item A message to encourage the user to visit the SelfReflect web app, satisfying F7.
@@ -856,7 +856,7 @@ If the user taps the \enquote{record wellbeing} button, they will navigate to th
 \label{fig:mobilequestion}
 \end{figure}
 
-The only small difference between different question screens is that the last question screen will contain a \enquote{submit} button, rather than a \enquote{next} button. Note that all questions are mandatory; the next buttons (and the submit button) will all be disabled until the question on that page has been answered.
+The only small difference between different question screens is that the last question screen will contain a \enquote{submit} button, rather than a \enquote{next} button. Note that all questions are mandatory; the next buttons (and the submit button) will be disabled until the question on that page has been answered.
 
 The submit button will sum the answers to all the questions and submit these via the SelfReflect API, satisfying F4.2. It will also compute the date and time of submission, and submit this alongside the computed wellbeing score, satisfying F5. It is important to compute this \enquote{client-side} rather than \enquote{server-side}, as this is (to the user) when the wellbeing was recorded. If this was computed server-side and some delay happened, the user could end up with a wellbeing recorded at a time significantly different from when they actually tapped submit. Computing this client-side makes this almost impossible, as long as date and time are computed and communicated correctly.
 
@@ -866,14 +866,14 @@ The second, larger internal client application that will communicate via the API
 \subsection{Choice of Technologies}
 This application will be built in \enquote{React} \parencite{react} and \enquote{Redux} \parencite{redux}, satisfying NF1. React is a JavaScript framework/library, and Redux is a tool and development methodology for handling state in JavaScript applications. There are a huge number of potential advantages to incorporating both of these: faster software, more modular/functional code, shorter development time, better extensibility and various others. This is true for various frameworks however, not just React. 
 
-React was chosen over other frameworks for various reasons, such as personal experience and preference, React's popularity and the various advantages it provides over other frameworks. However, this project is not about with the benefits of React, or the comparison of JavaScript frameworks, so will not discuss these reasons in too much detail. For the purposes of this project, selecting some JavaScript framework was the important, and React and Redux were chosen due to personal experience, preference and knowledge of the current state of the field of JavaScript web development.
+React was chosen over other frameworks for various reasons, such as personal experience and preference, React's popularity, and various other advantages it provides over other frameworks. However, this project is not about with the benefits of React, or the comparison of JavaScript frameworks, so will not discuss these reasons in too much detail. For the purposes of this project, selecting some JavaScript framework was the important, and React and Redux were chosen due to personal experience, preference and knowledge of the current state of the field of JavaScript web development.
 
 Building the entire application in React means that all navigation will happen via updates to application state, rather than full page requests. This means the web app will be \enquote{one page}. That is, the original request will fetch the entire application, then the displayed page will simply depend on the state, which is updated via user actions. Server requests therefore will be made asynchronously, via \enquote{AJAX} requests. This satisfies NF2, and can create an interesting and smooth user experience compared to traditional web pages, as users never have to wait for full page refreshes.
 
 \subsection{Styling and Responsiveness}
 As with almost all web pages, CSS (Cascading Style Sheets) will be used to style the content of the web application. It is possible to write all CSS from scratch. However, there are a huge number of libraries to aid with styling, so as to reduce development time, and to make certain problems easier, such as producing responsive websites. The most popular of these is likely Bootstrap, developed at Twitter \parencite{bootstrapcss}. Bootstrap is a huge library that provides a great number of features: a \enquote{grid system}, styling for many base components, custom components, and jQuery plugins. However, this project will use Skeleton CSS instead \parencite{skeletoncss}. Skeleton also provides a simple grid system, and styling for some base and custom components. It is massively more lightweight than Bootstrap, while still providing everything this project requires.
 
-The grid system in these libraries is the feature that supports responsiveness of websites, allowing them to work on different sized screens. All elements are placed within the grid, which is twelve \enquote{columns} wide. The grid resizes as the screen size changes, so if there are not enough \enquote{free} columns for an element, it is placed on the next \enquote{row}. This should mean that using Skeleton CSS will satisfy NF4, NF5.1 and NF5.2, as long as the use of the grid system is implemented correctly.
+The grid system in these libraries is the feature that supports responsiveness of websites, allowing them to work on different sized screens. All elements are placed within the grid, which is twelve \enquote{columns} wide. The grid resizes as the screen size changes, so if there are not enough \enquote{free} columns for an element, it is placed on the next \enquote{row}. This should mean that using Skeleton CSS will satisfy NF4, NF5.1 and NF5.2, as long as the grid system is used correctly.
 
 \subsection{Home}
 The first page the user sees when loading the web app is the home page, which contains some information about the project as a whole, and buttons to navigate to log in and register. The wireframe for this is seen in Figure \ref{fig:webhome}.
@@ -887,7 +887,7 @@ The first page the user sees when loading the web app is the home page, which co
 
 \newpage
 \subsection{Login and Register}
-If the user clicks login (either the button on the home page, or on the navigation bar), they will be directed to the login page, satisfying F1. The wireframe for this can be seen in Figure \ref{fig:weblogin}.
+If the user clicks log in (either the button on the home page, or on the navigation bar), they will be directed to the login page, satisfying F1. The wireframe for this can be seen in Figure \ref{fig:weblogin}.
 
 \begin{figure}[ht]
 \centering
@@ -907,7 +907,7 @@ If the user clicks register (again either the button on the home page, or on the
 \label{fig:webregister}
 \end{figure}
 
-Exactly as with the mobile app, both logging in and registering involve requests to the SelfReflect API. Again, this means the web app must be able to handle and give feedback on both successful and erroneous responses from the API. Also, again like the mobile app, the web app must store the token somewhere for use in subsequent requests.
+Exactly as with the mobile app, both logging in and registering involve requests to the SelfReflect API. Again, this means the web app must be able to handle and give feedback on both successful and erroneous responses from the API. Also, again like the mobile app, the web app must store the access token it obtains somewhere, for use in subsequent requests.
 
 Token storage is a little more complicated for the web app however. Simply storing the token in the state of the web application satisfies F8, as the user can be logged in as long as the token exists and is valid. However, if the token is only stored in state, as soon as the user refreshes the page the token will be lost, which fails F9. This kind of persisted login behaviour is usually achieved through the use of \enquote{HTTP cookies} in web applications. However, cookies are sent in the header of every request automatically, which is not intended for this application. Thankfully, modern browsers provide \enquote{HTML Local Storage} \parencite{htmllocalstorage}, which allows applications to store data in the browser, and retrieve this data whenever they desire. This will be used in this project to satisfy F9. The web app will store the access token in local storage, retrieve it on page load, and hence allow persisted login for users in much the same way as using cookies.
 
@@ -924,7 +924,7 @@ After a valid login, the navigation bar changes and the user is automatically di
 Similar to the mobile app, all subsequent screens have a log out button in the top right corner, satisfying F2. Note this guide page also includes a prompt to download and use the SelfReflect mobile app, satisfying F6.
 
 \subsection{SWEMWBS Questionnaire}
-Clicking the record button will navigate the user to the SWEMWBS questionnaire, satisfying F4.1. This is on one page, and allows the user to scroll up/down as they select answers to each of the seven questions. At the bottom of the page there is a submit button which computes and submits total score, satisfying F4.2. Exactly like the mobile app (and for the same reasons), this computes date and time of submission, satisfying F5. The wireframe for this page can be seen in Figure \ref{fig:webrecord}. This image only shows the bottom of the screen. The first 4 questions are \enquote{off-screen} to the top.
+Clicking the record button will navigate the user to the SWEMWBS questionnaire, satisfying F4.1. This is on one page, and allows the user to scroll up/down as they select answers to each of the seven questions. At the bottom of the page there is a submit button which computes and submits total score, satisfying F4.2. Exactly like the mobile app (and for the same reasons), this also computes date and time of submission, satisfying F5. The wireframe for this page can be seen in Figure \ref{fig:webrecord}. This image only shows the bottom of the screen. The first 4 questions are \enquote{off-screen} to the top.
 
 \begin{figure}[ht]
 \centering
@@ -969,7 +969,7 @@ This will fetch data from SelfReflect, Twitter and Strava via the SelfReflect AP
 
 This satisfies the requirements to have one visualisation per source (F14.1, F14.2 and F14.3). Also, as all of these visualisations consist of integer numbers that are likely to be somewhat compatible, they can all be plotted on one graph, as shown in the wireframe. This therefore allows external sources to be compared with both SelfReflect, and with one another, hence satisfying F14.4 and F14.5.
 
-These visualisations will be built using an open source project called \enquote{ReactD3} \parencite{reactd3}, satisfying NF3. This allows charts to be built fairly easily within the React framework, as long as data is provided in a compatible format. Making use of this library will significantly reduce development time, and will take advantage of the existing developmental effort, experience and testing that has already been carried out for this open source project.
+These visualisations will be built using an open source project called \enquote{ReactD3} \parencite{reactd3}, satisfying NF3. This allows charts to be built fairly easily within the React framework, as long as data is provided in a compatible format. Making use of this library will significantly reduce development time, and will take advantage of the developmental effort, experience and testing that has already been carried out for this open source project.
 
 \section{API} \label{sec:apidesign}
 The API is the server of SelfReflect's client-server type model. It handles all data storage, user management, connecting of existing apps, fetching of existing apps data and security/authentication.
@@ -996,11 +996,11 @@ The justification for the choice of these technologies, and particularly of Expr
 MySQL will be used for database access, satisfying NF2. As discussed in NF2, there are many options for database access that satisfy this project's needs, so for the purposes of this project it was simply important to select one. MySQL was chosen purely due to personal experience, as this will likely reduce development time at no additional cost.
 
 \subsection{RESTful API}
-The API will be \enquote{RESTful}, satisfying NF4. \enquote{REST} is an architectural development methodology for APIs, and is said to \enquote{induce desirable properties, such as performance, scalability, and modifiability, that enable services to work best on the Web} \parencite{oraclerest}. For these and other reasons, this is a popular, common best practise standard for building APIs.
+The API will be \enquote{RESTful}, satisfying NF4. \enquote{REST} is an architectural development methodology for APIs, and is said to \enquote{induce desirable properties, such as performance, scalability, and modifiability, that enable services to work best on the Web} \parencite{oraclerest}. For these and other reasons, REST is a popular, common best practise standard for building APIs.
 
 REST is a stateless architecture, meaning all requests are independent from one another. This does pose a particular issue with regard to persisted login; most web applications handle persisted login via the use of sessions. These store some state on the server against some session identifier, then send cookies containing these session identifiers to clients. Clients then send these with every request and hence can remain logged in. However, this violates the stateless principle of REST. Storing access tokens on the server after a user has \enquote{logged in} would also violate this principle. This is a problem that requires a fairly subtle solution, and will be discussed in more detail in the Security and Authentication section (section \ref{sec:apisecurity}) later.
 
-Probably the most important aspect of REST is the methodology used to design how a client accesses the API. REST uses http \enquote{verbs} (GET, POST, PUT, PATCH, DELETE) \parencite{httpmethods} to access \enquote{resources} via \enquote{Uniform Resource Identifiers} (URIs), producing an interface that is usually very intuitive. Any resource that access data should map almost identically to the database table it accesses. For example, SelfReflect has users, so will likely have a users table in the database and a resource at \emph{/users}. Creation of a users would then consist of a POST request to this resource, whereas simply fetching user details would consist of a GET request to something like \emph{/users/1}, where 1 is the requested user's unique identifier in the database. Each of the http \enquote{verbs} can be seen in Table \ref{table:httpverbs}, with a description of what they are typically used for in RESTful APIs.
+Probably the most important aspect of REST is the methodology used to design how a client accesses the API. REST uses http \enquote{verbs} (GET, POST, PUT, PATCH, DELETE) \parencite{httpmethods} to access \enquote{resources} via \enquote{Uniform Resource Identifiers} (URIs), producing an interface that is usually very intuitive. Any resource that accesses data should map almost identically to the database table it accesses. For example, SelfReflect has users, so will likely have a users table in the database and a resource at \emph{/users}. Creation of a users would then consist of a POST request to this resource, whereas simply fetching user details would consist of a GET request to something like \emph{/users/1}, where 1 is the requested user's unique identifier in the database. Each of the http \enquote{verbs} can be seen in Table \ref{table:httpverbs}, with a description of what they are typically used for in RESTful APIs.
 
 \begin{table}[ht]
 \centering
@@ -1011,7 +1011,7 @@ Probably the most important aspect of REST is the methodology used to design how
 \textbf{Verb} & \textbf{Usage} \\ \hline
 GET &  To read a resource. Should not make any changes to data.  \\  \hline
 POST & To create a new resource. Data of resource to be created is sent in body of the request.\\  \hline
-PUT &  To update an existing resource. Usually the entire resource at this URI is replaced with the data sent in the body of the request, so the entire resource needs to be sent. If no resource exists at this URI, often one will be created, which is equivalent to POSTing to this URI.\\  \hline
+PUT &  To update an existing resource. Usually the entire resource at this URI is replaced with the data sent in the body of the request, so the entire resource needs to be sent. If no resource exists at this URI, often one will be created, which is equivalent to a POST request to this URI.\\  \hline
 PATCH & To modify an existing resource. This allows only a subset of the data in a resource to be sent in the body of the request, so that only the specified fields will be updated.\\  \hline
 DELETE & Deletes a resource. \\  \hline
 \end{tabular}
@@ -1044,18 +1044,18 @@ PUT /tokens & Refresh an access token. Must provide a valid access token. This w
 As discussed in the web app design section, password recovery (F4.5) and email verification were dropped (F3.5). See section \ref{sec:webaccman} for justification of this.
 
 \subsection{Security and Authentication} \label{sec:apisecurity}
-Data protection is incredibly important for any application that stores data about users. It is even more important for data that is sensitive, such as healthcare data, or in this case mental health and wellbeing data. Not only does SelfReflect store wellbeing data, it also enables access to a user's Twitter and Strava data. Only the user themselves should be able to access their SelfReflect, Twitter and Strava data; the data must be restricted from all other users and/or malicious attacks. For this reason, all endpoints that access a user's data (i.e. all endpoints other than POST /users, and the /tokens endpoints) must be restricted unless the user can be prove their right to access that endpoint.
+Data protection is incredibly important for any application that stores data about users. It is even more important for data that is sensitive, such as healthcare data, or in this case mental health and wellbeing data. Not only does SelfReflect store wellbeing data, it also enables access to a user's Twitter and Strava data. Only the user themselves should be able to access their SelfReflect, Twitter and Strava data; the data must be restricted from all other users and/or malicious attacks. For this reason, all endpoints that access a user's data (i.e. all endpoints other than the \emph{POST /users} endpoints, and the two \emph{/tokens} endpoints) must be restricted unless the user can be prove their right to access that endpoint.
 
-Additionally, SelfReflect must allow persisted login, so that user's do not have to repeatedly log in to the web or mobile app. The API must work out where requests are coming from. Achieving this is usually done by violating REST principles and storing some state on the server, via the use of sessions and cookies. This project aims to achieve this however without violating stateless REST principles.
+Additionally, SelfReflect must allow persisted login, so that users do not have to repeatedly log in to the web or mobile app. The API must work out where requests are coming from. Achieving this is usually done by violating REST principles and storing some state on the server, via the use of sessions and cookies. This project aims to achieve this however without violating stateless REST principles.
 
-In order to achieve this, the API will use JSON Web Tokens, or JWTs \parencite{jwtrfc}. JWTs are a method of encrypting and digitally signing JSON objects, in order to communicate securely. This will allow SelfReflect to encrypt tokens as strings to be sent to clients, and decode these strings as JSON objects. These decoded tokens, if valid, will contain the user id related to that token, as well as an expiry time. As the encryption key will be kept secret and stored server side, tokens cannot be faked. This means the SelfReflect API can check the following conditions:
+In order to do this, the API will use JSON Web Tokens, or JWTs \parencite{jwtrfc}. JWTs are a method of encrypting and digitally signing JSON objects, in order to communicate securely. This will allow SelfReflect to encrypt tokens as strings to be sent to clients, and decode these strings as JSON objects. These decoded tokens, if valid, will contain the user id related to that token, as well as an expiry time. As the encryption key will be kept secret and stored server side, tokens cannot be faked. This means the SelfReflect API can check the following conditions:
 \begin{enumerate}
 \item The token is valid.
-\item The token is not expired. Tokens will be set to expire some sensible time after they are generate, such as 24 hours.
+\item The token is not expired. Tokens will be set to expire some sensible time after they are generated, such as 24 hours.
 \item The id of the decoded token matches the id of the requested resource.
 \end{enumerate}
 
-All endpoints that access restricted data will require a valid access token to be sent with the request, which can be obtained via the /tokens endpoints. If no token is sent, or any of the three conditions above are not met, the request will be rejected. This therefore provides all the security needed (satisfying F12.2 and F12.4), but does not store any state on the server, so does not violate stateless REST principles.
+All endpoints that access restricted data will require a valid access token to be sent with the request, which can be obtained via the \emph{/tokens} endpoints. If no token is sent, or any of the three conditions above are not met, the request will be rejected. This therefore provides all the security needed (satisfying F12.2 and F12.4), but does not store any state on the server, so does not violate stateless REST principles.
 
 \subsection{Secure Password Storage} \label{subsec:secpass}
 A final security issue relates to the storage of passwords. If the database were to be \enquote{hacked}, it is desirable that passwords would still not be lost. Common practise to achieve this is to \enquote{hash} passwords. This involves putting passwords through a \enquote{one way algorithm}, meaning the original password cannot be obtained from the final result, even if the algorithm is known. This is often used for passwords, as applications do not actually need to know user's original passwords. The application can store the hashed password, then when an authentication request is received, the password can be put through the same one way algorithm and checked against the stored hash to make sure they are the same. This is a small cost to the application, and ensures that even if the database is hacked, the hacker does not have access to user's original passwords.
@@ -1097,13 +1097,13 @@ This table includes:
 This table includes:
 \begin{itemize}
 \item id: the primary key for the table. This is a unique identifier for each entry in the table.
-\item user\textunderscore id: foreign key referencing the id column in the user table. Needed to map each wellbeing entry to a user. This has the added benefit of only allowing user\textunderscore ids that exist in the user table to be inserted into the wellbeing table.
+\item user\textunderscore id: foreign key referencing the id column in the user table. Needed to map each wellbeing entry to a user. This has the added benefit of only allowing user ids that exist in the user table to be inserted into the wellbeing table.
 \item wellbeing: foreign key referencing the raw\textunderscore score column in the swemwbs\textunderscore conversion table. This is the raw score, and has the added benefit of only allowing raw scores that are in the conversion to be inserted into the wellbeing table.
 \item date\textunderscore recorded: timestamp field to store when the wellbeing was recorded.
 \end{itemize}
 
 \subsection{SWEMWBS Conversion Table}
-This table is entirely static and will contain the SWEMWBS raw to metric score conversion table found in appendix \ref{swemwbsconversiontable}. This table includes:
+This table is entirely static and will contain the SWEMWBS raw to metric score conversion table, as found in appendix \ref{swemwbsconversiontable}. This table includes:
 \begin{itemize}
 \item raw\textunderscore score: the primary key for the table. This is a the raw score in the SWEMWBS conversion table.
 \item metric\textunderscore score: the metric score each raw score entry maps to.
