@@ -204,7 +204,7 @@ This chapter first discusses automated testing, then continues to discuss user t
 
 \textbf{Chapter 7: Results and Discussion}
 
-This chapter presents the results of the testing by the volunteer testers. It then discusses these results, and summaries usability improvements, feature improvements and additional features that could be added. It also discusses additional sources and visualisations that could be added to the system, based on user responses.
+This chapter presents the results of the testing by the volunteer testers. It then discusses these results, and summaries usability improvements, feature improvements and additional features that could be added. It also discusses additional sources and visualisations that could be added to the system, based on user responses. It will also discuss where, how and to what extent this project contributes to the research referenced in the Literature Survey.
 
 \textbf{Chapter 8: Conclusion and Future Work}
 
@@ -218,7 +218,7 @@ This project encompasses two key fields: personal informatics and mental health.
 
 The existing research in these fields will be extremely useful in the design and development of the system and its requirements. These will be developed by drawing on the conclusions of existing work, and by making improvements on existing technologies.
 
-\subsection{Self Management in Mental Health}
+\section{Self Management in Mental Health}
 Self-management techniques and schemes have been shown to be effective in both treatment \parencite{wrapstudy} and recovery \parencite{selfmanagementrelapse}. Many schemes exist today and are growing in popularity, with these schemes being said to offer an \enquote{increasingly popular alternative to therapist-administered psychological therapies, offering the potential of increased access to cost-effective treatment} \parencite{selfhelpanxiety}.
 
 Much of the principle of self-management revolves around \enquote{empowerment} of the user \parencite{whoselfmanagement}. Empowerment involves the user in decisions about his or her mental health condition treatment, providing them with a level of control and influence \parencite{whoempowerment}. Although self-management and active engagement has been commonplace for physical long term health conditions for a long time, it has been much less widely used in the context of mental health \parencite{whoselfmanagement}. It is only fairly recently that this has become common in mental health treatment, with claims that it can be as effective as medical treatment \parencite{mhfselfmanagement}.
@@ -229,7 +229,7 @@ Many self-management schemes are based around teaching users specific skills, an
 
 There are lots of self-management techniques, many of which are common recommendations to those suffering from mental health conditions or poor mental health. Some of these common techniques will be discussed below, with regard to how they apply to this project, and how this project can aid execution of each technique.
 
-\subsubsection{Cognitive Behavioural Therapy (CBT) Techniques}
+\subsection{Cognitive Behavioural Therapy (CBT) Techniques}
 Cognitive Behavioural Therapy, or CBT, is a form of talking therapy that is extremely popular in modern mental health treatment. It is \enquote{one of the most extensively researched forms of psychotherapy}, which is \enquote{due in part to the ongoing adaptation of CBT for an increasingly
 wider range of disorders and problems} \parencite{butler2006empirical}.
 
@@ -239,12 +239,12 @@ CBT is a combination of two types of therapy: cognitive and behavioural \parenci
 
 Behavioural techniques however involve substituting alternate, less harmful behaviours for harmful ones \parencite{patientcbt}. If this behaviour is one measured by a system, such as exercise or social activity, its effectiveness could be measured by the system and reported to the user. This could allow the user to identify which CBT techniques are more useful to them, as well as the effect on their mental health of not employing these techniques. They could also identify when a technique or techniques become less effective, and either address this themselves or recognise this as a sign of relapse, and consider contacting a mental health clinician before their condition worsens.
 
-\subsubsection{Trigger Identification}
+\subsection{Trigger Identification}
 Triggers refer to events that can potentially result in relapses or negative impacts on mental health \parencite{samhsatriggers}. These events can \enquote{trigger} these issues. Users identify triggers and plan their responses in advance so that they can react appropriately to try to avoid negative consequences \parencite{samhsatriggers}.
 
 The aim of this system in regard to triggers is that, should a user experience a negative change in mood, they can view the data around that time and identify potential triggers that resulted in that negative change. They can also, in a similar way to CBT techniques, measure the effectiveness of their planned actions to triggers. If the user knows a trigger occurred, and a planned action was carried out, they can investigate how effective this reaction was in avoiding the negative consequences of the trigger.
 
-\subsubsection{Wellness Recovery Action Plan (WRAP)}
+\subsection{Wellness Recovery Action Plan (WRAP)}
 Wellness Recovery Action Plan, or WRAP, is another popular and widely used system for self-management \parencite{mhrwrap}. A user creates their own WRAP, which includes (definitions taken from \parencite{mhrwrap}):
 \begin{itemize}
 \item A \enquote{Wellness Toolbox}. That is, resources such as contacting friends, exercising and maintaining a healthy diet.
@@ -258,7 +258,7 @@ Wellness Recovery Action Plan, or WRAP, is another popular and widely used syste
 
 This clearly has some crossover with the above methods. Again, the system developed in this project would in theory be able to help with this. An early warning sign, or even later sign could be identified by the wellbeing data recorded in the system. The effectiveness of the daily maintenance plan and post crisis plan could also be measured, and potentially updated depending on the results of the data recorded. This also applies to the Wellness Toolbox.
 
-\subsubsection{Self Management Schemes Similarities}
+\subsection{Self Management Schemes Similarities}
 All three of these schemes have some common features. They all require:
 \begin{itemize}
 \item Identification/recognition of events that can cause negative consequences to mental health.
@@ -270,16 +270,16 @@ To do this, and to measure the effectiveness of these actions, some measurement 
 
 This is particularly important for the purposes of this system. Only if this measurement is effective, efficient and recorded regularly will the system be able to aid in these self-management techniques. This is another area that requires research and a review of existing work, in order to decide the best way to allow the user to record their wellbeing easily and effectively.
 
-\subsection{Recording of Mental Health and Wellbeing} \label{recordingmentalhealth}
+\section{Recording of Mental Health and Wellbeing} \label{recordingmentalhealth}
 \subsubsection{Method of Recording} \label{methodofrecording}
 There are two key ways to record a person's wellbeing: self-rating and observer rating. For the purposes of this project, self-rating will be used, as the application is designed for self-management.
 
 Regardless of the fact that this is necessary for this project, self-rating methods may well be more effective anyway. A study in 2011, published in the journal of mental health, investigated the effectiveness of various measures from the point of view of service users \parencite{crawford2011selecting}. This study highlighted the importance service users place on measures rated by the patient. The participants in the study even \enquote{expressed surprise, and in some instances disbelief, that outcome measures based entirely on the judgements of researchers or clinicians could be used to judge a person’s response to treatment}. This study will be particular useful when discussing how to record mental health and wellbeing.
 
-\subsubsection{Ecological Momentary Assessment (EMA)} \label{sec:ema}
+\subsection{Ecological Momentary Assessment (EMA)} \label{sec:ema}
 Ecological momentary assessment (EMA) refers to a method of data collection in which a person can \enquote{report on symptoms, affect and behaviour close in time to experience} \parencite{moskowitz2006ecological}. This strongly relates to this project, as a key aim is to allow users to record their wellbeing regularly and easily, allowing EMA. EMA has \enquote{a number of advantages over more traditional methods for the assessment of patients}, and has been shown to \enquote{permit more sensitive assessments} and \enquote{enable more wide-ranging and detailed measurements of mood and behaviour} \parencite{moskowitz2006ecological}.
 
-\subsubsection{Questionnaire Length and Response Burden} \label{questionnairelength}
+\subsection{Questionnaire Length and Response Burden} \label{questionnairelength}
 Another important consideration is the length of the method used to record wellbeing. This relates to a concept known as \enquote{response burden}. That is, the effort required by a user to answer a questionnaire \parencite{rolstad2011response}. The initial proposal for this project was for the questionnaire to be just one field, rating a mood or wellbeing on a simple scale. However, research shows that users accused questionnaires that are too short of not being able to \enquote{properly assess the complex
 outcomes they are designed to measure} \parencite{crawford2011selecting}.
 
@@ -287,10 +287,10 @@ Questionnaires that are too long however have been shown to result in a lower re
 
 A high response burden poses another problem for this project, in that this system aims to allow users to record their wellbeing quickly and easily. A higher response burden could lead to the user delaying the recording of their wellbeing, which would then not count as EMA. To overcome this, the system must implement some trade off between response burden and obtaining meaningful measures of mental health and wellbeing.
 
-\subsubsection{Outcome Measures}
+\subsection{Outcome Measures}
 In both mental and physical health, measurements of a patient's progress and the efficacy of their treatment are often referred to as \enquote{outcome measures} \parencite{pediaoutcomemeasures}. These measures are said to allow health services to improve quality of service, but can also be used in the context of tracking a patient's mental health and wellbeing. These measures come in many forms, and fall into various possible categories: general outcome measures, patient rated outcome measures (PROMS), outcome measures for use with children, outcome measures for emotional difficulties and various others \parencite{mhpoutcomemeasures}. As discussed above, we are only interested in self-rating methods, and hence will only investigate patient reported outcome measures.
 
-\subsection{Which Outcome Measure(s)?} \label{whichoutcomemeasures}
+\section{Which Outcome Measure(s)?} \label{whichoutcomemeasures}
 There are many condition specific outcome measures, for example the \enquote{Patient Health Questionnaire} (PHQ-9) for depression \parencite{kroenke2001phq}, and the \enquote{Generalized Anxiety Disorder} (GAD7) questionnaire for generalised anxiety disorder \parencite{spitzer2006brief}.
 
 These condition specific questionnaires may well be more effective than generic wellbeing questionnaires, but this project will focus on the more generic examples. This is due to the fact that the key goal of this project is to investigate the combinations of user provided wellbeing data with user specific API data. The scope of the project does not allow for investigation and development of a new or custom outcome measure. Neither does it allow for the inclusion of multiple condition specific outcome measures. Another key goal of the application is that it is generic, and at least somewhat applicable to the majority of the general population, with regard to keeping track of their mental health and wellbeing.
@@ -298,7 +298,7 @@ These condition specific questionnaires may well be more effective than generic 
 For these reasons the project will implement an existing, well established patient reported outcome measure. Some examples of existing, popular outcome measures will be discussed, as will their appropriateness for use in this project. Candidates to be discussed (one of which will be included in the system) are: the \enquote{European Quality of Life instrument} (EQ-5D), the \enquote{Recovery Star}, the \enquote{Warwick-Edinburgh Mental Wellbeing Scale} (WEMWBS), and its short version, the \enquote{Short WEMWBS} (SWEMWBS).
 
 \newpage
-\subsubsection{European Quality of Life instrument (EQ-5D)}
+\subsection{European Quality of Life instrument (EQ-5D)}
 The \enquote{European Quality of Life instrument} (EQ-5D) is a \enquote{standardized instrument for use as a measure of health outcome} \parencite{eq5dabout}. The questionnaire consists of two pages. The user answers 5 questions on a scale ranging from \enquote{no problem} to \enquote{unable to do}, in areas such as mobility and self care, then scores their mood on a scale of 1 to 100 \parencite{eq5duse}. An example EQ-5D can be seen in Figure \ref{fig:eq5d} (images from \parencite{eq5duse}):
 
 \begin{figure}[ht]
@@ -311,7 +311,7 @@ The \enquote{European Quality of Life instrument} (EQ-5D) is a \enquote{standard
 The EQ-5D has been shown to be useful for common mental health conditions such as mild to moderate depression \parencite{brazier2010eq}, which may well be appropriate for this system. However, it is possible that it suffers from an issue discussed in the section \ref{questionnairelength} above; it is too short. In fact, in the study by \citeauthor{crawford2011selecting}, it was this questionnaire that participants raised concerns about with regard to it being too short to properly assess complex outcomes \parencite{crawford2011selecting}.
 
 \newpage
-\subsubsection{Mental Health Recovery Star (MHRS)}
+\subsection{Mental Health Recovery Star (MHRS)}
 The \enquote{Mental Health Recovery Star} (MHRS) is part of a set of outcome measure tools called \enquote{Outcomes Stars} \parencite{outcomesstars}. It measures ten areas of a user's life, rating them on a scale of 1 to 10, where 1 is \enquote{stuck} and 10 is \enquote{self-reliance}. This then produces a graphic in the shape of a ten-pointed star, an example of which can be seen in Figure \ref{fig:mhrs} (image from \parencite{outcomesstars}):
 
 \begin{figure}[ht]
@@ -330,7 +330,7 @@ Another issue with MHRS is the time to complete. In the study by \citeauthor{kil
 
 When considering 30 to 60 minutes with regard to this high desired response frequency, this is quite a high response burden. As discussed in the questionnaire length and response burden section, this is a key problem for this project. Also, it is likely that this time will be even longer than 30 to 60 minutes, given that the user would be completing the MHRS on their own without the guidance of a trained member of staff.
 
-\subsubsection{Warwick-Edinburgh Mental Wellbeing Scale (WEMWBS)}
+\subsection{Warwick-Edinburgh Mental Wellbeing Scale (WEMWBS)}
 The \enquote{Warwick-Edinburgh Mental Wellbeing Scale} (WEMWBS) is a scale designed to \enquote{enable the monitoring of mental wellbeing in the general population} \parencite{wemwbs}. It was developed by a panel of experts \parencite{wemwbsdevelopment} and has been tested fairly extensively, finding that it \enquote{showed good content validity} and is a \enquote{short and psychometrically robust scale} \parencite{tennant2007warwick}. It consists of 14 positively worded items with 5 possible responses to each, ranging from \enquote{none of the time} to \enquote{all of the time}.
 \newpage
 These questions and responses can be seen in Figure \ref{fig:wemwbs} (table from \parencite{wemwbsquestions}):
@@ -347,7 +347,7 @@ The study by \citeauthor{crawford2011selecting} (\citeyear{crawford2011selecting
 
 A problem with WEMWBS however is the length of the questionnaire, in that it consists of 14 items. This shouldn't be too time consuming for the user as the questions are not open ended, and are relatively simple. However, again regarding the aim of a high response frequency, a shorter questionnaire may be more effective for the purposes of this project. Thankfully, a shorter version of the WEMWBS exists; the \enquote{Short WEMWBS} (SWEMWBS).
 
-\subsubsection{Short WEMWBS (SWEMWBS)} \label{swemwbssection}
+\subsection{Short WEMWBS (SWEMWBS)} \label{swemwbssection}
 The \enquote{Short WEMWBS} (SWEMWBS) is a shorter version of the WEMWBS, consisting of a 7 item scale rather than a 14 item scale \parencite{swemwbs}. The questions on the short version are a subset of those on the full version, so retain the advantages of being positively worded. In order to compare the two scales, the score obtained from the shorter version is mapped to a \enquote{metric} score via a conversion table. This conversion table can be seen in appendix \ref{swemwbsconversiontable}.
 \newpage
 The questions in the SWEMWBS can be seen in Figure \ref{fig:swemwbs} (table from \parencite{swemwbsquestions}):
@@ -364,7 +364,7 @@ The disadvantages of this scale are that, as discussed, it does provide a more n
 
 The SWEMWBS (as well as the WEMWBS) is copyrighted by the University of Warwick and NHS Health Scotland. However, it is free to use as long as users register by completing a registration form \parencite{wemwbsreg}.
 
-\subsubsection{This project}
+\subsection{This Project}
 The SWEMWBS will be used for this project as it seems to provide a good trade off between response burden and obtaining meaningful measures of mental health and wellbeing. It is publicly available (after registration) and provides a single wellbeing score per response, which will aid massively when building visualisations. This will make mapping of wellbeing to other factors simple, which should result in simple, effective and easy to understand visualisations for the user.
 
 \section{Personal Informatics} \label{personalinformatics}
@@ -2174,7 +2174,36 @@ The last question of the questionnaire asked users for suggestions for additiona
 \item Strava: Pace analysis, time exercised per day, distance ran/cycled/swam per day, number of steps, time at rest, calories burned per day.
 \end{itemize}
 
-\chapter{Conclusion and Future Work}
+\section{Contributions to Research} \label{sec:contr}
+Another important aspect to discuss with regard to these results is where, how and to what extent this project has contributed to the research discussed in the literature survey (chapter \ref{litsurvey}). Some parts of the survey helped with design aspects of the system and so are not relevant here, such as how to record wellbeing and the use of the SWEMWBS questionnaire. Others however identified and discussed the fields of research in which this project hoped to contribute. The key examples of these are:
+\begin{itemize}
+\item Mental health and self management.
+\item Personal informatics in the context of mental health and wellbeing.
+\item Visualisations.
+\item Existing systems.
+\end{itemize}
+
+\subsection{Mental Health and Self Management}
+Research showed that self management is \enquote{increasingly popular} \parencite{selfhelpanxiety} and has been shown to be effective in both treatment \parencite{wrapstudy} and \parencite{selfmanagementrelapse}. It investigated various techniques and found that all self management schemes had several features in common. They all required identification of events that can cause negative consequences, recognition of when these events occur and what effect they have, and planned actions to minimise the negative consequences of these events. This project planned to develop a system to aid with the first two of these. Users would be able to build graphs to identify events, identify when they occur and see visual proof of the effect this event had.
+
+On one hand this can be considered a successful contribution for this project; a tool was successfully built to allow users to generate these graphs, allowing the possibility to identify the factors discussed. However, whether SelfReflect (in its current state) produces visualisations that are clear enough for the average user to identify these factors is, as of yet, untested. Future work should be carried out to discover if the average user can draw valid and useful conclusions, and ways in which the system can be improved to aid users in achieving this goal.
+
+\subsection{Personal Informatics in the Context of Mental Health}
+The literature survey discussed the five stage model of personal informatics systems by \citeauthor{li2010stage} (\citeyear{li2010stage}). It also stated which of these stages were primary focuses of this project: collection, integration and reflection. It then continued to discuss the impact of both social media activity and exercise on mental health and wellbeing, with the plan to develop a system to identify the exact nature of these relationships.
+
+SelfReflect's implemented features cover all of these areas. The combination of the mental health SWEMWBS questionnaire, connecting of Twitter and Strava, the API and the visualisations cover all three of the stated stages of the five stage model. The visualisations allow graphs to be produced to potentially identify relationships between social media activity, exercise activity and mental health and wellbeing. However, much like the field of self management, future work should investigate how effective the system is in allowing users to identify these relationships, and how it could further help users to do so.
+
+\subsection{Visualisations}
+Another identified area in which this project hoped to contribute was by trialling a new method of presenting visualisations to the user. Rather than trying to guess which visualisations the user wanted, or identifying correlations automatically, this project planned to implement a tool to allow the user to generate visualisations themselves.
+
+This was overall very successful; all users managed to generate visualisations across both two and three sources. Questionnaire responses showed that seven out of ten users rated this \enquote{very easy} to use, and the other three rated it \enquote{easy}. This means that overall, users found it simple and easy to generate visualisations across multiple sources. However, again further work should be carried out to investigate if users can identify correlations in data themselves, without the need for automatic identification.
+
+\subsection{Existing Systems}
+Finally, the literature survey reviewed existing systems and defined how SelfReflect would differentiate itself from these systems. It planned to do this by combining user submitted mental health and wellbeing data with API data, and by implementing a simple visualisation building tool.
+
+Both of these goals have already been discussed above, and it is clear that this system managed to achieve both of these with the features implemented. Providing no substantial systems were missed during research, SelfReflect can be said to be a unique system that contributes to the fields discussed, in a way that these existing systems do not.
+
+\chapter{Conclusion and Future Work} \label{chap:conc}
 \subsection{Conclusion}
 This project investigated the huge scale of the problem of mental health conditions in the UK, and the lack of funding faced by mental health services. It identified self management as a way to reduce the demand for mental health services, in people that are in of treatment, out of treatment and are post treatment. It also discussed personal informatics and its relation to mental health, as well as the modern state of user data, including the many apps that both record data about users, and make this data accessible via open APIs.
 
@@ -2202,7 +2231,7 @@ These were detailed and summarised in the results and discussion chapter of this
 This is, and was always going to be, a key area for future work for this project. Twitter and Strava were included as proofs of concept, with one visualisations built for each. The system has been designed to be extensible to add lots more of these, in order to provide an extensive personal informatics system to aid in the self management of mental health and wellbeing. Users provided a large number of suggestions for these, both in terms of additional sources and/or visualisations within existing sources, as seen in section \ref{subsec:addsources}.
 
 \subsubsection{System Feasibility Research}
-Either using the current system, or after further projects to improve and expand the software system, the feasibility of the software as a tool to aid in the self management of mental health and wellbeing needs to be investigated. This would need to be an organised, controlled study to measure the effectiveness of the system. Possible aims of this research could be: to investigate how effective the system can be as a tool for those who are suffering from mental health conditions or poor mental wellbeing, to investigate which users it would be most useful for, to gather the opinion of mental health specialists on the feasibility of the system, and many others. Most importantly however, future research should establish whether SelfReflect, or an expanded version of it, could truly help to tackle the huge problem of poor mental health and wellbeing in the UK, and whether this could reduce the demand for treatment from the underfunded and oversubscribed NHS mental health services.
+Either using the current system, or after further projects to improve and expand the software system, the feasibility of the software as a tool to aid in the self management of mental health and wellbeing needs to be investigated. This would need to be an organised, controlled study to measure the effectiveness of the system. This is somewhat similar to the suggestions made in section \ref{sec:contr}, regarding the contributions of this project to existing research, and how it could contribute further in future work. Possible aims of this research could be: to investigate how effective the system can be as a tool for those who are suffering from mental health conditions or poor mental wellbeing, to investigate which users it would be most useful for, to gather the opinion of mental health specialists on the feasibility of the system, and many others. Most importantly however, future research should establish whether SelfReflect, or an expanded version of it, could truly help to tackle the huge problem of poor mental health and wellbeing in the UK, and whether this could reduce the demand for treatment from the underfunded and oversubscribed NHS mental health services.
 
 \printbibliography
 
