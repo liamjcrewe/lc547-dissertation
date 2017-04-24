@@ -1459,7 +1459,7 @@ store.subscribe(() => {
 })
 \end{lstlisting}
 
-The fetchUser function (not shown) simply fetches the user's information by sending a GET request to the \emph{/v1/users/:id}. It then updates the user's information in the Redux store state. This is again throttled, but in a slightly different way. The function needs to not be throttled if no user has already been fetched, so both the throttled and original versions of the fetchUser function are required.
+The fetchUser function (not shown) simply fetches the user's information by sending a GET request to the \emph{/v1/users/:id}. It then updates the user's information in the Redux store state. This is again throttled, but in a slightly different way. The function needs to not be throttled if the user has not been fetched yet, so both the throttled and original versions of the \emph{fetchUser} function are required.
 
 \subsection{Home}
 The first screen the user sees when loading the web app is the home screen, which can be seen in Figure \ref{fig:webhomeimpl}.
