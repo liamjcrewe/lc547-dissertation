@@ -1074,11 +1074,10 @@ An entity-relationship diagram for the planned database can be seen in Figure \r
 \begin{figure}[ht]
 \centering
 \caption{Planned Database Entity-Relationship Diagram}
-\includegraphics[width=0.8\textwidth]{i/selfreflectdb.png}
+\includegraphics[width=0.7\textwidth]{i/selfreflectdb.png}
 \label{fig:dberd}
 \end{figure}
 
-\newpage
 This shows each of the tables, the columns in them, the types of each of these columns, and the relationships between tables.
 
 \subsection{User Table}
@@ -1135,7 +1134,7 @@ inputsValid() {
 }
 \end{lstlisting}
 
-This does of course require some validation on the format of an email, hence the call to the isValidEmail function. Email validation is a topic that is debated regularly in web development, with some arguing for complex validation, and others arguing for simple validation with email verification. For this project, a very simple validation function was used. This simply checks the email matches a \emph{something@something.something} format, as shown in the following code snippet:
+This does of course require some validation on the format of an email, hence the call to the \emph{isValidEmail} function. Email validation is a topic that is debated regularly in web development, with some arguing for complex validation, and others arguing for simple validation with email verification. For this project, a very simple validation function was used. This simply checks the email matches a \emph{something@something.something} format, as shown in the following code snippet:
 
 \begin{lstlisting}
 const simpleEmailRegex = /^(.+)@(.+)\.(.+)$/
@@ -1179,7 +1178,7 @@ login(onSuccess) {
 
 This executes an AJAX request which posts the login credentials, in JSON format, to the SelfReflect API endpoint \emph{/v1/tokens}. Versioning was included in the API implementation, hence the \enquote{v1}, as will be discussed in section \ref{sec:apiimpl}.
 
-Some code has been removed from the function in this snippet. The removed code simply handles whatever response the app gets from the server. If the credentials sent are valid, the mobile app will receive a success response code and an access token. It can then store this access token for subsequent requests, and execute the onSuccess function. This function will navigate the user to the \enquote{logged in} area of the app. If the credentials are invalid, the app will receive an error response code, and the login screen will display an \enquote{Invalid email or password} message, in exactly the same way as the \enquote{Invalid email} message in Figure \ref{fig:mobileloginerror}. It is possible the app will receive some other response from the server, if the database is down for example, in which case the mobile app will simply display \enquote{Something went wrong. Please try again later}.
+Some code has been removed from the function in this snippet. The removed code simply handles whatever response the app gets from the server. If the credentials sent are valid, the mobile app will receive a success response code and an access token. It can then store this access token for subsequent requests, and execute the \emph{onSuccess} function. This function will navigate the user to the \enquote{logged in} area of the app. If the credentials are invalid, the app will receive an error response code, and the login screen will display an \enquote{Invalid email or password} message, in exactly the same way as the \enquote{Invalid email} message in Figure \ref{fig:mobileloginerror}. It is possible the app will receive some other response from the server, if the database is down for example, in which case the mobile app will simply display \enquote{Something went wrong. Please try again later}.
 
 \subsection{Register}
 The register screen is very similar to the login screen. The implemented register page can be seen in Figure \ref{fig:mobileregisterimpl}.
@@ -1233,7 +1232,7 @@ register(onSuccess) {
 }
 \end{lstlisting}
 
-This is clearly extremely similar to the login code. This will become a similar theme throughout this entire chapter, and is due to the API having been buillt in a RESTful way; all accesses tend to follow a similar, \enquote{uniform} pattern. For this reason not all of these API accesses will be included in code snippets; they will simply be described, as they are almost all fairly similar. Again, the success and error codes are handled in much the same way, and displayed to the user if necessary, such as for \enquote{Email already exists} responses. In the case of register, the onSuccess function will navigate back to the login page, so the user can log in with their newly created account.
+This is clearly extremely similar to the login code. This will become a similar theme throughout this entire chapter, and is due to the API having been buillt in a RESTful way; all accesses tend to follow a similar, \enquote{uniform} pattern. For this reason not all of these API accesses will be included in code snippets; they will simply be described, as they are almost all fairly similar. Again, the success and error codes are handled in much the same way, and displayed to the user if necessary, such as for \enquote{Email already exists} responses. In the case of register, the \emph{onSuccess} function will navigate back to the login page, so the user can log in with their newly created account.
 
 \subsection{Home}
 Once the user has logged in successfully, they will be navigated to the home screen, as seen in Figure \ref{fig:mobilehomeimpl}. For demonstration purposes, a test account with some existing wellbeing recordings was used.
@@ -1247,7 +1246,7 @@ Once the user has logged in successfully, they will be navigated to the home scr
 
 This is similar to the wireframe for the home screen in the design section (Figure \ref{fig:mobilehome}), with a few changes. Most of these changes are styling and other small changes, but one is the addition of the \enquote{Refresh recent recordings} button. The button simply repopulates the recent recordings table. During implementation it was discovered that if the user recorded their wellbeing on the web app, the only way to get the table in the mobile app to refresh would be to exit and reload the app, which was not very \enquote{user-friendly}. Adding this button solved this issue at little extra cost, as all the functionality to populate the table was already implemented.
 
-The logout button (the \enquote{power} button in the top left) simply navigates the user back to the login screen, which they then cannot get through without logging in again. The population of the last five recent recordings table however is a little more complicated.
+The logout button (the \enquote{power} button in the top left) simply navigates the user back to the login screen, which they then cannot get past without logging in again. The population of the last five recent recordings table however is a little more complicated.
 
 \subsubsection{Last 5 Recordings Table}
 The code to fetch a user's last five recordings is not vastly different to the API accesses in the login and register pages. However, this is now accessing user data, so the token (obtained at successful login) must be sent with the request. The code to fetch this data is seen below:
@@ -1297,7 +1296,7 @@ Tapping the record wellbeing button will navigate users to the SWEMWBS questions
 
 The next button on each question screen is disabled until an answer is selected. One change that was made from the design is the inclusion of the cancel button. This was implemented instead of the logout button, so that if a user wanted to cancel and go back to the home screen, they can do so without pressing back lots of times, or without having to log out and in again.
 
-The last question includes a submit button instead of a next button, which simply sums the scores to each of the answers (where \enquote{None of the time} has a score of 1, \enquote{Rarely} has a score of 2 etc.), computes the date and time of submission, and posts these to the \emph{/v1/users/:id/wellbeings} endpoint, where \emph{:id} is the user ID obtained on successful login. This code has not been included here as it is very similar to the API accesses described in previous sections. It again handles both successful and error responses from the server, by either navigating the user back to the home page on success, or displaying an error message on error.
+The last question includes a submit button instead of a next button, which simply sums the scores to each of the answers (where \enquote{None of the time} has a score of 1, \enquote{Rarely} has a score of 2 etc.), computes the date and time of submission, and POSTs these to the \emph{/v1/users/:id/wellbeings} endpoint, where \emph{:id} is the user ID obtained on successful login. This code has not been included here as it is very similar to the API accesses described in previous sections. It again handles both successful and error responses from the server, by either navigating the user back to the home page on success, or displaying an error message on error.
 
 If successful, this also automatically updates the state that the recent recordings table (on the home screen) is generated from with the new wellbeing entry, based on the API response. This allows the user to instantly see that their wellbeing was recorded successfully.
 
@@ -1310,7 +1309,7 @@ Then web app was developed using the various technologies discussed in the desig
 \subsection{React and the Redux Store}
 Before the implementation of each page in the web app is described, the implementation of persistent state and the Redux store will be described. When developing a React application, the entire application is rendered based on state. Changes to the app, based on user input, are then simply changes to the state. React notices these changes, computes what will change due to this new state, then updates with the \enquote{document object model}, or DOM, with these changes.
 
-Redux is a tool and development methodology for managing state in a React application, by creating a \enquote{store} that holds state. Large applications can become confusing due to a huge amount of state, so Redux helps to organise state in a uniform, modular way. Redux requires \enquote{reducers} to be passed when creating the store. These define all possible ways to update the state in the store. This limits the ways state can be accessed/updated, and is one of the main ways Redux helps to arrange state and updates to state, in a uniform and organised way.
+Redux is a tool and development methodology for managing state in a React application, by creating a \enquote{store} that holds state. Large applications can become confusing due to a huge amount of state, so Redux helps to organise this in a uniform, modular way. Redux requires \enquote{reducers} to be passed when creating the store. These define all possible ways to update the state in the store. This limits the ways the store can be accessed/updated, and is one of the main ways Redux helps to arrange state, in a uniform and organised way.
 
 \subsubsection{Initialising State}
 Another feature Redux provides is the ability to initialise the store with some pre-loaded state. This is how persisted state was implemented in the web app. The following code does this:
@@ -1427,7 +1426,7 @@ store.subscribe(throttle(300000, () => {
 }))
 \end{lstlisting}
 
-This checks to see if the token exists and is going to expire in less than an hour. If these conditions are met, it refresheds the token using a PUT request to the \emph{/v1/tokens} endpoint of the SelfReflect API. One other thing of note in this code snippet is that the function is \enquote{throttled}. This limits how often this function can be called, so as not to slow down the application or add unnecessary load on the server. In this case the function is throttled to once every 300 seconds, or five minutes.
+This checks to see if the token exists and is going to expire in less than an hour. If these conditions are met, it refreshes the token by sending a PUT request to the \emph{/v1/tokens} endpoint of the SelfReflect API. One other thing of note in this code snippet is that the function is \enquote{throttled}. This limits how often this function can be called, so as not to slow down the application or add unnecessary load on the server. In this case the function is throttled to once every 300 seconds, or five minutes.
 
 \subsubsection{Update User Information}
 In order to ensure the information about the currently logged in user stays as \enquote{up-to-date} as possible, a listener was added that regularly updates the user's information. This is so that if some other client was used to edit the email of a user, for example, this would be updated and represented in the SelfReflect web app. The code to add this listener is shown below:
@@ -1457,7 +1456,7 @@ store.subscribe(() => {
 })
 \end{lstlisting}
 
-The fetchUser function (not shown) simply fetches the user's information by sending a GET request to the \emph{/v1/users/:id}. It then updates the user's information in the Redux store state. This is again throttled, but in a slightly different way. The function needs to not be throttled if the user has not been fetched yet, so both the throttled and original versions of the \emph{fetchUser} function are required.
+The \emph{fetchUser} function (not shown) simply fetches the user's information by sending a GET request to the \emph{/v1/users/:id}. It then updates the user's information in the Redux store state. This is again throttled, but in a slightly different way. The function needs to not be throttled if the user has not been fetched yet, so both the throttled and original versions of the \emph{fetchUser} function are required.
 
 \subsection{Home}
 The first screen the user sees when loading the web app is the home screen, which can be seen in Figure \ref{fig:webhomeimpl}.
@@ -1495,7 +1494,7 @@ If input validation is failed, the log in button will do nothing. Input validati
 \end{figure}
 
 \subsubsection{Login}
-The login functionality of the web app is almost identical to the login functionality of the mobile app. For this reason the code has not been included here. It is almost identical, except it handles responses (success/error) with Redux. After a successful login, the user is navigated to the guide page (see section \ref{subsec:guide}).
+The login functionality of the web app is almost identical to the login functionality of the mobile app, so again has not been included here. It is almost identical, except it handles responses (success/error) with Redux. After a successful login, the user is navigated to the guide page (see section \ref{subsec:guide}).
 
 \subsection{Register}
 Clicking the register button either on the home page or in the navigation bar will navigate the user to the register screen, as can be seen in Figure \ref{fig:webregisterimpl}.
@@ -1525,7 +1524,7 @@ This is again exactly the same as the mobile app. The register page with failed 
 Again, the register functionality is almost identical to that of the mobile app, so does not need to be described again. After a successful register, a success message appears to indicate the account has been created.
 
 \subsection{Guide} \label{subsec:guide}
-The guide page was implemented almost exactly like the wireframe in the design section (Figure \ref{fig:webguide}), but with some styling improvements. This can be seen in Figure \ref{fig:webguideimpl}.
+The guide page was implemented almost exactly as shown in the wireframe in the design section (Figure \ref{fig:webguide}), but with some styling improvements. This can be seen in Figure \ref{fig:webguideimpl}.
 
 \begin{figure}[ht]
 \centering
@@ -1569,7 +1568,7 @@ The SWEMWBS questionnaire can be found on the record page. This is almost identi
 \newpage
 The only significant change to the design is the addition of the clear button which, much like the register page, clears all of the answers to the questionnaire.
 
-The submit button is disabled until all the questions are answered. When it is enabled and pressed, the sum of the answers and the current date and time are calculated. These are then submitted to the SelfReflect API in exactly the same way as the questions in the mobile app. The user is then presented with a success message and the answers are cleared.
+The submit button is disabled until all the questions are answered. When it is enabled and pressed, the sum of the answers and the current date and time are calculated. These are then submitted to the SelfReflect API in exactly the same way as the questions in the mobile app. The user is then presented with a success message (if successful) and the answers are cleared.
 
 \subsection{Account}
 The account page is divided into two areas: account management and connect existing apps. An overall view of the page can be seen in Figure \ref{fig:webaccountimpl}.
@@ -1595,11 +1594,11 @@ The first section of the account page deals with account management. This sectio
 \end{figure}
 
 \newpage
-A change made from the design of this page (in Figure \ref{fig:webaccount}) was the addition of the view account tab. This was originally not included, but automatically displaying either of the edit forms seemed strange from a user experience point of view. The user may simply want to view their details rather than edit them. This also provides some feedback for the user if they change their email, as the view account tab will automatically be updated to their new email.
+A change made from the design of this page (in Figure \ref{fig:webaccount}) is the addition of the view account tab. This was originally not included, but automatically displaying either of the edit forms seemed strange from a user experience point of view. The user may simply want to view their details rather than edit them. This also provides some feedback for the user if they change their email, as the view account tab will automatically be updated to their new email.
 
-The edit email and edit password forms are relatively simple. They use the same validation rules as the register page, require the current password to be provided for security reasons, and send a PUT request to the \emph{/v1/users/:id} endpoint of the SelfReflect API. The body of this request contains the full original user, with either the \emph{email} or the \emph{newPassword} field changed, for edit email and edit password respectively. See section \ref{sec:apiimplusers} for further details on this.
+The edit email and edit password forms are relatively simple. They use the same validation as the register page, require the current password to be provided for security reasons, and send a PUT request to the \emph{/v1/users/:id} endpoint of the SelfReflect API. The body of this request contains the full original user, with either the \emph{email} or the \emph{newPassword} field changed, for edit email and edit password respectively. See section \ref{sec:apiimplusers} for further details on this.
 
-Both of these forms contain a clear button, which work in exactly the same way as other clear buttons described in this chapter. They simply clear the inputs of that form. Both forms also handle successful and error responses from the server, and report these to the user.
+Both of these forms contain clear buttons, which work in exactly the same way as other the clear buttons described in this chapter. They simply clear the inputs of that form. Both forms also handle both success and error responses from the server, and report these to the user.
 
 \subsubsection{Connect Existing Apps} \label{subsec:webconnectapis}
 The second area of this page is the connect existing apps area. This allows the user to connect Twitter and Strava to their SelfReflect account. The colours for the boxes surrounding the Twitter and Strava areas are taken from the respective logos for each of the applications.
@@ -1616,7 +1615,7 @@ export default twitter_username => (
 )
 \end{lstlisting}
 
-\paragraph{Strava} Strava does not provide application only authentication, and so must be fully connected to allow the SelfReflect to fetch the user's exercise data. This is a fairly complicated process that was made more complicated by the fact the the SelfReflect web app is a \enquote{one page} app. The following stages are required to connect a user's Strava account to any application:
+\paragraph{Strava} Strava does not provide application only authentication, and so must be fully connected to allow the SelfReflect API to fetch the user's exercise data. This is a fairly complicated process that was made more complicated by the fact the the SelfReflect web app is a \enquote{one page} app. The following stages are required to connect a user's Strava account to any application:
 \begin{enumerate}
 \item Direct the user to Strava's authorisation page. If the user accepts, Strava will respond with a code.
 \item Exchange this code for a Strava access token.
@@ -1640,10 +1639,10 @@ const onClickConnect = (userId, tokenValue) => () => {
 }
 \end{lstlisting}
 
-This directs the user to the Strava authorisation page. It also provides two parameters of note:
+This directs the user to Strava's authorisation page. It also provides two parameters of note:
 \begin{enumerate}
-\item \emph{state}. This is extremely important for stage 2 of connecting strava. It allows some state to be passed to Strava's authorization page, which is automatically passed back (unmodified) after the user accepts authorisation.
-\item \emph{redirect\textunderscore uri}. This is where Strava will direct the user, and hence pass the code and state to, after the user accepts authorisation. This is the reason SelfReflect being a one page application caused issues when connecting Strava. The web app originally only had one page, meaning there was no page to redirect to that would be able to handle the Strava authorisation. To handle this, another page had to be added to the web app. This is accessible at \emph{/connectStrava} on the web app.
+\item \emph{state}. This is extremely important for stage 2 of connecting Strava. It allows some state to be passed to Strava's authorization page, which is automatically passed back (unmodified) after the user accepts authorisation.
+\item \emph{redirect\textunderscore uri}. This is where Strava will direct the user, and hence pass the code and state to, after the user accepts authorisation. This is the reason SelfReflect being a one page application caused issues when connecting Strava. The web app originally only had one page, meaning there was no page to redirect to that would be able to handle the Strava authorisation. To handle this, another page had to be added to the web app, which is accessible at \emph{/connectStrava}.
 \end{enumerate}
 
 This page handles part of stage 2 of connecting a user's Strava account. When the page is loaded, the GET parameters (state and code) are pulled from the address bar using the following code:
@@ -1652,7 +1651,7 @@ const getParams = parse(window.location.search)
 const state = JSON.parse(getParams.state)
 \end{lstlisting}
 
-The page then simply sends the code to the SelfReflect API (using the userId and the SelfReflect token, as is required by the SelfReflect API), which exchanges the code for a Strava access token and stores it in the SelfReflect database against that user. The page gives user feedback on the progress of connecting Strava as this happens, as shown in Figure \ref{fig:webstravaloading} and Figure \ref{fig:webstravasuccess}.
+The page then simply sends the code to the SelfReflect API. This uses the user's id and token, as is required by the SelfReflect API, which were passed in the state parameter to Strava's authorization page (and hence back to \emph{/connectStrava}). The SelfReflect API then exchanges the code for a Strava access token and stores it in the SelfReflect database against that user. The web app page gives user feedback on the progress of connecting Strava as this happens, as shown in Figure \ref{fig:webstravaloading} and Figure \ref{fig:webstravasuccess}.
 
 \begin{figure}[ht]
 \centering
@@ -1668,6 +1667,7 @@ The page then simply sends the code to the SelfReflect API (using the userId and
 \label{fig:webstravasuccess}
 \end{figure}
 
+\newpage
 \subsection{Analysis}
 The final page of the web app is the analysis page, which includes the visualisations. This page can be seen in Figure \ref{fig:webanalysisimpl}.
 
@@ -1793,7 +1793,6 @@ This generates the graph, a full example of which can be seen in Figure \ref{fig
 \label{fig:webanalysisgraph}
 \end{figure}
 
-\newpage
 \subsection{Responsiveness}
 Throughout development regular checks were made to ensure the web app was responsive and functional on various screen sizes. This required some basic CSS code and more importantly correct usage of the Skeleton CSS grid system. However, this code is not particularly complex or interesting, so some images proving this responsiveness have simply been included in appendix \ref{app:webresponsiveness}. The only element that doesn't resize for a small screen is the graph, for fairly obvious reasons.
 
@@ -1846,6 +1845,8 @@ In the case of a PUT \emph{/v1/tokens} request, email and password are not requi
 As discussed in the design section of the api (section \ref{sec:apisecurity}), many endpoints require authentication as they access or modify user's data. The token, obtained from valid requests to the \emph{/v1/tokens} endpoints, must be sent in the \emph{Authorization} header of all requests to restricted endpoints. All \emph{/v1/users/:id} endpoints are restricted. The only users endpoint that is not restricted is \emph{/v1/users} (for account creation), as the user cannot authenticate if they do not have an account.
 
 In order to add this check to all of the required endpoints, \enquote{middleware} was used. This middleware sits between the received request and the callback functions for each endpoint. Another piece of open source software called \enquote{express-jwt} \parencite{expressjwt} was used to achieve this. The usage of this can be seen in the following code:
+
+\newpage
 \begin{lstlisting}
 // Decode Authorization header token
 const jwtMiddleware = jwt({
@@ -1868,13 +1869,13 @@ app.use((err, req, res, next) => {
   }
 })
 \end{lstlisting}
-This intercepts all endpoints other than \emph{/v1/users} (for user creation), and \emph{POST /v1/tokens}, as this does not require a token to be provided. The middleware will then throw an \enquote{UnauthorizedError} unless both of the following conditions are met:
+This intercepts all endpoints other than \emph{/v1/users} (for user creation), and \emph{POST /v1/tokens}, as these do not require a token to be provided. The middleware will then throw an \enquote{UnauthorizedError}, which is handled in the above code, unless both of the following conditions are met:
 \begin{itemize}
 \item A token is provided.
 \item The token is valid, i.e. can be decoded using the server secret.
 \end{itemize}
 
-The decoded token is then passed to the callback function, as part of the request. This can then be used to perform extra checks. In the case of the SelfReflect API, this is used to check that the user id in the token is the same as the user id of the requested resource. An example of this can be seen below:
+The decoded token is then passed to the requested endpoint's callback function, as part of the request parameter. This can then be used to perform extra checks. In the case of the SelfReflect API, this is used to check that the user id in the token is the same as the user id of the requested resource. An example of this can be seen below:
 \begin{lstlisting}
 app.get('/v1/users/:id', (req, res) => {
   const id = parseInt(req.params.id, 10)
@@ -1891,7 +1892,7 @@ app.get('/v1/users/:id', (req, res) => {
 })
 \end{lstlisting}
 
-This checks the user id is valid, then checks the user id matches that of the requested resource. Combining this token generation and authentication middleware provides all authentication required for restricted endpoints in the SelfReflect API.
+This checks the user id is valid, then checks the user id in the provided token matches that of the requested resource. Combining this token generation and authentication middleware provides all authentication required for restricted endpoints in the SelfReflect API.
 
 \subsection{Secure Password Storage}
 In order to implement secure password storage and hashing, as described in section \ref{subsec:secpass}, an open source library called \enquote{node.bcrypt.js} was used, which simply implements \emph{bcrypt} hashing and is compatible with Node.js \parencite{nodebcrypt}. This is implemented using the following code:
@@ -1912,7 +1913,7 @@ bcrypt.hash(password, saltRounds, (err, hash) => {
 This is the code used to create a user in the database. This hashes the password, then inserts the resultant hash in the database in the password field for the user. Note that this library automatically generates and uses a salt. Salt rounds can be increased or decreased; more salt rounds provides added security at the cost of processing speed. Ten salt rounds is the default that is recommended by the author of the open source library, so this was used for the SelfReflect API.
 
 \subsection{Users Endpoints} \label{sec:apiimplusers}
-The endpoints implemented are almost identical to those described in section \ref{sec:apiendpoints}. They will not all be described in detail here as are very simple and intuitive, and hence the code is not particularly interesting. Creation of users for example consists of a simple function that extracts email and password from the request, performs some validation (checks fields exist, checks email not already in use), then performs a simple MySQL insert to insert an entry into the database. Full descriptions of all of these endpoints have been detailed in the documentation, as discussed in section \ref{sec:apidocs}. The only endpoints that will be discussed in detail here are those that relate to external APIs (Twitter and Strava).
+The endpoints implemented are almost identical to those described in section \ref{sec:apiendpoints}. They will not all be described in detail here as are very simple and intuitive, and hence the code is not particularly interesting. Creation of users for example consists of a simple function that extracts email and password from the request, performs some validation (checks fields exist, checks email not already in use), then performs a simple MySQL insert to insert an entry into the database. Full descriptions of all of these endpoints have been detailed in the documentation, as discussed in section \ref{sec:apidocs}. The only endpoints that will be discussed in detail here are those that relate to external APIs (Twitter and Strava), as these are more complicated.
 
 \subsection{Twitter} \label{sec:apiconnecttwitter}
 \subsubsection{Connect Twitter}
@@ -1976,10 +1977,10 @@ export const updateStravaToken = (id, code, res) => {
   })
 })
 \end{lstlisting}
-The client id and client secret are obtained, like Twitter, by signing up to Strava's developer site and registering an application. The code above can then obtains an access token for this user in exchange for the code, and store this access token in the SelfReflect database against that user.
+The client id and client secret are obtained, like Twitter, by signing up to Strava's developer site and registering an application. The code above can then obtains an access token for this user in exchange for the code, and stores this access token in the SelfReflect database against that user.
 
 \subsubsection{Fetch Strava Data}
-Once an access token is obtained and stored, it can be used in subsequent requests to fetch the users data. In the case of SelfReflect, this fetches the user's \enquote{activities}. The code to do this is shown below:
+Once an access token is obtained and stored, it can be used in subsequent requests to fetch the user's Strava data. In the case of SelfReflect, this fetches the user's \enquote{activities}. The code to do this is shown below:
 \begin{lstlisting}
 import { stravaDataAPI, clientId, clientSecret } from '../../config/strava'
 
@@ -2011,7 +2012,7 @@ export const getStravaData = (id, res) => {
 })
 \end{lstlisting}
 
-This is very similar to the code to fetch a user's Twitter timeline, with a few changes. The API is different of course, and the token in the \enquote{Authorization} header is different. This is loaded from the database, and is user specific rather than application-level. As with Twitter data, the Strava data is returned \enquote{raw} i.e. unmodified from the format provided by Strava.
+This is very similar to the code to fetch a user's Twitter timeline, with a few changes. The API is different of course, and the token in the \emph{Authorization} header is different. This is loaded from the database, and is user specific rather than application-level. As with Twitter data, the Strava data is returned \enquote{raw} i.e. unmodified from the format provided by Strava.
 
 \subsection{Documentation} \label{sec:apidocs}
 A huge amount of documentation was written for the SelfReflect API. This documentation includes:
@@ -2039,7 +2040,7 @@ The database was implemented almost exactly as discussed in the database design 
 \begin{figure}[ht]
 \centering
 \caption{Implemented Database Entity-Relationship Diagram}
-\includegraphics[width=0.8\textwidth]{i/dberdimpl.png}
+\includegraphics[width=0.7\textwidth]{i/dberdimpl.png}
 \label{fig:dberdimpl}
 \end{figure}
 
