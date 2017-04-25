@@ -2061,7 +2061,7 @@ To implement tests for the API, various open source libraries were used:
 The details of all the tests and their specific implementation will not be discussed here. A set of tests were written for each endpoint, so that for every endpoint:
 \begin{itemize}
 \item The expected success response was tested.
-\item Every error response to a valid request was tested, such as duplicate emails (providing a duplicate email is a valid request that returns an error response).
+\item Every error response to a valid request was tested, such as duplicate emails (sending a duplicate email is a valid request that returns an error response).
 \item Every error response to invalid request was tested, such as requesting information for a user id that is not authenticated, or providing no authentication token.
 \end{itemize}
 
