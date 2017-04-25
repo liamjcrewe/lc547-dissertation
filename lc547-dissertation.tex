@@ -72,7 +72,7 @@ Over 23 million adults in the UK alone suffer from mental health conditions, 75\
 
 Personal informatics systems gather data about a user for the purposes of self reflection or self monitoring. This project consisted of the development of a personal informatics system, called SelfReflect, specifically tailored towards mental health self management.
 
-SelfReflect not only collects data about a user's mental wellbeing, but also takes advantage of the fact that lots of data about users is already available. It connects to existing applications via their respective APIs, and fetches a user's data from each of these applications. Visualisations can then be built by the user, in order to identify relationships between their mental wellbeing and other data, such as physical exercise statistics or social media activity.
+SelfReflect not only collects data about a user's mental wellbeing, but also takes advantage of the fact that lots of data about users is already available. It connects to existing applications via their respective APIs, and fetches a user's data from each of these applications. Visualisations can then be built by the user, in order to identify relationships between their mental wellbeing and other data, such as physical exercise statistics and social media activity.
 
 SelfReflect was built to be extensible; to be built on and expanded in the future. Two existing applications were connected as proofs of concept: Twitter and Strava, with one visualisation implemented for each. This project and the implemented software system provide a base for future work and research, with the long term goal of producing an extensive personal informatics system. This will hope to truly help to tackle the huge problem of poor mental health and wellbeing in the UK, and to reduce the demand for treatment from the underfunded and oversubscribed NHS mental health services.
 \newpage
@@ -100,7 +100,7 @@ I would also like to thank the ten volunteer testers who took the time to test t
 \subsection{Mental Health in the UK}
 One in four adults (around 26\%) have been diagnosed with at least one mental health condition (where adult is any person 16 or over) \parencite{hse2014}. A further 18\% reported to have experienced a mental health condition but did not seek a diagnosis \parencite{hse2014}. This equates to around 44\% of adults in the UK. The population of the UK is around 65 million \parencite{onspopulation}, of which around 18.8\% are under the age of 16 \parencite{onspopulation}. This results in a population over the age of 16 of around 81.2\%, or around 52.78 million people. Given that 44\% of these will experience a mental health condition, this means there are over 23 million adults in the UK alone suffering from mental health conditions. This, in addition to any children and young people with mental health conditions, truly shows the prevalence of mental health conditions in the UK.
 
-This figure is further supported by the fact that mental health is the result of over 70 million sick days every year \parencite{cmoreport2013}, and is the largest burden of disease with around 28\% of the total burden, compared to 16\% for each of cancer and heart disease \parencite{burdendisorders}. Mental health conditions are estimated to cost the economy between £70 and £100 billion every year \parencite{cmoreport2013}.
+This figure is further supported by the fact that mental health is the result of over 70 million sick days every year \parencite{cmoreport2013}, and is the largest burden of disease with around 28\% of the total burden, compared to 16\% for each of cancer and heart disease \parencite{burdendisorders}. Mental health conditions are estimated to cost the economy between \pounds 70 and \pounds 100 billion every year \parencite{cmoreport2013}.
 
 \subsection{Mental Health Funding and Capacity}
 Despite these figures, the funding for mental health services only sums to around 13\% of total NHS (National Health Service) spending \parencite{cepnhsfunding}. In fact, around 75\% of people with mental health conditions receive no treatment at all \parencite{cmoreport2013}. On top of this, although the NHS is due to receive increased funding in 2016 and the years that follow \parencite{kfnhsbudget}, funding for mental health services is due to rise by just 0.3\% \parencite{mhfunding}. 53 out of 59 services in the UK responded to the freedom of information act made as part of the cited BBC article by \citeauthor{mhfunding}; 23 of which said that their funding would in fact decrease in 2016.
@@ -148,8 +148,8 @@ The goal of this project is not to produce a system with an extensive variety of
   \item User creation, log in and management.
   \item Storage of wellbeing score, as well as date and time of submission.
   \item Fetching of user's wellbeing scores over time.
-  \item Connection of existing applications (Twitter and Strava) when given valid applications credentials for a user, and storage of these credentials.
-  \item Fetching of user's existing application data, to create an \enquote{API of APIs}
+  \item Connection of existing applications (Twitter and Strava) when given valid credentials for a user, and storage of these credentials.
+  \item Fetching of user's existing application data, to create an \enquote{API of APIs}.
 \end{itemize} 
   
 \item Design and implement a mobile app that allows:
@@ -166,7 +166,7 @@ The goal of this project is not to produce a system with an extensive variety of
   \item Fetching and combining of user's data from both SelfReflect and connected existing applications, to produce visualisations from this data (with one for each of the \enquote{proof of concept} sources).
 \end{itemize} 
 
-\item Distribute this application to a series of volunteer testers, and get feedback on both the functionality of the system (i.e. if it works) and the usability of the various areas of the system.
+\item Distribute this application to a series of volunteer testers, and get feedback on the functionality of the system (i.e. if it works), the usability of the various areas of the system, and suggestions for future improvements and/or additional features.
 \item Analyse the application and the results of the testing to:
 \begin{itemize}
   \item Identify possible future changes that could be made and functionality/features that could be added in order to improve the system.
@@ -184,7 +184,7 @@ This chapter provides some high-level background research and motivation for the
 
 \textbf{Chapter 2: Literature Survey}
 
-This chapter delves deeper into the research relevant to this project. It considers relevant literature in terms of motivations and system design, researches methods of recording wellbeing, and compares and contrasts existing applications.
+This chapter delves deeper into the research relevant to this project. It identifies the various fields this project relates to, considers relevant literature in terms of motivations and system design, researches methods of recording wellbeing, and compares and contrasts existing applications.
 
 \textbf{Chapter 3: Requirements Specification}
 
@@ -204,7 +204,7 @@ This chapter first discusses automated testing, then continues to discuss user t
 
 \textbf{Chapter 7: Results and Discussion}
 
-This chapter presents the results of the testing by the volunteer testers. It then discusses these results, and summaries usability improvements, feature improvements and additional features that could be added. It also discusses additional sources and visualisations that could be added to the system, based on user responses. It will also discuss where, how and to what extent this project contributes to the research referenced in the Literature Survey.
+This chapter presents the results of the testing by the volunteer testers. It then discusses these results, and summarises usability improvements, feature improvements and additional features that could be added. It also identifies additional sources and visualisations that could be added to the system, based on user responses. Finally, it discusses where, how and to what extent this project contributes to the various fields identified in the literature survey.
 
 \textbf{Chapter 8: Conclusion and Future Work}
 
@@ -298,7 +298,7 @@ These condition specific questionnaires may well be more effective than generic 
 For these reasons the project will implement an existing, well established patient reported outcome measure. Some examples of existing, popular outcome measures will be discussed, as will their appropriateness for use in this project. Candidates to be discussed (one of which will be included in the system) are: the \enquote{European Quality of Life instrument} (EQ-5D), the \enquote{Recovery Star}, the \enquote{Warwick-Edinburgh Mental Wellbeing Scale} (WEMWBS), and its short version, the \enquote{Short WEMWBS} (SWEMWBS).
 
 \newpage
-\subsection{European Quality of Life instrument (EQ-5D)}
+\subsection{European Quality of Life Instrument (EQ-5D)}
 The \enquote{European Quality of Life instrument} (EQ-5D) is a \enquote{standardized instrument for use as a measure of health outcome} \parencite{eq5dabout}. The questionnaire consists of two pages. The user answers 5 questions on a scale ranging from \enquote{no problem} to \enquote{unable to do}, in areas such as mobility and self care, then scores their mood on a scale of 1 to 100 \parencite{eq5duse}. An example EQ-5D can be seen in Figure \ref{fig:eq5d} (images from \parencite{eq5duse}):
 
 \begin{figure}[ht]
@@ -444,7 +444,7 @@ Strava is a mobile app that \enquote{lets you track your running and riding with
 
 Strava also has an API \parencite{stravaapi}, that allows retrieval of a users activities, which is perfect for the needs of this system.
 
-\subsection{Social media}
+\subsection{Social Media}
 \subsubsection{Link to Mental Health}
 A project by \citeauthor{de2013predicting} (\citeyear{de2013predicting}) stated that \enquote{social media contains useful signals for characterizing the onset of depression in individuals}. This same project managed to build a classifier using Twitter data, to predict onset depressive episodes in patients with major depression, with an impressive accuracy of around 70\%.
 
@@ -2183,12 +2183,12 @@ Another important aspect to discuss with regard to these results is where, how a
 \item Existing systems.
 \end{itemize}
 
-\subsection{Mental Health and Self Management}
+\subsection{Self Management in Mental Health}
 Research showed that self management is \enquote{increasingly popular} \parencite{selfhelpanxiety} and has been shown to be effective in both treatment \parencite{wrapstudy} and \parencite{selfmanagementrelapse}. It investigated various techniques and found that all self management schemes had several features in common. They all required identification of events that can cause negative consequences, recognition of when these events occur and what effect they have, and planned actions to minimise the negative consequences of these events. This project planned to develop a system to aid with the first two of these. Users would be able to build graphs to identify events, identify when they occur and see visual proof of the effect this event had.
 
 On one hand this can be considered a successful contribution for this project; a tool was successfully built to allow users to generate these graphs, allowing the possibility to identify the factors discussed. However, whether SelfReflect (in its current state) produces visualisations that are clear enough for the average user to identify these factors is, as of yet, untested. Future work should be carried out to discover if the average user can draw valid and useful conclusions, and ways in which the system can be improved to aid users in achieving this goal.
 
-\subsection{Personal Informatics in the Context of Mental Health}
+\subsection{Personal Informatics in the Context of Mental Health and Wellbeing}
 The literature survey discussed the five stage model of personal informatics systems by \citeauthor{li2010stage} (\citeyear{li2010stage}). It also stated which of these stages were primary focuses of this project: collection, integration and reflection. It then continued to discuss the impact of both social media activity and exercise on mental health and wellbeing, with the plan to develop a system to identify the exact nature of these relationships.
 
 SelfReflect's implemented features cover all of these areas. The combination of the mental health SWEMWBS questionnaire, connecting of Twitter and Strava, the API and the visualisations cover all three of the stated stages of the five stage model. The visualisations allow graphs to be produced to potentially identify relationships between social media activity, exercise activity and mental health and wellbeing. However, much like the field of self management, future work should investigate how effective the system is in allowing users to identify these relationships, and how it could further help users to do so.
@@ -2236,7 +2236,7 @@ Either using the current system, or after further projects to improve and expand
 \printbibliography
 
 \begin{appendices}
-\section{SWEMWBS conversion table} \label{SWEMWBS conversion table}
+\section{SWEMWBS Conversion Table} \label{SWEMWBS Conversion Table}
 \begin{figure}[ht]
   \centering
   \includegraphics[width =.7\textwidth]{i/swemwbsconversiontable1.png}
